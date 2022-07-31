@@ -36,21 +36,6 @@ function BlogsView() {
           {blogData.map((blog) => {
             return <BlogCard key={blog.id} blog={blog} />;
           })}
-          {blogData.map((blog) => {
-            return <BlogCard key={blog.id} blog={blog} />;
-          })}
-          {blogData.map((blog) => {
-            return <BlogCard key={blog.id} blog={blog} />;
-          })}
-          {blogData.map((blog) => {
-            return <BlogCard key={blog.id} blog={blog} />;
-          })}
-          {blogData.map((blog) => {
-            return <BlogCard key={blog.id} blog={blog} />;
-          })}
-          {blogData.map((blog) => {
-            return <BlogCard key={blog.id} blog={blog} />;
-          })}
         </div>
       </div>
     </div>

@@ -26,7 +26,7 @@ function AlumniDashboard() {
     };
 
     fetchData();
-  });
+  },[]);
 
   return (
     <div className="dashboard">
@@ -43,7 +43,11 @@ function AlumniDashboard() {
             </div>
             <div className="carousel-container">
               <div className="carousel-heading">Faculties</div>
-              <DashboardCarousel type="profile" className="dash-sm-carousel" />
+              <DashboardCarousel
+                type="profile"
+                className="dash-sm-carousel"
+                data={studentData}
+              />
             </div>
           </div>
           <div className="dash-main-right">
@@ -60,7 +64,7 @@ function AlumniDashboard() {
         <div className="carousel-container">
           <div className="carousel-heading d-flex align-items-center justify-content-between mb-2">
             <span>Student Profiles</span>
-            <Link to="/blogs">
+            <Link to="/profiles">
               <span className="explore-btn">Explore</span>
             </Link>
           </div>

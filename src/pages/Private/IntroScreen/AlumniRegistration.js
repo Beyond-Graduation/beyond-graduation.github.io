@@ -87,6 +87,17 @@ function AluminiRegistration({ state }) {
   };
 
   const onRegister = async () => {
+    if (
+      formDetails.firstName === "" ||
+      formDetails.lastName === "" ||
+      formDetails.email === "" ||
+      formDetails.password === "" ||
+      formDetails.areasOfInterest.length === 0 ||
+      formDetails.workExperience.length === 0
+    ) {
+      toast.error("Please fill all the fields");
+      return;
+    }
     await axios({
       method: "post",
       url: "alumni/signup",

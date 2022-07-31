@@ -111,6 +111,16 @@ function AlumniProfilesView() {
     });
   };
 
+  const handleClearFilter = () => {
+    setFilterData({
+      department: "",
+      areasOfInterest: [],
+      before: null,
+      after: null,
+    });
+    setSearchAlumniData(alumniData);
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -120,7 +130,7 @@ function AlumniProfilesView() {
       <div className="profiles-view-cnt">
         <h1 className="profiles-view-head">Alumni Profiles</h1>
         <div className="filter-container mt-5">
-          <div className="filter-inner mb-4 d-flex">
+          <div className="filter-inner mb-4 d-flex align-items-center">
             <Select
               name="department"
               className="department me-3"
@@ -143,13 +153,14 @@ function AlumniProfilesView() {
               options={interestList}
               onChange={(e) => handleFilterChange("areasOfInterest", e)}
             />
+            <span className="grad-year-label">Graduation Year:</span>
             <input
               type="number"
               name="after"
               min={1943}
               maxLength={4}
               className="me-3 grad"
-              placeholder="Grad. Year (after)"
+              placeholder="After"
               onChange={(e) =>
                 handleFilterChange(e.target.name, e.target.value)
               }
@@ -160,7 +171,7 @@ function AlumniProfilesView() {
               min={1943}
               maxLength={4}
               className="grad"
-              placeholder="Grad. Year (before)"
+              placeholder="Before"
               onChange={(e) =>
                 handleFilterChange(e.target.name, e.target.value)
               }
@@ -176,8 +187,8 @@ function AlumniProfilesView() {
                 <FaFilter className="me-1" />
                 Apply Filters
               </div>
-              <div className="apply-filter ms-3" onClick={applyFilter}>
-                <FaBan className="me-2" onClick={fetchData} />
+              <div className="apply-filter ms-3" onClick={handleClearFilter}>
+                <FaBan className="me-2" />
                 Clear Filters
               </div>
             </div>
@@ -187,12 +198,12 @@ function AlumniProfilesView() {
           {searchAlumniData.map((alumni) => (
             <ProfilesViewCard key={alumni.__id} data={alumni} />
           ))}
-          {searchAlumniData.map((alumni) => (
+          {/* {searchAlumniData.map((alumni) => (
             <ProfilesViewCard key={alumni.__id} data={alumni} />
           ))}
           {searchAlumniData.map((alumni) => (
             <ProfilesViewCard key={alumni.__id} data={alumni} />
-          ))}
+          ))} */}
         </div>
       </div>
     </div>

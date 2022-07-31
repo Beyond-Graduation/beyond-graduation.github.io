@@ -11,7 +11,12 @@ function ProfilesViewCard({ data }) {
           {data.firstName} {data.lastName}
         </div>
         <div className="pv-c-dept">{data.department}</div>
-        <div className="pv-c-batch">{data.yearGraduation} Batch</div>
+        <div className="pv-c-batch">
+          {data.yearGraduation
+            ? data.yearGraduation
+            : data.expectedGraduationYear}{" "}
+          Batch
+        </div>
         <div className="pv-c-domain">{data.areasOfInterest.join(", ")}</div>
       </div>
     </div>

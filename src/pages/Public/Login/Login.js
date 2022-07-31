@@ -38,7 +38,11 @@ function Login() {
     })
       .then(async (res) => {
         if (res.status === 200) {
-          isAuth.login(res.data.token, res.data.userId, res.data.userType);
+          isAuth.login(
+            res.data.token,
+            res.data.userId,
+            res.data.userType.toLowerCase()
+          );
           isAuth.userType = res.data.userType.toLowerCase();
           dispatch({
             type: "SET_USER_ID",

@@ -68,6 +68,22 @@ function StudentRegistration({ state }) {
   ];
 
   const onRegister = async () => {
+    if (
+      formDetails.firstName === "" ||
+      formDetails.lastName === "" ||
+      formDetails.email === "" ||
+      formDetails.password === "" ||
+      formDetails.department === "" ||
+      formDetails.yearOfJoining === 0 ||
+      formDetails.expectedGraduationYear === 0 ||
+      formDetails.areasOfInterest.length === 0 ||
+      formDetails.higherSecondary.board === "" ||
+      formDetails.higherSecondary.cgpa === 0 ||
+      formDetails.degree === ""
+    ) {
+      toast.error("Please fill all the fields");
+      return;
+    }
     await axios({
       method: "post",
       url: "student/signup",
@@ -102,8 +118,7 @@ function StudentRegistration({ state }) {
     });
   }, []);
 
-  useEffect(() => {
-  }, [formDetails]);
+  useEffect(() => {}, [formDetails]);
 
   return (
     <div className="intro-main">

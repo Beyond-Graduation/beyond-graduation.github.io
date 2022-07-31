@@ -58,10 +58,11 @@
 .filter-inner .department {
   border: 2px solid rgba(58, 90, 64, 1);
   border-radius: 6px;
+  height: 42px;
 }
 
 .filter-inner .department:first-child {
-	width: 300px;
+	width: 340px;
 }
 
 .filter-inner .department:nth-child(2) {
@@ -81,7 +82,8 @@
 }
 
 .filter-inner .grad {
-  width: 210px;
+  width: 120px;
+  height: 42px;
   border: 2px solid rgba(58, 90, 64, 1) !important;
   border-radius: 6px;
   outline: none;
@@ -113,4 +115,10 @@
   padding: 0 20px;
   cursor: pointer;
   height: 40px;
+}
+
+.grad-year-label {
+  font-size: 16px;
+  font-weight: 500;
+  margin-right: 10px;
 }
