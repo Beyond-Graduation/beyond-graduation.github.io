@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  BrowserRouter,
+  HashRouter,
   Navigate,
   Outlet,
   Route,
@@ -92,7 +92,7 @@ function App() {
 
   return (
     <div className="App">
-      <BrowserRouter>
+      <HashRouter>
         <ToastContainer
           position="bottom-right"
           autoClose={3000}
@@ -125,7 +125,7 @@ function App() {
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </div>
   );
 }
