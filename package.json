@@ -1,7 +1,7 @@
 {
   "name": "alumni-tracker",
   "version": "0.1.0",
-  "homepage": "https://Beyond-Graduation.github.io/Beyond-Graduation/FrontEnd",
+  "homepage": "https://beyond-graduation.github.io/",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
