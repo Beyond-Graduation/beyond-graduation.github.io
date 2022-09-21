@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.42b5533f.css",
-    "main.js": "/static/js/main.a186c996.js",
+    "main.js": "/static/js/main.5f229770.js",
     "static/js/787.5bc012d4.chunk.js": "/static/js/787.5bc012d4.chunk.js",
     "static/media/login-bck-img.png": "/static/media/login-bck-img.e5bf987585859111d538.png",
     "static/media/beyond-grad.jpeg": "/static/media/beyond-grad.024a95d20305f498f691.jpeg",
@@ -9,6 +9,7 @@
     "static/media/blog-card.png": "/static/media/blog-card.ef08e9ad3c8d598d4345.png",
     "static/media/nanda kishor.jpg": "/static/media/nanda kishor.eb61c285a265952c2c0a.jpg",
     "static/media/sourav.jpeg": "/static/media/sourav.358d391ae32b728a5f46.jpeg",
+    "static/media/paurnami.jpg": "/static/media/paurnami.522dae6ea0bc17111731.jpg",
     "static/media/natasha.jpg": "/static/media/natasha.7ae393967a7cea4541b5.jpg",
     "static/media/home-grad-logo.png": "/static/media/home-grad-logo.50fa5dcbe8a4cbe03463.png",
     "static/media/revicons.eot": "/static/media/revicons.a77de540a38981833f9e.eot",
@@ -18,11 +19,11 @@
     "static/media/upload-file.svg": "/static/media/upload-file.b4ad9c59064ebac2b4481353ce6aa268.svg",
     "index.html": "/index.html",
     "main.42b5533f.css.map": "/static/css/main.42b5533f.css.map",
-    "main.a186c996.js.map": "/static/js/main.a186c996.js.map",
+    "main.5f229770.js.map": "/static/js/main.5f229770.js.map",
     "787.5bc012d4.chunk.js.map": "/static/js/787.5bc012d4.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.42b5533f.css",
-    "static/js/main.a186c996.js"
+    "static/js/main.5f229770.js"
   ]
 }
