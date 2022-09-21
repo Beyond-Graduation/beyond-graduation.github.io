@@ -22,6 +22,7 @@ import axios from "./components/axios";
 import { useStateValue } from "./reducer/StateProvider";
 import BlogsView from "./pages/Private/Blogs/BlogsView";
 import ProfilesView from "./pages/Private/Profiles/ProfilesView";
+import About from './pages/Public/About/About';
 
 const WithNav = () => {
   return (
@@ -121,6 +122,7 @@ function App() {
               element={<PrivateRoute comp={ProfilesView} />}
             />
             <Route path="/blogs" element={<PrivateRoute comp={BlogsView} />} />
+            <Route path="/about" element={<About/>}/>
             <Route path="/" element={<Home />} />
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />

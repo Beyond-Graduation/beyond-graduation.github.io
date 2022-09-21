@@ -44,7 +44,9 @@ function Navbar() {
         <Link to="/">
           <div className="nav-link">Home</div>
         </Link>
-        <div className="nav-link">About</div>
+        <Link to="/about">
+          <div className="nav-link">About</div>
+        </Link>
         {isAuth.checkAuth() ? (
           <label htmlFor="profile-btn" className="nav-link" ref={ref}>
             <div className="profile-btn">
