@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import AnimatedInputField from "../../../components/AnimatedInputField/AnimatedInputField";
 import avatarIcon from "../../../assets/images/avatar.png";
 import uploadIcon from "../../../assets/icons/upload-file.svg";
-import { MutliDropdown } from "../../../components/CustomDropdown/CustomDropdown";
+import {
+  CustomDropdown,
+  MutliDropdown,
+} from "../../../components/CustomDropdown/CustomDropdown";
 import { useNavigate } from "react-router-dom";
 import { isAuth } from "../../../auth/Auth";
 import axios from "../../../components/axios";
@@ -39,7 +42,7 @@ function StudentRegistration({ state }) {
       setFormDetails({ ...formDetails, [e.target.name]: e.target.value });
     }
   };
-
+  
   const handleInterstChange = (e) => {
     const areas = [];
     e.forEach((item) => {
@@ -47,17 +50,48 @@ function StudentRegistration({ state }) {
     });
     setFormDetails({ ...formDetails, areasOfInterest: areas });
   };
-
+  
   const handleSecondary = (e) => {
     setFormDetails({
       ...formDetails,
       higherSecondary: {
         ...formDetails.higherSecondary,
         [e.target.name]:
-          e.target.name === "cgpa" ? Number(e.target.value) : e.target.value,
+        e.target.name === "cgpa" ? Number(e.target.value) : e.target.value,
       },
     });
   };
+  
+    const handleDepartmentChange = (e) => {
+      if (e === null) {
+        setFormDetails({ ...formDetails, department: "" });
+      } else {
+        setFormDetails({ ...formDetails, department: e.value });
+      }
+    };
+  
+  const departmentOptions = [
+    {
+      value: "Computer Science and Engineering",
+      label: "Computer Science Engineering",
+    },
+    {
+      value: "Electronics and Communication Engineering",
+      label: "Electronics and Communication Engineering",
+    },
+    { value: "Mechanical Engineering", label: "Mechanical Engineering" },
+    { value: "Industrial Engineering", label: "Industrial Engineering" },
+    {
+      value: "Applied Electronics Engineering",
+      label: "Applied Electronics Engineering",
+    },
+    {
+      value: "Electrical and Electronics Engineering",
+      label: "Electrical and Electronics Engineering",
+    },
+    { value: "Civil Engineering", label: "Civil Engineering" },
+    { value: "Architecture (B. Arch.)", label: "Architecture (B. Arch.)" },
+  ];
 
   const InterestOptions = [
     { value: "webevelopment", label: "Web Development" },
@@ -118,7 +152,9 @@ function StudentRegistration({ state }) {
     });
   }, []);
 
-  useEffect(() => {}, [formDetails]);
+  useEffect(() => {
+    console.log(formDetails);
+  }, [formDetails]);
 
   return (
     <div className="intro-main">
@@ -206,10 +242,10 @@ function StudentRegistration({ state }) {
                   title="Degree"
                   onChange={handleChange}
                 />
-                <AnimatedInputField
-                  name="department"
+                <CustomDropdown
                   title="Department"
-                  onChange={handleChange}
+                  options={departmentOptions}
+                  onChange={(e) => handleDepartmentChange(e)}
                 />
                 <AnimatedInputField
                   name="cgpa"

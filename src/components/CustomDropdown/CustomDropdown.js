@@ -5,10 +5,10 @@ import Select from "react-select";
 import Creatable from "react-select/creatable";
 import addIcon from "../../assets/icons/add-icon.svg";
 
-export function CustomDropdown({ title, options }) {
+export function CustomDropdown({ title, options, onChange }) {
   const DropdownIndicator = (props) => {
     return (
-      <components.DropdownIndicator {...props}>
+      <components.DropdownIndicator {...props} >
         <svg
           fill="white"
           height="24"
@@ -31,6 +31,7 @@ export function CustomDropdown({ title, options }) {
         options={options}
         placeholder={title}
         isClearable={true}
+        onChange={(e) => onChange(e)}
       />
     </div>
   );

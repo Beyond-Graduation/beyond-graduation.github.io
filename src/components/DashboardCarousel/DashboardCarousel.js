@@ -1,11 +1,12 @@
 import React from "react";
+import { useEffect } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import DashBlogCard from "../DasboardCards/DashBlogCard/DashBlogCard";
 import DashProfilCard from "../DasboardCards/DashProfileCard/DashProfileCard";
 import "./DashboardCarousel.css";
 
-function DashboardCarousel({ cardCount, type, data, ...props }) {
+function DashboardCarousel({ cardCount, type, data, userData, ...props }) {
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -29,18 +30,11 @@ function DashboardCarousel({ cardCount, type, data, ...props }) {
     <div {...props}>
       {type?.toLowerCase() === "blog" ? (
         <Carousel responsive={responsive} infinite={true}>
-          <div className="carousel-card">
-            <DashBlogCard />
-          </div>
-          <div className="carousel-card">
-            <DashBlogCard />
-          </div>
-          <div className="carousel-card">
-            <DashBlogCard />
-          </div>
-          <div className="carousel-card">
-            <DashBlogCard />
-          </div>
+          {data.map((blog) => (
+            <div className="carousel-card">
+              <DashBlogCard blogData={blog} userData={userData} />
+            </div>
+          ))}
         </Carousel>
       ) : (
         <Carousel responsive={responsive} infinite={true}>

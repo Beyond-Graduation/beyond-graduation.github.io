@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import { FaFilter, FaSearch, FaBan } from "react-icons/fa";
 import axios from "../../../components/axios";
+import "./ProfilesView.css"
 import ProfilesViewCard from "../../../components/ProfilesViewCard/ProfilesViewCard";
 import Select from "react-select";
 
@@ -184,12 +185,6 @@ function StudentProfilesView() {
           </div>
         </div> */}
         <div className="profiles-view-list mt-5">
-          {searchAlumniData.map((alumni) => (
-            <ProfilesViewCard key={alumni.__id} data={alumni} />
-          ))}
-          {searchAlumniData.map((alumni) => (
-            <ProfilesViewCard key={alumni.__id} data={alumni} />
-          ))}
           {searchAlumniData.map((alumni) => (
             <ProfilesViewCard key={alumni.__id} data={alumni} />
           ))}

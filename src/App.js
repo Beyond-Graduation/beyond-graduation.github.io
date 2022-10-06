@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  HashRouter,
-  Navigate,
-  Outlet,
-  Route,
-  Routes,
-} from "react-router-dom";
+import { HashRouter, Navigate, Outlet, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
 import { isAuth } from "./auth/Auth";
@@ -21,14 +15,17 @@ import { useEffect } from "react";
 import axios from "./components/axios";
 import { useStateValue } from "./reducer/StateProvider";
 import BlogsView from "./pages/Private/Blogs/BlogsView";
-import ProfilesView from "./pages/Private/Profiles/ProfilesView";
-import About from './pages/Public/About/About';
+import About from "./pages/Public/About/About";
+import AlumniProfilesView from "./pages/Private/Profiles/AlumniProfilesView";
+import StudentProfilesView from "./pages/Private/Profiles/StudentProfilesView";
 
 const WithNav = () => {
   return (
     <>
       <Navbar />
-      <Outlet />
+      <div style={{ paddingTop: "70px" }}>
+        <Outlet />
+      </div>
     </>
   );
 };
@@ -118,12 +115,16 @@ function App() {
             />
             <Route path="/profile" element={<PrivateRoute comp={Profile} />} />
             <Route
-              path="/profiles"
-              element={<PrivateRoute comp={ProfilesView} />}
+              path="/alumni-profiles"
+              element={<PrivateRoute comp={AlumniProfilesView} />}
+            />
+            <Route
+              path="/student-profiles"
+              element={<PrivateRoute comp={StudentProfilesView} />}
             />
             <Route path="/blogs" element={<PrivateRoute comp={BlogsView} />} />
-            <Route path="/about" element={<About/>}/>
-            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/" element={<PublicRoute comp={Home} />} />
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

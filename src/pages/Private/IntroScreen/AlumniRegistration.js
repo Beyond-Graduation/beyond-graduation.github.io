@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AnimatedInputField from "../../../components/AnimatedInputField/AnimatedInputField";
 import avatarIcon from "../../../assets/images/avatar.png";
-import { MutliDropdown } from "../../../components/CustomDropdown/CustomDropdown";
+import { CustomDropdown, MutliDropdown } from "../../../components/CustomDropdown/CustomDropdown";
 import { FaTrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import axios from "../../../components/axios";
@@ -65,6 +65,37 @@ function AluminiRegistration({ state }) {
     });
     setFormDetails({ ...formDetails, areasOfInterest: areas });
   };
+
+  const handleDepartmentChange = (e) => {
+    if (e === null) {
+      setFormDetails({ ...formDetails, department: "" });
+    } else {
+      setFormDetails({ ...formDetails, department: e.value });
+    }
+  };
+
+  const departmentOptions = [
+    {
+      value: "Computer Science and Engineering",
+      label: "Computer Science Engineering",
+    },
+    {
+      value: "Electronics and Communication Engineering",
+      label: "Electronics and Communication Engineering",
+    },
+    { value: "Mechanical Engineering", label: "Mechanical Engineering" },
+    { value: "Industrial Engineering", label: "Industrial Engineering" },
+    {
+      value: "Applied Electronics Engineering",
+      label: "Applied Electronics Engineering",
+    },
+    {
+      value: "Electrical and Electronics Engineering",
+      label: "Electrical and Electronics Engineering",
+    },
+    { value: "Civil Engineering", label: "Civil Engineering" },
+    { value: "Architecture (B. Arch.)", label: "Architecture (B. Arch.)" },
+  ];
 
   const addNewExp = () => {
     setWorkCount(workCount + 1);
@@ -203,10 +234,10 @@ function AluminiRegistration({ state }) {
                   title="Degree"
                   onChange={handleChange}
                 />
-                <AnimatedInputField
-                  name="department"
+                <CustomDropdown
                   title="Department"
-                  onChange={handleChange}
+                  options={departmentOptions}
+                  onChange={(e) => handleDepartmentChange(e)}
                 />
                 <AnimatedInputField
                   name="yearGraduation"

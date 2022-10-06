@@ -7,10 +7,12 @@ import { Link } from "react-router-dom";
 import { useStateValue } from "../../../reducer/StateProvider";
 import axios from "../../../components/axios";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 function StudentDashboard() {
   const [{ userData, userId }, dispatch] = useStateValue();
   const [alumniData, setAlumniData] = useState([]);
+  const [blogData, setBlogData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,9 +27,28 @@ function StudentDashboard() {
         setAlumniData(res.data);
       });
     };
+    const fetchBlogData = async () => {
+      const token = localStorage.getItem("authKey");
+      axios({
+        method: "get",
+        url: "/blog",
+        headers: {
+          Authorization: `bearer ${token}`,
+        },
+      })
+        .then((res) => {
+          setBlogData(res.data);
+        })
+        .catch((err) => {
+          toast.error("Something went wrong!!");
+        });
+    };
 
+    fetchBlogData();
     fetchData();
   }, []);
+
+  useEffect(() => {}, [alumniData, blogData]);
 
   return (
     <div className="dashboard">
@@ -48,7 +69,12 @@ function StudentDashboard() {
             </div>
             <div className="carousel-container">
               <div className="carousel-heading">Bookmarked Blogs</div>
-              <DashboardCarousel type="blog" className="dash-sm-carousel" />
+              <DashboardCarousel
+                type="blog"
+                className="dash-sm-carousel"
+                data={blogData}
+                userData={alumniData}
+              />
             </div>
           </div>
           <div className="dash-main-right">
@@ -57,15 +83,15 @@ function StudentDashboard() {
             </Link>
           </div>
         </div>
-        <div className="dash-nav-section d-flex align-items-center justify-content-center">
+        {/* <div className="dash-nav-section d-flex align-items-center justify-content-center">
           <div>Internships</div>
           <div>Projects</div>
           <div>Your Applications</div>
-        </div>
+        </div> */}
         <div className="carousel-container">
           <div className="carousel-heading d-flex align-items-center justify-content-between mb-2">
             <span>Alumni Profiles</span>
-            <Link to="/profiles">
+            <Link to="/alumni-profiles">
               <span className="explore-btn">Explore</span>
             </Link>
           </div>
@@ -87,6 +113,8 @@ function StudentDashboard() {
             type="blog"
             className="dash-lg-carousel"
             cardCount={4}
+            data={blogData}
+            userData={alumniData}
           />
         </div>
       </div>

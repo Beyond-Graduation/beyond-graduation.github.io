@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useState } from "react";
+import "./ProfilesView.css"
 import { FaFilter, FaSearch, FaBan } from "react-icons/fa";
 import axios from "../../../components/axios";
 import ProfilesViewCard from "../../../components/ProfilesViewCard/ProfilesViewCard";
