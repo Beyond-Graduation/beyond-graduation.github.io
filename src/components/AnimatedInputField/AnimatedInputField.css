@@ -97,3 +97,14 @@
   color: rgba(88, 129, 87, 1);
   font-weight: 500;
 }
+
+.animated-in input::-webkit-outer-spin-button,
+.animated-in input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.animated-in input[type=number] {
+  -moz-appearance: textfield;
+}

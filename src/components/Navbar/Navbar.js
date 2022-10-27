@@ -87,7 +87,7 @@ function Navbar() {
                   <Link to="/profile">
                     <div className="prof-btn-link">
                       <BsPersonCircle />
-                      <span>Profile</span>
+                      <span>My Profile</span>
                     </div>
                   </Link>
                   <div className="prof-btn-link" onClick={handleLogout}>

@@ -73,7 +73,7 @@ function AlumniDashboard() {
         <div className="dash-main-cnt">
           <div className="dash-main-left">
             <div className="carousel-container">
-              <div className="carousel-heading">Your Blogs</div>
+              <div className="carousel-heading">My Blogs</div>
               <DashboardCarousel
                 type="blog"
                 className="dash-sm-carousel"

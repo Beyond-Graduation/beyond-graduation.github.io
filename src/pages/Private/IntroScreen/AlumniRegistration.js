@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import AnimatedInputField from "../../../components/AnimatedInputField/AnimatedInputField";
 import avatarIcon from "../../../assets/images/avatar.png";
-import { CustomDropdown, MutliDropdown } from "../../../components/CustomDropdown/CustomDropdown";
+import {
+  CustomDropdown,
+  MutliDropdown,
+} from "../../../components/CustomDropdown/CustomDropdown";
 import { FaTrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import axios from "../../../components/axios";
@@ -34,6 +37,14 @@ function AluminiRegistration({ state }) {
     degree: "",
     workExperience: [],
   });
+
+  const degreeOptions = [
+    { value: "B-Tech", label: "B-Tech" },
+    { value: "M-Tech", label: "M-Tech" },
+    { value: "B-Arch", label: "B-Arch" },
+    { value: "M-Arch", label: "M-Arch" },
+    { value: "PhD", label: "PhD" },
+  ];
 
   const InterestOptions = [
     { value: "Web Development", label: "Web Development" },
@@ -74,6 +85,14 @@ function AluminiRegistration({ state }) {
     }
   };
 
+  const handleDegreeChange = (e) => {
+    if (e === null) {
+      setFormDetails({ ...formDetails, degree: "" });
+    } else {
+      setFormDetails({ ...formDetails, degree: e.value });
+    }
+  };
+
   const departmentOptions = [
     {
       value: "Computer Science and Engineering",
@@ -94,7 +113,7 @@ function AluminiRegistration({ state }) {
       label: "Electrical and Electronics Engineering",
     },
     { value: "Civil Engineering", label: "Civil Engineering" },
-    { value: "Architecture (B. Arch.)", label: "Architecture (B. Arch.)" },
+    { value: "Architecture", label: "Architecture" },
   ];
 
   const addNewExp = () => {
@@ -118,13 +137,21 @@ function AluminiRegistration({ state }) {
   };
 
   const onRegister = async () => {
+    if (formDetails.workExperience.length !== 0) {
+      if (
+        formDetails.workExperience[0].company === "" &&
+        formDetails.workExperience[0].role === ""
+      ) {
+        setFormDetails({ ...formDetails, workExperience: [] });
+      }
+    }
+
     if (
       formDetails.firstName === "" ||
       formDetails.lastName === "" ||
       formDetails.email === "" ||
       formDetails.password === "" ||
-      formDetails.areasOfInterest.length === 0 ||
-      formDetails.workExperience.length === 0
+      formDetails.areasOfInterest.length === 0
     ) {
       toast.error("Please fill all the fields");
       return;
@@ -224,27 +251,30 @@ function AluminiRegistration({ state }) {
           </div>
         </div>
         <section className="intro-section mt-5">
-          <div className="head">Educational Qualification</div>
-          <div className="m-4 mt-3">
-            <div className="sub-head">Undergraduate Degree</div>
-            <div className="intro-form-inner">
-              <div className="d-flex">
-                <AnimatedInputField
-                  name="degree"
-                  title="Degree"
-                  onChange={handleChange}
-                />
-                <CustomDropdown
-                  title="Department"
-                  options={departmentOptions}
-                  onChange={(e) => handleDepartmentChange(e)}
-                />
-                <AnimatedInputField
-                  name="yearGraduation"
-                  title="Year of Graduation"
-                  onChange={handleChange}
-                />
-              </div>
+          <div className="head">
+            Program Graduated from College of Engineering Trivandrum
+          </div>
+          <div className="intro-form-inner">
+            <div className="d-flex">
+              <CustomDropdown
+                title="Degree"
+                options={degreeOptions}
+                onChange={(e) => handleDegreeChange(e)}
+              />
+              <CustomDropdown
+                title="Department"
+                options={departmentOptions}
+                onChange={(e) => handleDepartmentChange(e)}
+              />
+              <AnimatedInputField
+                name="yearGraduation"
+                title="Year of Graduation"
+                type="number"
+                min="1900"
+                max="2099"
+                step="1"
+                onChange={handleChange}
+              />
             </div>
           </div>
         </section>
@@ -330,7 +360,7 @@ function AluminiRegistration({ state }) {
           <div className="head">Domain</div>
           <div className="m-4 mt-3">
             <MutliDropdown
-              title="Domain"
+              title="Domain (select from the menu or type)"
               options={InterestOptions}
               onChange={(e) => handleInterstChange(e)}
             />

@@ -38,6 +38,7 @@ function Login() {
     })
       .then(async (res) => {
         if (res.status === 200) {
+          console.log(res.data);
           isAuth.login(
             res.data.token,
             res.data.userId,
@@ -48,23 +49,25 @@ function Login() {
             type: "SET_USER_ID",
             item: res.data.userId,
           });
-          await axios({
-            method: "get",
-            url:
-              res.data.userType.toLowerCase() === "student"
-                ? `student/student_details?userId=${res.data.userId}`
-                : `alumni/alumni_details?userId=${res.data.userId}`,
-            headers: {
-              Authorization: `bearer ${res.data.token}`,
-            },
-          }).then((res) => {
-            if (res.status === 200) {
-              dispatch({
-                type: "SET_USER_DATA",
-                item: res.data,
-              });
-            }
-          });
+          if (!res.data.userType === "Admin") {
+            await axios({
+              method: "get",
+              url:
+                res.data.userType.toLowerCase() === "student"
+                  ? `student/student_details?userId=${res.data.userId}`
+                  : `alumni/alumni_details?userId=${res.data.userId}`,
+              headers: {
+                Authorization: `bearer ${res.data.token}`,
+              },
+            }).then((res) => {
+              if (res.status === 200) {
+                dispatch({
+                  type: "SET_USER_DATA",
+                  item: res.data,
+                });
+              }
+            });
+          }
           toast.success("Login Successfull !!");
           navigate("/dashboard");
         } else {
@@ -100,6 +103,9 @@ function Login() {
               autoComplete="off"
               placeholder="Email"
               onChange={handleChange}
+              onKeyPress={(e) => {
+                if (e.key === "Enter") handleLogin();
+              }}
             ></input>
             {/* placholder space = padding for input (remind me to explain this) */}
             <HiOutlineMail className="icon-email-pswd" />
@@ -111,6 +117,9 @@ function Login() {
               placeholder="Password"
               onChange={handleChange}
               ref={passToggleRef}
+              onKeyPress={(e) => {
+                if (e.key === "Enter") handleLogin();
+              }}
             ></input>
             <BiLockAlt className="icon-email-pswd" />
             <AiFillEye className="icon-eye" onClick={togglePassword} />

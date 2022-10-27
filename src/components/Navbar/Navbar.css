@@ -9,7 +9,7 @@
   top: 0;
   left: 0;
   z-index: 10000;
-  box-shadow: 0px 2px 15px 6px rgba(58, 90, 64, 0.5);
+  box-shadow: 0px 0px 15px 6px rgba(58, 90, 64, 0.5);
 }
 
 a {
@@ -26,7 +26,7 @@ a {
 }
 
 .navbar-links {
-  width: fit-content;
+  width: max-content;
   margin-right: 30px;
 }
 
@@ -90,7 +90,7 @@ a {
 }
 
 .prof-btn-overlay .prof-btn-link {
-  padding: 8px 18px;
+  padding: 6px 14px;
   margin: 5px 0;
   color: white;
   text-decoration: none;
@@ -102,6 +102,7 @@ a {
 
 .prof-btn-overlay span {
   font-size: 18px;
+  white-space: nowrap;
 }
 
 .prof-btn-overlay .prof-btn-link:hover {

@@ -51,7 +51,7 @@
 }
 
 .profile-pinfo-heading {
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 600;
 }
 
@@ -103,12 +103,13 @@ p + .address-box {
 }
 
 .profile-subheading {
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 500;
   color: black;
 }
 
 .profile-values {
+  font-size: 20px;
   display: flex;
   flex-direction: row;
   gap: 20px;

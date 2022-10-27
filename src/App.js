@@ -1,5 +1,12 @@
 import React from "react";
-import { HashRouter, Navigate, Outlet, Route, Routes } from "react-router-dom";
+import {
+  HashRouter,
+  Navigate,
+  Outlet,
+  Route,
+  Routes,
+  useNavigate,
+} from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
 import { isAuth } from "./auth/Auth";
@@ -18,6 +25,7 @@ import BlogsView from "./pages/Private/Blogs/BlogsView";
 import About from "./pages/Public/About/About";
 import AlumniProfilesView from "./pages/Private/Profiles/AlumniProfilesView";
 import StudentProfilesView from "./pages/Private/Profiles/StudentProfilesView";
+import AdminDashboard from "./pages/Private/Dashboard/AdminDashboard/AdminDashboard";
 
 const WithNav = () => {
   return (
@@ -30,8 +38,20 @@ const WithNav = () => {
   );
 };
 
+const AdminDash = () => {
+  return localStorage.getItem("userType") === "admin" ? (
+    <AdminDashboard />
+  ) : (
+    <Navigate to="/" replace />
+  );
+};
+
 const PrivateRoute = ({ comp: Component }) => {
-  return isAuth.checkAuth() === true ? (
+  const userType = localStorage.getItem("userType");
+
+  return userType === "admin" ? (
+    <Navigate to="/admin" replace />
+  ) : isAuth.checkAuth() === true ? (
     <Component />
   ) : (
     <Navigate to="/login" replace />
@@ -58,9 +78,9 @@ function App() {
   const [{ userData, userId }, dispatch] = useStateValue();
 
   useEffect(() => {
+    const userType = localStorage.getItem("userType");
     const token = localStorage.getItem("authKey");
     const userId = localStorage.getItem("userId");
-    const userType = localStorage.getItem("userType");
 
     const getData = async () => {
       await axios({
@@ -83,10 +103,10 @@ function App() {
       });
     };
 
-    if (token && userId) {
+    if (token && userId && userType !== "admin") {
       getData();
     }
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="App">
@@ -107,6 +127,7 @@ function App() {
         <Routes>
           <Route exact path="/login" element={<PublicRoute comp={Login} />} />
           <Route path="/register" element={<PublicRoute comp={Register} />} />
+          <Route path="/admin" element={<AdminDash />} />
           <Route element={<WithNav />}>
             <Route path="/intro" element={<RegisterRoute comp={Intro} />} />
             <Route

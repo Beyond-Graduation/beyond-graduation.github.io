@@ -21,7 +21,7 @@ export const isAuth = {
   },
   logout() {
     localStorage.removeItem("authKey");
-    localStorage.removeItem("userid");
+    localStorage.removeItem("userId");
     localStorage.removeItem("userType");
     this.isAuthenticated = false;
   },
