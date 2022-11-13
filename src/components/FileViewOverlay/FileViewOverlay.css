@@ -1,0 +1,127 @@
+.file-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10001;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.close-overlay {
+  color: rgba(52, 78, 65, 1);
+  font-weight: 600;
+  font-size: 40px;
+  padding: 6px;
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  cursor: pointer;
+  background-color: white;
+  border-radius: 50%;
+}
+
+.hide-overlay {
+  z-index: -10;
+}
+
+.file-overlay-cnt {
+  background-color: rgb(82, 86, 89);
+  position: relative;
+  width: 70vw;
+  height: 90vh;
+}
+
+.overlay-top {
+  width: 100%;
+  height: 50px;
+  background-color: rgb(50, 54, 57);
+  color: white;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.overlay-top span {
+  font-size: 16px;
+  color: rgb(181, 181, 181);
+  letter-spacing: 1px;
+}
+
+.file-download-btn {
+  position: absolute;
+  right: 20px;
+  top: 70px;
+}
+
+.file-download-btn-inner {
+  position: relative;
+}
+
+.file-download-btn span {
+  position: absolute;
+  visibility: hidden;
+  width: 100px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  z-index: 1000000;
+  top: calc(100% + 6px);
+  left: 50%;
+  margin-left: -50px;
+}
+
+.file-download-btn span::after {
+  content: " ";
+  position: absolute;
+  bottom: 100%; /* At the top of the tooltip */
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent rgba(0, 0, 0, 0.6) transparent;
+}
+
+.file-download-btn-inner:hover span {
+  visibility: visible;
+}
+
+.file-download-btn svg {
+  color: white;
+  font-size: 40px;
+  background-color: black;
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.file-overlay-inner {
+  width: fit-content;
+  overflow-y: scroll;
+  height: calc(90% - 40px);
+  margin: auto;
+  box-shadow: 0px 0px 10px 4px rgba(0, 0, 0, 0.3);
+  overflow-x: hidden;
+}
+
+.react-pdf__Document {
+  width: fit-content;
+}
+
+.react-pdf__Page {
+  margin-bottom: 10px;
+}
+
+.react-pdf__Page:last-child {
+  margin-bottom: 0;
+}
+
+.react-pdf__message {
+  color: white;
+  font-size: 18px;
+  margin: 20px 100px;
+}

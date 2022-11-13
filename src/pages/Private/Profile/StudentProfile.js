@@ -1,102 +1,196 @@
-import React from "react";
+import React, { useState } from "react";
 import { useEffect } from "react";
 import { AiOutlineFileDone } from "react-icons/ai";
-import ProfileCard from "../../../components/ProfileCard/ProfileCard";
+import avatarIcon from "../../../assets/images/avatar.png";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import { Accordion } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import FileViewOverlay from "../../../components/FileViewOverlay/FileViewOverlay";
 
 function StudentProfile({ data }) {
+  const [showResume, setShowResume] = useState(false);
+
   return (
     <div className="profile-main">
-      <div className="profile-container">
-        <div className="d-flex prof-cnt">
-          <div className="profile-left">
-            <h2 className="profile-heading mb-4">Profile</h2>
-            <p className="profile-pinfo-heading">Personal Information</p>
-            <div className="profile-attributes">
-              <div className="profile-values">
-                <div>
-                  <p className="profile-pinfos">{data.firstName}</p>
-                  <p className="profile-pinfos">{data.lastName}</p>
-                </div>
-                <div>
-                  {/* <p className="profile-pinfos">Phone Number</p> */}
-                  <p className="profile-pinfos">{data.email}</p>
-                </div>
-              </div>
-              <div>
-                <div className="mb-2">{data.address}</div>
-                <div className="address-box">{data.address}</div>
-              </div>
-            </div>
-          </div>
-          <div className="profile-right">
-            <ProfileCard className="mt-4" data={data} />
+      <div className="profile-top d-flex align-items-center justify-content-between">
+        <div className="d-flex align-items-center">
+          <img src={data.profilePicPath} alt="" />
+          <div className="profile-top-name">
+            {data.firstName} {data.lastName}
           </div>
         </div>
-
-        <div className="profile-pinfo-heading mt-4">
-          Education Qualification
-        </div>
-        <div className="profile-attributes">
-          <div className="profile-subheading mb-3">12th Grade</div>
-          <div className="profile-values">
-            <div>
-              <p className="profile-pinfos">{data.higherSecondary.board}</p>
-            </div>
-            <div>
-              <p className="profile-pinfos">{data.higherSecondary.cgpa} %</p>
-            </div>
-          </div>
-          <div className="profile-subheading mb-3">Undergraduate Degree</div>
-          <div>
-            <div className="profile-values">
-              <p className="profile-pinfos">{data.degree}</p>
-              <p className="profile-pinfos">{data.department}</p>
-              <p className="profile-pinfos">{data.cgpa}</p>
-            </div>
-            <div className="profile-values">
-              <p className="profile-pinfos">{data.expectedGraduationYear}</p>
-              <p className="profile-pinfos">
-                Year {data.expectedGraduationYear - data.yearOfJoining}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <p className="profile-pinfo-heading mt-4">Relevant Links</p>
-        <div className="profile-attributes">
-          <div className="profile-values">
-            <p className="profile-pinfos">Github: none</p>
-            <p className="profile-pinfos">LinkedIn: none</p>
-          </div>
-
-          <div>
-            <p>Others (if any)</p>
-            <div className="links-box"></div>
-          </div>
-        </div>
-
-        <p className="profile-pinfo-heading mt-4">Areas Of Interest</p>
-        <div className="profile-attributes">
-          <div className="profile-values">
-            {data.areasOfInterest.map((interest, i) => (
-              <p className="interest-box" key={i}>
-                {interest}
-              </p>
-            ))}
-          </div>
-        </div>
-
-        <p className="profile-pinfo-heading mt-4">Resume</p>
-        <div className="profile-attributes">
-          <button className="resume-button">
-            View Your Resume <AiOutlineFileDone />
-          </button>
-        </div>
-
-        <div className="update-button-div">
-          <button className="update-button">UPDATE</button>
+        <div className="d-flex align-items-center justify-content-center">
+          <CircularProgressbar
+            value={data.profileCompletionPerc}
+            text={`${data.profileCompletionPerc}%`}
+            background
+            styles={buildStyles({
+              backgroundColor: "#ffffffa0",
+              pathColor: "#344E41",
+              trailColor: "transparent",
+              strokeLinecap: "round",
+              textSize: "20px",
+            })}
+          />
+          <Link to="/update">
+            <div className="prof-update-button">Update your profile</div>
+          </Link>
         </div>
       </div>
+      <div className="d-flex">
+        <div className="profile-left">
+          <div className="p-person-info">
+            <div className="prof-blk-head">Personal Information</div>
+            <div className="d-flex">
+              <div className="prof-det">
+                <div className="prof-det-head">First Name</div>
+                <div className="prof-det-body">{data.firstName}</div>
+              </div>
+              <div className="prof-det">
+                <div className="prof-det-head">Last Name</div>
+                <div className="prof-det-body">{data.lastName}</div>
+              </div>
+            </div>
+            <div className="d-flex">
+              <div className="prof-det">
+                <div className="prof-det-head">Email</div>
+                <div className="prof-det-body">{data.email}</div>
+              </div>
+              <div className="prof-det">
+                <div className="prof-det-head">Phone Number</div>
+                <div className="prof-det-body">9999999999</div>
+              </div>
+            </div>
+            <div className="prof-address-box d-flex align-items-center">
+              <div className="prof-det-head mt-0">Address</div>
+              <div className="prof-address">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Mollitia quaeratLorem ipsum dolor sit amet consectetur
+                adipisicing elit. Mollitia quaerat, neque quibusdam nostrum
+                pariatur et fugit,
+              </div>
+            </div>
+          </div>
+          <div className="p-person-info pb-5 mb-5 border-0">
+            <div className="prof-blk-head">Educational Information</div>
+            <div className="ms-4">
+              <div className="prof-blk-subhead">12th Grade</div>
+              <div className="ms-4 d-flex">
+                <div className="prof-det">
+                  <div className="prof-det-head">Board</div>
+                  <div className="prof-det-body">
+                    {data.higherSecondary.board}
+                  </div>
+                </div>
+                <div className="prof-det">
+                  <div className="prof-det-head">Percentage</div>
+                  <div className="prof-det-body">
+                    {data.higherSecondary.cgpa}%
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="ms-4 mt-4">
+              <div className="prof-blk-subhead">Undergraduate Degree</div>
+              <div className="ms-4 d-flex">
+                <div className="prof-det-small">
+                  <div className="prof-det-head">Degree</div>
+                  <div className="prof-det-body det-small">{data.degree}</div>
+                </div>
+                <div className="ms-3 prof-det w-auto">
+                  <div className="prof-det-head">Branch</div>
+                  <div className="prof-det-body prof-det-department">{data.department}</div>
+                </div>
+              </div>
+              <div className="ms-4 d-flex">
+                <div className="prof-det-small">
+                  <div className="prof-det-head">Graduation Year</div>
+                  <div className="prof-det-body det-small">
+                    {data.expectedGraduationYear}
+                  </div>
+                </div>
+                <div className="ms-3 prof-det-small">
+                  <div className="prof-det-head">Year of Study</div>
+                  <div className="prof-det-body det-small">
+                    {data.expectedGraduationYear - data.yearOfJoining}
+                  </div>
+                </div>
+                <div className="ms-3 prof-det-small">
+                  <div className="prof-det-head">CGPA</div>
+                  <div className="prof-det-body det-small">{data.cgpa}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="profile-right">
+          <Accordion defaultActiveKey="0">
+            <Accordion.Item eventKey="0">
+              <Accordion.Header>Areas of Interest</Accordion.Header>
+              <Accordion.Body>
+                <div className="d-flex flex-wrap">
+                  {data.areasOfInterest.map((interest, i) => (
+                    <div className="interest-box my-2" key={i}>
+                      {interest}
+                    </div>
+                  ))}
+                </div>
+              </Accordion.Body>
+            </Accordion.Item>
+            <Accordion.Item eventKey="1">
+              <Accordion.Header>Projects</Accordion.Header>
+              <Accordion.Body>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+                sunt in culpa qui officia deserunt mollit anim id est laborum.
+              </Accordion.Body>
+            </Accordion.Item>
+            <Accordion.Item eventKey="2">
+              <Accordion.Header>Internships</Accordion.Header>
+              <Accordion.Body>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+                sunt in culpa qui officia deserunt mollit anim id est laborum.
+              </Accordion.Body>
+            </Accordion.Item>
+            <Accordion.Item eventKey="3">
+              <Accordion.Header>Relevant Links</Accordion.Header>
+              <Accordion.Body>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+                sunt in culpa qui officia deserunt mollit anim id est laborum.
+              </Accordion.Body>
+            </Accordion.Item>
+          </Accordion>
+
+          <div className="prof-resume">
+            <button
+              className="resume-button"
+              onClick={() => setShowResume(true)}
+            >
+              View Your Resume <AiOutlineFileDone />
+            </button>
+          </div>
+        </div>
+      </div>
+      <FileViewOverlay
+        url={data.resume}
+        name={{ firstName: data.firstName, lastName: data.lastName }}
+        showOverlay={showResume}
+        closeOverlay={() => setShowResume(false)}
+      />
     </div>
   );
 }

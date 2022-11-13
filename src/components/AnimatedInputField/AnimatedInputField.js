@@ -14,10 +14,14 @@ function AnimatedInputField({
 }) {
   const [value, setValue] = React.useState("");
 
+  useEffect(() => {
+    setValue(defaultValue);
+  }, [defaultValue]);
+
   return (
     <Form.Group
       className={`animated-in ${
-        value === "" && defaultValue === undefined ? "" : "animate-input"
+        value === "" ? "" : "animate-input"
       }  ${className} ${type === "date" ? "animate-input" : ""}`}
     >
       <Form.Control
@@ -26,7 +30,7 @@ function AnimatedInputField({
         type={type ? type : "text"}
         className="animated-in-ip"
         autoComplete="off"
-        value={defaultValue ? defaultValue : null}
+        defaultValue={defaultValue === null ? null : defaultValue}
         onChange={(e) => {
           setValue(e.target.value);
           if (onChange) {

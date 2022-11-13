@@ -36,6 +36,7 @@ function AluminiRegistration({ state }) {
     yearGraduation: "",
     degree: "",
     workExperience: [],
+    gender: "",
   });
 
   const degreeOptions = [
@@ -90,6 +91,22 @@ function AluminiRegistration({ state }) {
       setFormDetails({ ...formDetails, degree: "" });
     } else {
       setFormDetails({ ...formDetails, degree: e.value });
+    }
+  };
+
+  const genderOptions = [
+    { value: "Male", label: "Male" },
+    { value: "Female", label: "Female" },
+    { value: "Transgender", label: "Transgender" },
+    { value: "Non-binary/non-conforming", label: "Non-binary/non-conforming" },
+    { value: "Prefer not to say", label: "Prefer not to say" },
+  ];
+
+  const handleGenderChange = (e) => {
+    if (e === null) {
+      setFormDetails({ ...formDetails, gender: "" });
+    } else {
+      setFormDetails({ ...formDetails, gender: e.value });
     }
   };
 
@@ -214,12 +231,17 @@ function AluminiRegistration({ state }) {
                     onChange={handleChange}
                   />
                 </div>
-                <div className="d-flex w-50">
+                <div className="d-flex">
                   <AnimatedInputField
                     name="email"
                     title="Email"
                     disabled
                     defaultValue={state.creds.email}
+                  />
+                  <CustomDropdown
+                    title="Gender"
+                    options={genderOptions}
+                    onChange={(e) => handleGenderChange(e)}
                   />
                   {/* <AnimatedInputField
                     name="phoneNumber"

@@ -108,3 +108,7 @@
 .animated-in input[type=number] {
   -moz-appearance: textfield;
 }
+
+.animated-in input:disabled {
+  cursor: not-allowed;
+}

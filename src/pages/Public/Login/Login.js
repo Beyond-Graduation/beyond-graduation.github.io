@@ -38,7 +38,7 @@ function Login() {
     })
       .then(async (res) => {
         if (res.status === 200) {
-          console.log(res.data);
+          // console.log(res.data);
           isAuth.login(
             res.data.token,
             res.data.userId,

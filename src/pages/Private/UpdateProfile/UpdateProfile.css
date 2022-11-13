@@ -1,0 +1,170 @@
+.intro-main {
+  min-height: calc(100vh - 70px);
+  height: fit-content;
+  background-color: rgba(0, 12, 2, 0.89);
+  color: white;
+  padding-top: 8vh;
+  user-select: none;
+  padding-bottom: 15vh;
+  user-select: none;
+}
+
+.intro-container {
+  width: 80%;
+  margin: auto;
+}
+
+.intro-heading {
+  font-size: calc(1rem + 2vw);
+  width: fit-content;
+}
+
+.intro-heading::after {
+  content: "";
+  display: block;
+  width: 50%;
+  margin-top: 8px;
+  height: 5px;
+  border-radius: 5px;
+  background-color: rgba(163, 177, 138, 1);
+}
+
+.intro-container h4 {
+  font-size: calc(0.7rem + 0.9vw);
+  margin-top: 4vh;
+}
+
+.intro-form-inner {
+  margin-left: 30px;
+}
+
+.intro-avatar {
+  flex-grow: 1;
+  margin-left: 15%;
+  padding-left: 10%;
+  border-left: 1px solid white;
+}
+
+.intro-avatar img {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 90px;
+}
+
+.image-input {
+  margin-top: 20px;
+}
+
+.image-input__input {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.image-input__label {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  padding: 8px 20px;
+  background-color: rgba(58, 90, 64, 1);
+}
+
+.image-input__label img {
+  height: 25px;
+  margin-left: 10px;
+}
+
+.intro-section .head {
+  font-size: 20px;
+}
+
+.intro-section .sub-head {
+  font-size: 18px;
+}
+
+.file-input__input {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.file-input__label {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 20px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #fff;
+  padding: 10px 30px;
+  background-color: rgba(58, 90, 64, 1);
+}
+
+.file-input__label img {
+  height: 25px;
+  margin-left: 10px;
+}
+
+.uploaded-file-name {
+  margin-left: 20px;
+  font-size: 18px;
+}
+
+.intro-reg-btn {
+  background-color: rgba(58, 90, 64, 0.5);
+  color: white !important;
+  width: fit-content;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 20px;
+  letter-spacing: 1px;
+  border-radius: 20px;
+  padding: 10px 80px;
+  cursor: pointer;
+  margin: auto;
+  margin-top: 100px;
+}
+
+.delete-experience {
+  color: white;
+  background-color: rgba(88, 129, 87, 1);
+  padding: 6px 20px;
+  border-radius: 16px;
+  height: fit-content;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.animated-textarea textarea {
+  position: relative;
+  margin: 5px 50px 0 0;
+  width: 100%;
+  font-size: 16px;
+  border: none;
+  padding: 10px;
+  border-bottom: 2px solid #d3d3d3 !important;
+  color: white !important;
+  border-radius: 0;
+  outline: none !important;
+  box-shadow: none !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  resize: none;
+}
+
+.animated-textarea div {
+  font-size: 14px;
+  color: rgb(181, 181, 181);
+  transition: 0.2s all;
+  cursor: text;
+}

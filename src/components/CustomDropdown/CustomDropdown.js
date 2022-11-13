@@ -1,14 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./CustomDropdown.css";
 import { components } from "react-select";
 import Select from "react-select";
 import Creatable from "react-select/creatable";
 import addIcon from "../../assets/icons/add-icon.svg";
 
-export function CustomDropdown({ title, options, onChange }) {
+export function CustomDropdown({ title, options, onChange, defaultValue }) {
   const DropdownIndicator = (props) => {
     return (
-      <components.DropdownIndicator {...props} >
+      <components.DropdownIndicator {...props}>
         <svg
           fill="white"
           height="24"
@@ -32,12 +32,13 @@ export function CustomDropdown({ title, options, onChange }) {
         placeholder={title}
         isClearable={true}
         onChange={(e) => onChange(e)}
+        defaultValue={defaultValue}
       />
     </div>
   );
 }
 
-export function MutliDropdown({ title, options, onChange }) {
+export function MutliDropdown({ title, options, onChange, defaultValue }) {
   const DropdownIndicator = (props) => {
     return (
       <components.DropdownIndicator {...props}>
@@ -56,7 +57,11 @@ export function MutliDropdown({ title, options, onChange }) {
         options={options}
         noOptionsMessage={() => "Type and add a new option"}
         maxMenuHeight={210}
-        onChange={(e) => onChange(e)}
+        onChange={(e) => {
+          // console.log(e);
+          onChange(e);
+        }}
+        defaultValue={defaultValue}
       />
     </div>
   );

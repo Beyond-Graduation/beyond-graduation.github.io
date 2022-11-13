@@ -1,0 +1,65 @@
+.file-input {
+  max-height: 75px;
+  width: fit-content;
+  border-radius: 2px;
+  background-color: rgba(58, 90, 64, 1);
+  border-radius: 10px;
+  padding: 10px 15px;
+  margin: 5px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.input {
+  display: none;
+}
+
+.select-file-btn {
+  outline: none;
+  color: white;
+  background: transparent;
+  border: 1px solid white;
+  padding: 4px 6px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.progress_container {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  padding: 4px 6px;
+  width: 75px;
+  height: 55px;
+}
+
+.upload-file-btn {
+  outline: none;
+  color: white;
+  font-size: 14px;
+  background: transparent;
+  border: 1px solid white;
+  padding: 4px 6px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.progress_container .check_img {
+  width: 40px;
+  height: 40px;
+  margin: 4px 0;
+  margin-left: 12px;
+}
+
+.progress_container .CircularProgressbar {
+  width: 45px;
+  margin: 0;
+}
+
+.progress_container .CircularProgressbar text {
+  transform: translate(-23px, 10px);
+  font-size: 28px;
+  font-weight: bold;
+}

@@ -21,7 +21,7 @@ const AdminDashboard = () => {
   };
 
   const approveAlumni = async (userId) => {
-    console.log(userId);
+    // console.log(userId);
     await axios({
       method: "post",
       url: "admin/approve",
@@ -49,7 +49,7 @@ const AdminDashboard = () => {
     }).then((res) => {
       if (res.status === 200) {
         setPending(res.data);
-        console.log(res.datanod)
+        // console.log(res.datanod)
       }
     });
   };

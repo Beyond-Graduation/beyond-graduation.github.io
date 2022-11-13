@@ -16,6 +16,11 @@
   color: rgb(181, 181, 181);
 }
 
+.custom-dd__input-container, .custom-dd__input {
+  font-size: 18px;
+  color: white!important;
+}
+
 .custom-dd .custom-dd__placeholder,
 .custom-dd .custom-dd__value-container,
 .custom-dd .custom-dd__input-container {

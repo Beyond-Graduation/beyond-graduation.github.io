@@ -5,7 +5,6 @@ import {
   Outlet,
   Route,
   Routes,
-  useNavigate,
 } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
@@ -26,6 +25,8 @@ import About from "./pages/Public/About/About";
 import AlumniProfilesView from "./pages/Private/Profiles/AlumniProfilesView";
 import StudentProfilesView from "./pages/Private/Profiles/StudentProfilesView";
 import AdminDashboard from "./pages/Private/Dashboard/AdminDashboard/AdminDashboard";
+import UpdateProfile from './pages/Private/UpdateProfile/UpdateProfile';
+import CreateBlog from "./pages/Private/Blogs/CreateBlog";
 
 const WithNav = () => {
   return (
@@ -135,6 +136,7 @@ function App() {
               element={<PrivateRoute comp={Dashboard} />}
             />
             <Route path="/profile" element={<PrivateRoute comp={Profile} />} />
+            <Route path="/update" element={<PrivateRoute comp={UpdateProfile} />} />
             <Route
               path="/alumni-profiles"
               element={<PrivateRoute comp={AlumniProfilesView} />}
@@ -143,6 +145,7 @@ function App() {
               path="/student-profiles"
               element={<PrivateRoute comp={StudentProfilesView} />}
             />
+            <Route path="/blogs/create" element={<PrivateRoute comp={CreateBlog} />} />
             <Route path="/blogs" element={<PrivateRoute comp={BlogsView} />} />
             <Route path="/about" element={<About />} />
             <Route path="/" element={<PublicRoute comp={Home} />} />

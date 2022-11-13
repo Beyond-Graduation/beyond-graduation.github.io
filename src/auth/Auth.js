@@ -5,7 +5,7 @@ const authContext = createContext();
 export const isAuth = {
   isAuthenticated: false,
   userType: "",
-  registering: false,
+  registering: true,
   authenticate() {
     if (localStorage.getItem("authKey")) {
       this.isAuthenticated = true;
