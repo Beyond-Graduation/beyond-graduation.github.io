@@ -144,27 +144,10 @@
   height: fit-content;
   font-weight: 500;
   cursor: pointer;
+  margin: 0 0 0 130px;
+  max-width: fit-content;
 }
 
-.animated-textarea textarea {
-  position: relative;
-  margin: 5px 50px 0 0;
-  width: 100%;
-  font-size: 16px;
-  border: none;
-  padding: 10px;
-  border-bottom: 2px solid #d3d3d3 !important;
-  color: white !important;
-  border-radius: 0;
-  outline: none !important;
-  box-shadow: none !important;
-  background-color: rgba(255, 255, 255, 0.1) !important;
-  resize: none;
-}
-
-.animated-textarea div {
-  font-size: 14px;
-  color: rgb(181, 181, 181);
-  transition: 0.2s all;
-  cursor: text;
+.other-links .animated-in {
+  max-width: 500px;
 }

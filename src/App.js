@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  BrowserRouter,
   HashRouter,
   Navigate,
   Outlet,
@@ -27,6 +28,7 @@ import StudentProfilesView from "./pages/Private/Profiles/StudentProfilesView";
 import AdminDashboard from "./pages/Private/Dashboard/AdminDashboard/AdminDashboard";
 import UpdateProfile from './pages/Private/UpdateProfile/UpdateProfile';
 import CreateBlog from "./pages/Private/Blogs/CreateBlog";
+import SingleBlog from './pages/Private/Blogs/SingleBlog';
 
 const WithNav = () => {
   return (
@@ -111,7 +113,7 @@ function App() {
 
   return (
     <div className="App">
-      <HashRouter>
+      <BrowserRouter>
         <ToastContainer
           position="bottom-right"
           autoClose={3000}
@@ -146,13 +148,14 @@ function App() {
               element={<PrivateRoute comp={StudentProfilesView} />}
             />
             <Route path="/blogs/create" element={<PrivateRoute comp={CreateBlog} />} />
+            <Route path="/blogs/:blogId" element={<PrivateRoute comp={SingleBlog}/>}/>
             <Route path="/blogs" element={<PrivateRoute comp={BlogsView} />} />
             <Route path="/about" element={<About />} />
             <Route path="/" element={<PublicRoute comp={Home} />} />
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
-      </HashRouter>
+      </BrowserRouter>
     </div>
   );
 }

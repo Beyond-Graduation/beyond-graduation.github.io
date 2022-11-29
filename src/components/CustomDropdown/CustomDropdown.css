@@ -16,9 +16,10 @@
   color: rgb(181, 181, 181);
 }
 
-.custom-dd__input-container, .custom-dd__input {
+.custom-dd__input-container,
+.custom-dd__input {
   font-size: 18px;
-  color: white!important;
+  color: white !important;
 }
 
 .custom-dd .custom-dd__placeholder,
@@ -52,7 +53,6 @@
   color: white !important;
 }
 
-
 .custom-dd select {
   width: 100%;
   background-color: transparent !important;
@@ -85,6 +85,7 @@
   max-width: 500px;
   width: 100%;
   color: white;
+  font-size: 18px;
 }
 
 .multi-dd .multi-select__input {
@@ -134,6 +135,7 @@
   background-color: rgba(217, 217, 217, 1);
   color: black;
   font-weight: 600;
+  border-radius: 5px;
 }
 
 .multi-dd .multi-select__multi-value:nth-last-child(2) {
@@ -153,8 +155,53 @@
   border-radius: 10px;
 }
 
-
 .multi-select__clear-indicator {
-  color: white!important;
+  color: white !important;
   cursor: pointer;
+}
+
+/* ---------------------------------------- */
+
+.light-mode .multi-dd {
+  width: 400px;
+}
+
+.light-mode .multi-dd .multi-select__control {
+  border-color: rgba(52, 78, 65, 1) !important;
+}
+
+.light-mode .multi-dd .multi-select__placeholder {
+  color: rgba(52, 78, 65, 1) !important;
+  font-size: 18px;
+}
+
+.light-mode .multi-select__dropdown-indicator {
+  filter: invert(23%) sepia(5%) saturate(3185%) hue-rotate(97deg)
+    brightness(30%) contrast(80%);
+}
+
+.light-mode .multi-select__clear-indicator {
+  color: rgba(52, 78, 65, 1) !important;
+}
+
+.light-mode .multi-dd .multi-select__multi-value {
+  background-color: rgba(88, 129, 87, 1);
+  font-weight: 500;
+}
+
+.light-mode .multi-select__multi-value__label {
+  color: white;
+}
+
+.light-mode .multi-dd .multi-select__input {
+  caret-color: rgba(58, 90, 64, 1) !important;
+  color: rgba(58, 90, 64, 1) !important;
+}
+
+.light-mode .multi-dd .multi-select__placeholder {
+  color: rgba(58, 90, 64, 1);
+}
+
+.light-mode .multi-dd .multi-select__multi-value__remove:hover {
+  background-color: rgba(58, 90, 64, 1);
 }

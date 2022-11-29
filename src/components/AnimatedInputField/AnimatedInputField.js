@@ -15,7 +15,7 @@ function AnimatedInputField({
   const [value, setValue] = React.useState("");
 
   useEffect(() => {
-    setValue(defaultValue);
+    if (defaultValue) setValue(defaultValue);
   }, [defaultValue]);
 
   return (

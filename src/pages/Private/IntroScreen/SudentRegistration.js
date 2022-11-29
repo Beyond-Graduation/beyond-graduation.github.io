@@ -202,7 +202,7 @@ function StudentRegistration({ state }) {
     const generateUserId = () => {
       let userId = "";
       const possible =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
       for (let i = 0; i < 5; i++) {
         userId += possible.charAt(Math.floor(Math.random() * possible.length));
       }

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { AiOutlineFileDone } from "react-icons/ai";
-import avatarIcon from "../../../assets/images/avatar.png";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import { Accordion } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -9,6 +8,10 @@ import FileViewOverlay from "../../../components/FileViewOverlay/FileViewOverlay
 
 function StudentProfile({ data }) {
   const [showResume, setShowResume] = useState(false);
+
+  useEffect(() => {
+    console.log(data);
+  }, []);
 
   return (
     <div className="profile-main">
@@ -99,7 +102,9 @@ function StudentProfile({ data }) {
                 </div>
                 <div className="ms-3 prof-det w-auto">
                   <div className="prof-det-head">Branch</div>
-                  <div className="prof-det-body prof-det-department">{data.department}</div>
+                  <div className="prof-det-body prof-det-department">
+                    {data.department}
+                  </div>
                 </div>
               </div>
               <div className="ms-4 d-flex">
@@ -140,37 +145,108 @@ function StudentProfile({ data }) {
             <Accordion.Item eventKey="1">
               <Accordion.Header>Projects</Accordion.Header>
               <Accordion.Body>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                sunt in culpa qui officia deserunt mollit anim id est laborum.
+                {data.projects.length > 0
+                  ? data.projects.map((proj) => (
+                      <div className="project">
+                        <div className="d-flex justify-content-between  align-items-center">
+                          <div className="d-flex align-items-center ">
+                            <div className="proj-title">{proj.title}</div>
+                            <div className="proj-role ms-2">
+                              ( {proj.role} )
+                            </div>
+                          </div>
+                          <div className="d-flex align-items-center">
+                            <div className="proj-date">
+                              {proj.from} - {proj.to}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="proj-contribution">
+                          {proj.description}
+                        </div>
+                        <div className="proj-domain">
+                          Domain : {proj.domain}
+                        </div>
+                      </div>
+                    ))
+                  : "Nothing to show"}
               </Accordion.Body>
             </Accordion.Item>
             <Accordion.Item eventKey="2">
               <Accordion.Header>Internships</Accordion.Header>
               <Accordion.Body>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                sunt in culpa qui officia deserunt mollit anim id est laborum.
+                {data.internships.length > 0
+                  ? data.internships.map((proj) => (
+                      <div className="project">
+                        <div className="d-flex justify-content-between  align-items-center">
+                          <div className="d-flex align-items-center ">
+                            <div className="proj-title">{proj.company}</div>
+                            <div className="proj-role ms-2">
+                              ( {proj.role} )
+                            </div>
+                          </div>
+                          <div className="d-flex align-items-center">
+                            <div className="proj-date">
+                              {proj.from} - {proj.to}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="proj-contribution">
+                          {proj.contribution}
+                        </div>
+                      </div>
+                    ))
+                  : "Nothing to show"}
               </Accordion.Body>
             </Accordion.Item>
             <Accordion.Item eventKey="3">
               <Accordion.Header>Relevant Links</Accordion.Header>
               <Accordion.Body>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                sunt in culpa qui officia deserunt mollit anim id est laborum.
+                <div className="relevant-link">
+                  <span className="link-head">Github : </span>
+                  {data.github ? (
+                    <a
+                      href={data.github}
+                      target="_blank"
+                      className="link"
+                      rel="noreferrer"
+                    >
+                      {data.github}
+                    </a>
+                  ) : (
+                    "Not Provided"
+                  )}
+                </div>
+                <div className="relevant-link mt-1">
+                  <span className="link-head">LinkedIn : </span>
+                  {data.linkedin ? (
+                    <a
+                      href={data.linkedin}
+                      target="_blank"
+                      className="link"
+                      rel="noreferrer"
+                    >
+                      {data.linkedin}
+                    </a>
+                  ) : (
+                    "Not Provided"
+                  )}
+                </div>
+                <div className="relevant-link mt-1">
+                  <span className="link-head">Other Links : </span>
+                  {data.otherLinks ? (
+                    <a
+                      href={data.otherLinks}
+                      target="_blank"
+                      className="link"
+                      rel="noreferrer"
+                    >
+                      {data.otherLinks}
+                    </a>
+                  ) : (
+                    "Not Provided"
+                  )}
+                </div>
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>

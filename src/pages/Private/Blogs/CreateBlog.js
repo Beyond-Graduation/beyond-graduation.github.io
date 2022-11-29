@@ -1,14 +1,96 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./CreateBlog.css";
 import { Editor } from "@tinymce/tinymce-react";
-import { MutliDropdown } from "../../../components/CustomDropdown/CustomDropdown";
 import FileInput from "../../../components/FileInput/FileInput";
+import { useStateValue } from "../../../reducer/StateProvider";
+import { toast } from "react-toastify";
+import axios from "../../../components/axios";
+import AnimatedInputField from "../../../components/AnimatedInputField/AnimatedInputField";
+import { MutliDropdown } from "../../../components/CustomDropdown/CustomDropdown";
+import { useNavigate } from "react-router-dom";
 
 function CreateBlog() {
+  const [{ userData, userId }, dispatch] = useStateValue();
   const editorRef = useRef();
+  const [blogImg, setBlogImg] = useState("");
+  const navigate = useNavigate();
 
-  const onSubmitBlog = () => {
-    console.log(editorRef.current.getContent());
+  const [blogDetails, setBlogDetails] = useState({
+    blogId: "",
+    userId: "",
+    firstName: "",
+    lastName: "",
+    title: "",
+    domain: [],
+    content: "",
+    abstract: "",
+    imagePath: "",
+  });
+
+  const handleBlogContentChange = (e) => {
+    setBlogDetails({ ...blogDetails, content: editorRef.current.getContent() });
+  };
+
+  useEffect(() => {
+    if (userData) {
+      let blogId = "blog";
+      const possible =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      for (let i = 0; i < 5; i++) {
+        blogId += possible.charAt(Math.floor(Math.random() * possible.length));
+      }
+      setBlogDetails({
+        ...blogDetails,
+        blogId: blogId,
+        userId: userData.userId,
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+      });
+    }
+  }, [userData]);
+
+  const handleChange = (e) => {
+    setBlogDetails({ ...blogDetails, [e.target.name]: e.target.value });
+  };
+
+  const onSubmitBlog = async () => {
+    let token = localStorage.getItem("authKey");
+    if (
+      blogDetails.title === "" ||
+      blogDetails.domain === "" ||
+      blogDetails.abstract === ""
+    ) {
+      toast.error("Please fill all the fields");
+      return;
+    } else if (editorRef.current.getContent({ format: "text" }).length < 500) {
+      toast.error("Blog must contain at least 500 characters");
+      return;
+    } else if (blogDetails.abstract.length < 30) {
+      toast.error("Description must contain at least 30 characters");
+      return;
+    } else if (blogDetails.abstract.length > 200) {
+      toast.error("Description must contain less than 200 characters");
+      return;
+    } else if (blogDetails.imagePath === "") {
+      toast.error("Upload Blog Image !!");
+      return;
+    }
+
+    await axios({
+      method: "post",
+      url: "blog/create",
+      data: blogDetails,
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        toast.success("Blog published successfully");
+        navigate("/dashboard");
+      })
+      .catch((e) => {
+        toast.error("Something went wrong !!");
+      });
   };
 
   const domainOptions = [
@@ -19,60 +101,86 @@ function CreateBlog() {
     { value: "blockChain", label: "Block Chain" },
   ];
 
+  const handleDomainChange = (e) => {
+    const areas = [];
+    e.forEach((item) => {
+      areas.push(item.label);
+    });
+    setBlogDetails({ ...blogDetails, domain: areas });
+  };
+
+  useEffect(() => {
+    if (localStorage.getItem("userType") !== "alumni") navigate("/dashboard");
+  }, [blogDetails]);
+
   return (
     <div className="create-blog">
       <div className="create-blog-cnt">
         <div className="create-blog-head">Create Blog</div>
         <div className="d-flex">
           <div>
-            <div className="cb-head">Title</div>
-            <input type="text" />
-          </div>
-          <div className="ms-5">
-            <div className="cb-head">Domain</div>
-            <div className="">
-              <MutliDropdown
-                title="Domain"
-                options={domainOptions}
-                onChange={(e) => {}}
-              />
+            <div className="d-flex">
+              <div>
+                <AnimatedInputField
+                  name="title"
+                  title="Title"
+                  className="light-mode"
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="ms-5 mt-4 light-mode">
+                <MutliDropdown
+                  title="Domain"
+                  options={domainOptions}
+                  onChange={(e) => handleDomainChange(e)}
+                />
+              </div>
+            </div>
+            <div className="d-flex">
+              <div>
+                <AnimatedInputField
+                  as="textarea"
+                  name="abstract"
+                  title="Description"
+                  rows={4}
+                  className="mt-5 light-mode"
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="blog-img-upload ms-5 mt-4 d-flex align-items-center justify-content-center">
+                <FileInput
+                  label="Upload Blog Image"
+                  type="image"
+                  onUpload={(e) => {
+                    setBlogDetails({ ...blogDetails, imagePath: e });
+                  }}
+                  onChange={(e) => {
+                    if (!e.target.files[0].name.match(/.(jpg|jpeg|png|gif)$/i))
+                      alert("not an image");
+                    else setBlogImg(URL.createObjectURL(e.target.files[0]));
+                  }}
+                />
+              </div>
             </div>
           </div>
-        </div>
-        <div className="d-flex">
-          <div>
-            <div className="cb-head mt-3">Description</div>
-            <textarea
-              name="description"
-              className="blog-desc"
-              rows={4}
-              id="desc"
-              draggable={false}
-            />
-          </div>
-          <div className="blog-img-upload ms-5 mt-4 d-flex align-items-center justify-content-center">
-            <FileInput
-              label="Upload Blog Image"
-              type="image"
-              onUpload={(e) => {
-                console.log(e);
-              }}
-              onChange={(e) => {
-                if (!e.target.files[0].name.match(/.(jpg|jpeg|png|gif)$/i))
-                  alert("not an image");
-                // else setProfilePic(URL.createObjectURL(e.target.files[0]));
-              }}
-            />
+          <div className="blog-img-thumb">
+            {blogImg !== "" ? <img src={blogImg} alt="" /> : null}
           </div>
         </div>
         <div className="mt-5">
-          <Editor onInit={(evt, editor) => (editorRef.current = editor)} />
-          <button type="button" onClick={onSubmitBlog}>
-            Submit
-          </button>
+          <Editor
+            onInit={(evt, editor) => (editorRef.current = editor)}
+            onSelectionChange={handleBlogContentChange}
+          />
+          <div
+            type="button"
+            onClick={onSubmitBlog}
+            className="mt-4 create-blog-btn"
+          >
+            Publish
+          </div>
         </div>
       </div>
-      <FileInput />
     </div>
   );
 }

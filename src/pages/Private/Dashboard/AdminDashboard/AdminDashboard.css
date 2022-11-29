@@ -1,91 +1,81 @@
 .admin-dash {
+  background-color: rgba(52, 78, 65, 1);
   min-height: 100vh;
-  background-color: rgba(218, 215, 205, 1);
-  padding-bottom: 15vh;
-  user-select: none;
+  min-width: 100vw;
+  padding: 2%;
 }
 
-.admin-dash-container {
+.admin-dash-left {
+  width: 20%;
+}
+
+.admin-dash-right {
+  padding: 2% 4vh;
   width: 80%;
-  padding-top: 100px;
+  background-color: rgba(163, 177, 138, 1);
+  border-radius: 20px 0 0 20px;
+  overflow-x: hidden;
+  overflow-y: auto; 
+  max-height: 91vh;
+}
+
+.admin-dash-right {
+  scrollbar-width: thin;
+  scrollbar-color: #465f52 #dad7cd;
+}
+
+/* Chrome, Edge, and Safari */
+.admin-dash-right::-webkit-scrollbar {
+  width: 10px;
+}
+
+.admin-dash-right::-webkit-scrollbar-track {
+  background: #dad7cd;
+}
+
+.admin-dash-right::-webkit-scrollbar-thumb {
+  background-color: #465f52;
+  border-radius: 0px;
+  border: 1px solid #ffffff8a;
+}
+
+.admin-profile-icon img {
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+}
+
+.admin-profile-icon span {
+  font-size: 32px;
+  color: white;
+  margin-left: 20px;
+}
+
+.admin-nav-item {
+  color: white;
+  font-size: 22px;
+  margin-bottom: 20px;
+  padding: 10px 30px;
+  border-radius: 10px 0 0 10px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.1s ease-in-out;
+}
+
+.admin-nav-item.active {
+  background-color: rgba(163, 177, 138, 1);
+  color: black;
+}
+
+.admin-logout {
+  color: white;
+  font-size: 25px;
+  cursor: pointer;
+  width: fit-content;
   margin: auto;
 }
 
-.admin-dash .prof-btn-overlay {
-  padding: 0;
-  width: 110%;
-}
-
-.admin-dash .prof-btn-overlay .prof-btn-link {
-  margin: 0;
-  border-radius: 8px;
-}
-
-.admin-main-head {
-  width: fit-content;
-  color: black;
-  font-weight: 500;
-  font-size: calc(1rem + 1.5vw);
-  margin-bottom: 50px;
-}
-
-.admin-main-head:after {
-  content: "";
-  display: block;
-  width: 60%;
-  border-bottom: 4px solid rgba(88, 129, 87, 0.893);
-}
-
-.pending-card {
-  width: 70%;
-  background-color: white;
-  margin: 30px auto;
-  box-shadow: 0px 0px 6px 2px rgba(0, 0, 0, 0.383);
-  border-radius: 10px;
-  padding: 20px 40px;
-}
-
-.p-name {
-  font-size: 30px;
-  font-weight: 500;
-}
-
-.p-card-top {
-  border-bottom: 2px solid;
-  margin-bottom: 20px;
-  padding-bottom: 5px;
-}
-
-.p-department {
+.admin-logout svg {
   font-size: 20px;
-  color: rgba(115, 105, 105, 1);
-  font-weight: 500;
-  margin-top: -5px;
-}
-
-.pending-card .approve-btn {
-  color: white;
-  border: 2px solid rgba(52, 78, 65, 1);
-  border: none;
-  padding: 8px 22px;
-  border-radius: 10px;
-  background-color: rgba(58, 90, 64, 1);
-  font-size: 18px;
-  font-weight: 500;
-  cursor: pointer;
-}
-
-.p-field {
-  font-size: 18px;
-  margin-bottom: 4px;
-}
-
-.p-field span {
-  font-weight: 600;
-  margin-right: 5px;
-}
-
-.no-pending {
-  font-size: 24px;
-  font-weight: 400;
+  margin-right: 10px;
 }

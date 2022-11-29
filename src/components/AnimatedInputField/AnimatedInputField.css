@@ -6,6 +6,7 @@
 }
 
 .animated-in-label {
+  font-size: 18px;
   position: absolute;
   top: 50%;
   left: 0;
@@ -34,8 +35,8 @@
 
 .animated-in-ip:focus ~ .animated-in-label,
 .animate-input .animated-in-label {
-  font-size: 14px;
-  top: -14px;
+  font-size: 16px;
+  top: -18px;
   transform: none;
 }
 
@@ -51,16 +52,16 @@
 }
 
 .animated-in textarea ~ .animated-in-label {
-  top: 5px;
-  left: 5px;
+  top: 8px;
+  left: 10px;
   transform: none;
 }
 
 .animated-in textarea:focus ~ .animated-in-label,
 .animate-input textarea ~ .animated-in-label {
-  font-size: 14px;
+  font-size: 16px;
   left: 0;
-  top: -24px;
+  top: -28px;
   transform: none;
 }
 
@@ -78,7 +79,7 @@
   border-radius: 50px;
 }
 
-.add-experience-button > div{
+.add-experience-button > div {
   font-weight: 600;
   background-color: rgba(58, 90, 64, 1);
   height: 30px;
@@ -105,10 +106,35 @@
 }
 
 /* Firefox */
-.animated-in input[type=number] {
+.animated-in input[type="number"] {
   -moz-appearance: textfield;
 }
 
 .animated-in input:disabled {
   cursor: not-allowed;
+}
+
+.light-mode .animated-in-label {
+  color: rgba(58, 90, 64, 1);
+}
+
+.light-mode.animated-in .animated-in-ip {
+  border-bottom: 2px solid rgba(52, 78, 65, 1) !important;
+  color: rgba(58, 90, 64, 1) !important;
+}
+
+.light-mode.animated-in textarea.form-control {
+  background-color: rgba(255, 255, 255, 0.3) !important;
+  border-radius: 10px 10px 0 0;
+}
+
+.light-mode .animated-in textarea.form-control::-webkit-scrollbar-thumb {
+  background: rgb(230, 230, 230);
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+.light-mode .animated-in textarea.form-control::-webkit-scrollbar-track {
+  background: transparent;
+  border: 0px none #ffffff;
+  border-radius: 50px;
 }

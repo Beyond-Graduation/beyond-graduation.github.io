@@ -8,6 +8,24 @@
   cursor: pointer;
 }
 
+.sm-carousel {
+  width: 70%;
+}
+
+.lg-carousel {
+  width: 100%;
+}
+
+.carousel-card.create-card {
+  margin: 0;
+  margin-top: 15px;
+  margin-right: 40px;
+}
+
+.carousel-card.create-card .dash-blog-card{
+  width: 200px;
+}
+
 .react-multiple-carousel__arrow--left {
   left: 0;
 }

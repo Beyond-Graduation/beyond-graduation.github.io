@@ -5,19 +5,13 @@
   margin-left: -0.5%;
   border-radius: 15px;
   position: relative;
+  color: black;
 }
 
 .d-b-card-upper {
   height: 40%;
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1)),
-    url("../../../assets/images/blog-card.png");
-  background: -webkit-linear-gradient(
-      to right,
-      rgba(0, 0, 0, 0.2),
-      rgba(0, 0, 0, 0.1)
-    ),
-    url("../../../assets/images/blog-card.png");
-  background-size: cover;
+  width: 100%;
+  object-fit: fill;
   border-radius: 15px 15px 0 0;
 }
 
@@ -36,7 +30,7 @@
 }
 
 .d-b-card-lower .description {
-  margin-top: 6px;
+  margin-top: 8px;
   font-size: 12px;
   line-height: 100%;
   overflow: hidden;
@@ -61,7 +55,7 @@
 .dash-blog-card .author .name {
   font-size: 14px;
   font-weight: 500;
-  line-height: 100%;
+  line-height: 140%;
 }
 
 .dash-blog-card .author .department {
@@ -106,4 +100,37 @@
 
 .dash-blog-card .author .name {
   font-size: 16px;
+}
+
+.blog-create-card {
+  padding: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.blog-create-card p {
+  color: white;
+  font-size: 40px;
+  background-color: rgba(58, 90, 64, 1);
+  height: 50px;
+  width: 50px;
+  border-radius: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  margin: auto;
+}
+
+.blog-create-card div {
+  font-size: 22px;
+  font-weight: 500;
+  color: rgba(52, 78, 65, 1) !important;
+}
+
+.d-b-card-likes svg{
+  margin-top: -1px;
+  margin-right: 2px;
 }

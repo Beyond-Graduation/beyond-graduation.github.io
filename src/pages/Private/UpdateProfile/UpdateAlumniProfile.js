@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useStateValue } from "../../../reducer/StateProvider";
 
-function UpdateStudentProfile({ data }) {
+function UpdateAlumniProfile({ data }) {
   const navigate = useNavigate();
   const [updateEnabled, setUpdateEnabled] = useState(true);
 
@@ -604,4 +604,4 @@ function UpdateStudentProfile({ data }) {
   );
 }
 
-export default UpdateStudentProfile;
+export default UpdateAlumniProfile;

@@ -1,44 +1,22 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./AdminDashboard.css";
 import avatarIcon from "../../../../assets/images/avatar.png";
-import { FaPowerOff } from "react-icons/fa";
+import AlumniVerification from "../../../../components/AdminDashboard/AlumniVerification/AlumniVerification";
 import axios from "../../../../components/axios";
-import { Link, useNavigate } from "react-router-dom";
+import { FaPowerOff } from "react-icons/fa";
 import { isAuth } from "../../../../auth/Auth";
-import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+
+const Sample = () => {
+  return <></>;
+};
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
-  const ref = useRef();
-  const checkRef = useRef();
-  const overlayRef = useRef();
+  const [activeMenu, setActiveMenu] = useState(0);
+
   const [pending, setPending] = useState([]);
   const token = localStorage.getItem("authKey");
-
-  const handleLogout = () => {
-    isAuth.logout();
-    navigate("/");
-  };
-
-  const approveAlumni = async (userId) => {
-    // console.log(userId);
-    await axios({
-      method: "post",
-      url: "admin/approve",
-      headers: {
-        Authorization: `bearer ${token}`,
-      },
-      data: {
-        userId: userId,
-      },
-    }).then((res) => {
-      if (res.status === 200) {
-        toast.success("Alumni Approved");
-        getData();
-      }
-    });
-  };
-
   const getData = async () => {
     await axios({
       method: "get",
@@ -49,80 +27,78 @@ const AdminDashboard = () => {
     }).then((res) => {
       if (res.status === 200) {
         setPending(res.data);
-        // console.log(res.datanod)
       }
     });
+  };
+
+  const handleLogout = () => {
+    isAuth.logout();
+    navigate("/");
   };
 
   useEffect(() => {
     getData();
   }, []);
 
+  const menuOptions = [
+    {
+      name: "Home",
+      component: <Sample />,
+    },
+    {
+      name: "Alumni Verification",
+      component: <AlumniVerification pending={pending} getData={getData} />,
+    },
+    {
+      name: "Notices Verification",
+      component: <Sample />,
+    },
+    {
+      name: "Notice Publication",
+      component: <Sample />,
+    },
+    {
+      name: "Notices View",
+      component: <Sample />,
+    },
+    {
+      name: "Data Modification",
+      component: <Sample />,
+    },
+  ];
+
   return (
-    <div className="admin-dash">
-      <div className="navbar-main d-flex align-items-center justify-content-between">
-        <Link to="/" className="nav-logo">
-          BeGrad
-        </Link>
-        <div className="d-flex align-items-center navbar-links">
-          <Link to="/">
-            <div className="nav-link">Home</div>
-          </Link>
-          <label htmlFor="profile-btn" className="nav-link" ref={ref}>
-            <div className="profile-btn">
-              <input id="profile-btn" type="checkbox" ref={checkRef} />
-              <div>
-                <img src={avatarIcon} alt="admin" />
-                Admin
-              </div>
-              <div className="prof-btn-overlay" ref={overlayRef}>
-                <div className="prof-btn-link" onClick={handleLogout}>
-                  <FaPowerOff />
-                  <span>Logout</span>
-                </div>
-              </div>
+    <div className="admin-dash d-flex">
+      <div className="admin-dash-left">
+        <div className="d-flex flex-column justify-content-between h-100">
+          <div>
+            <div className="admin-profile-icon d-flex align-items-center ms-4">
+              <img src={avatarIcon} alt="" />
+              <span>Admin</span>
             </div>
-          </label>
+            <div className="admin-nav mt-5 ms-4">
+              {menuOptions.map((opt, i) => (
+                <div
+                  className={`admin-nav-item ${
+                    activeMenu === i ? "active" : ""
+                  }`}
+                  onClick={(e) => setActiveMenu(i)}
+                >
+                  {opt.name}
+                </div>
+              ))}
+            </div>
+          </div>
+          <div
+            className="admin-logout mb-5 d-flex align-items-center justify-content-center"
+            onClick={handleLogout}
+          >
+            <FaPowerOff /> Logout
+          </div>
         </div>
       </div>
-
-      <div className="admin-dash-container">
-        <div className="admin-main-head">Pending Alumni Verification</div>
-        <div className="pending-container">
-          {pending.length !== 0 ? (
-            pending.map((alu) => (
-              <div className="pending-card">
-                <div className="p-card-top">
-                  <div className="p-name">
-                    {alu.firstName} {alu.lastName}
-                  </div>
-                  <div className="p-department">{alu.department}</div>
-                </div>
-                <div className="d-flex align-items-center justify-content-between">
-                  <div>
-                    <div className="p-degree p-field">
-                      <span>Degree:</span> {alu.degree}
-                    </div>
-                    <div className="p-email p-field">
-                      <span>Email:</span> {alu.email}
-                    </div>
-                    <div className="p-yearGrad p-field">
-                      <span>Year of Graduation:</span> {alu.yearGraduation}
-                    </div>
-                  </div>
-                  <div
-                    className="approve-btn"
-                    onClick={() => approveAlumni(alu.userId)}
-                  >
-                    Approve
-                  </div>
-                </div>
-              </div>
-            ))
-          ) : (
-            <div className="no-pending">No Pending Verifications</div>
-          )}
-        </div>
+      <div className="admin-dash-right">
+        {menuOptions[activeMenu].component}
       </div>
     </div>
   );

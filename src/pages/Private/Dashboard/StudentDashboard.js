@@ -31,7 +31,7 @@ function StudentDashboard() {
       const token = localStorage.getItem("authKey");
       axios({
         method: "get",
-        url: "/blog",
+        url: "blog",
         headers: {
           Authorization: `bearer ${token}`,
         },

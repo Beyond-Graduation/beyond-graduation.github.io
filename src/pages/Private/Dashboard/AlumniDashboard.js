@@ -60,8 +60,6 @@ function AlumniDashboard() {
     fetchAlumniData();
     fetchData();
   }, []);
-  
-  
 
   return (
     <div className="dashboard">
@@ -79,6 +77,7 @@ function AlumniDashboard() {
                 className="dash-sm-carousel"
                 data={blogData}
                 userData={alumniData}
+                userType="alumni"
               />
             </div>
             <div className="carousel-container">
@@ -125,9 +124,11 @@ function AlumniDashboard() {
           <DashboardCarousel
             type="blog"
             className="dash-lg-carousel"
-            cardCount={4}
             data={blogData}
             userData={alumniData}
+            cardCount={4}
+            userType="alumni" 
+            create={false}
           />
         </div>
       </div>
