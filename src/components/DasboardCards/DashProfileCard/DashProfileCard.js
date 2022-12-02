@@ -1,12 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import "./DashProfileCard.css";
 import avatarIcon from "../../../assets/images/avatar.png";
+import { useEffect } from "react";
 
 function DashProfileCard({ userData }) {
+  const [profImg, setProfImg] = useState(avatarIcon);
+
+  useEffect(() => {
+    setProfImg(userData.profilePicPath);
+  }, [userData]);
+
   return (
     <div className="d-prof-card">
       <div className="d-p-card-upper">
-        <img src={avatarIcon} alt="" />
+        <img src={profImg} alt="" />
       </div>
       <div className="d-p-card-lower">
         <div className="name">

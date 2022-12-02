@@ -28,7 +28,6 @@ function SingleBlog() {
   const childCommentRef = useRef([]);
 
   const postComment = (type, parent, index) => {
-    console.log(childCommentRef.current[index].value);
     if (postCommentEnabled) {
       setPostCommentEnabled(false);
       let commentId = "com";
@@ -75,7 +74,9 @@ function SingleBlog() {
         },
       })
         .then((res) => {
-          commentRef.current.value = "";
+          type === "parent"
+            ? (commentRef.current.value = "")
+            : (childCommentRef.current[index].value = "");
           fetchBlogComments();
           setPostCommentEnabled(true);
         })
@@ -107,26 +108,41 @@ function SingleBlog() {
 
   const fetchChildComments = async () => {
     const token = localStorage.getItem("authKey");
-    for (var j = 0; j < comments.length; j++) {
-      if (comments[j].childCommentCount > 0) {
-        const cId = comments[j].commentId;
+    let promises = [];
+    for (var i = 0; i < comments.length; i++) {
+      const cId = comments[i].commentId;
+      promises.push(
         axios({
           method: "get",
-          url: `blog/getComments?parentId=${comments[j].commentId}`,
+          url: `blog/getComments?parentId=${comments[i].commentId}`,
           headers: {
             Authorization: `bearer ${token}`,
           },
         })
-          .then((res) => {
-            setChildComments({ ...childComments, [cId]: res.data });
-          })
-          .catch((err) => {
-            console.log(err);
-            toast.error("Something went wrong!!");
-          });
-      }
-      return 0;
+        // .then((res) => {
+        //   setChildComments({ ...childComments, [cId]: res.data });
+        // })
+        // .catch((err) => {
+        //   console.log(err);
+        //   toast.error("Something went wrong!!");
+        // })
+      );
     }
+    Promise.all(promises)
+      .then((res) => {
+        let arr = {};
+        for (let i = 0; i < comments.length; i++) {
+          arr = {
+            ...arr,
+            [comments[i].commentId]: res[i].data,
+          };
+        }
+        setChildComments(arr);
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Something went wrong!!");
+      });
   };
 
   const likeBlog = async () => {
@@ -192,10 +208,6 @@ function SingleBlog() {
     if (comments.length > 0) fetchChildComments();
   }, [comments]);
 
-  useEffect(() => {
-    console.log(childComments);
-  }, [childComments]);
-
   return (
     <div className="single-blog">
       <div className="single-blog-cnt">
@@ -226,7 +238,7 @@ function SingleBlog() {
         <div className="comments-heading">Comments ({comments.length})</div>
         <div className="post-comment text-center my-5 mt-4">
           <textarea
-            name="commet"
+            name="comment"
             cols="30"
             rows="5"
             ref={commentRef}
@@ -254,7 +266,7 @@ function SingleBlog() {
                   </div>
                 </div>
                 <div className="comment-content mt-2">{com.content}</div>
-                {/* <div
+                <div
                   className="comm-reply mt-2 me-4"
                   onClick={() => {
                     let arr = childCommentOpen.map((x, index) => {
@@ -309,7 +321,7 @@ function SingleBlog() {
                         </div>
                       </div>
                     ))}
-                </div> */}
+                </div>
               </div>
             );
           })}

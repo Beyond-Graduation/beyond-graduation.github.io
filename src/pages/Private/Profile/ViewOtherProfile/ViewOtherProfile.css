@@ -1,0 +1,11 @@
+.view-profile {
+  min-height: calc(100vh - 70px);
+  background-color: rgba(218, 215, 205, 1);
+  padding-top: 5vh;
+  user-select: none;
+}
+
+.view-profile .prof-det.email .prof-det-body {
+	max-width: none;
+	width: fit-content;
+}

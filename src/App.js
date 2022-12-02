@@ -26,9 +26,10 @@ import About from "./pages/Public/About/About";
 import AlumniProfilesView from "./pages/Private/Profiles/AlumniProfilesView";
 import StudentProfilesView from "./pages/Private/Profiles/StudentProfilesView";
 import AdminDashboard from "./pages/Private/Dashboard/AdminDashboard/AdminDashboard";
-import UpdateProfile from './pages/Private/UpdateProfile/UpdateProfile';
+import UpdateProfile from "./pages/Private/UpdateProfile/UpdateProfile";
 import CreateBlog from "./pages/Private/Blogs/CreateBlog";
-import SingleBlog from './pages/Private/Blogs/SingleBlog';
+import SingleBlog from "./pages/Private/Blogs/SingleBlog";
+import ViewStudentProfile from "./pages/Private/Profile/ViewOtherProfile/ViewStudentProfile";
 
 const WithNav = () => {
   return (
@@ -138,7 +139,10 @@ function App() {
               element={<PrivateRoute comp={Dashboard} />}
             />
             <Route path="/profile" element={<PrivateRoute comp={Profile} />} />
-            <Route path="/update" element={<PrivateRoute comp={UpdateProfile} />} />
+            <Route
+              path="/update"
+              element={<PrivateRoute comp={UpdateProfile} />}
+            />
             <Route
               path="/alumni-profiles"
               element={<PrivateRoute comp={AlumniProfilesView} />}
@@ -147,8 +151,18 @@ function App() {
               path="/student-profiles"
               element={<PrivateRoute comp={StudentProfilesView} />}
             />
-            <Route path="/blogs/create" element={<PrivateRoute comp={CreateBlog} />} />
-            <Route path="/blogs/:blogId" element={<PrivateRoute comp={SingleBlog}/>}/>
+            <Route
+              path="/student-profile/:userId"
+              element={<PrivateRoute comp={ViewStudentProfile} />}
+            />
+            <Route
+              path="/blogs/create"
+              element={<PrivateRoute comp={CreateBlog} />}
+            />
+            <Route
+              path="/blogs/:blogId"
+              element={<PrivateRoute comp={SingleBlog} />}
+            />
             <Route path="/blogs" element={<PrivateRoute comp={BlogsView} />} />
             <Route path="/about" element={<About />} />
             <Route path="/" element={<PublicRoute comp={Home} />} />

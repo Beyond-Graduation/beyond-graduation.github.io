@@ -95,11 +95,6 @@ function AlumniDashboard() {
             </Link>
           </div>
         </div>
-        {/* <div className="dash-nav-section d-flex align-items-center justify-content-center">
-          <div>POST NEW INTERNSHIPS&nbsp;/ PROJECTS</div>
-          <div>CREATE YOUR OWN BLOGS</div>
-          <div>PROJECT PROGRESS</div>
-        </div> */}
         <div className="carousel-container">
           <div className="carousel-heading d-flex align-items-center justify-content-between mb-2">
             <span>Student Profiles</span>
@@ -112,6 +107,7 @@ function AlumniDashboard() {
             className="dash-lg-carousel"
             cardCount={4}
             data={studentData}
+            userType="student"
           />
         </div>
         <div className="carousel-container">

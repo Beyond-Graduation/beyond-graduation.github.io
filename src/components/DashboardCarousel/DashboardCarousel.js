@@ -81,7 +81,15 @@ function DashboardCarousel({
         <Carousel responsive={responsive} infinite={true}>
           {data.map((user) => (
             <div className="carousel-card">
-              <DashProfilCard userData={user} />
+              <Link
+                to={
+                  userType === "student"
+                    ? `/student-profile/${user.userId}`
+                    : ""
+                }
+              >
+                <DashProfilCard userData={user} />
+              </Link>
             </div>
           ))}
         </Carousel>
