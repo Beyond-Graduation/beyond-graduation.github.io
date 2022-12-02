@@ -1,6 +1,7 @@
 import React from "react";
 import { isAuth } from "../../../auth/Auth";
 import { useStateValue } from "../../../reducer/StateProvider";
+import UpdateAlumniProfile from "./UpdateAlumniProfile";
 import UpdateStudentProfile from "./UpdateStudentProfile";
 
 function UpdateProfile() {
@@ -8,7 +9,7 @@ function UpdateProfile() {
   return isAuth.userType === "student" ? (
     <UpdateStudentProfile data={userData} />
   ) : (
-    <UpdateStudentProfile data={userData} />
+    <UpdateAlumniProfile data={userData} />
   );
 }
 
