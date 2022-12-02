@@ -20,8 +20,8 @@ function UpdateAlumniProfile({ data }) {
   const [resumeFileName, setResumeFileName] = useState("");
   const [profilePic, setProfilePic] = useState(avatarIcon);
   const [defaultInterest, setDefaultInterest] = useState([]);
-  const [internshipCount, setInternshipCount] = useState(0);
-  const [internship, setInternship] = useState([]);
+  const [experienceCount, setExperienceCount] = useState(0);
+  const [experience, setExperience] = useState([]);
   const [projectCount, setProjectCount] = useState(0);
   const [projects, setProjects] = useState([]);
   const [formDetails, setFormDetails] = useState(data);
@@ -50,48 +50,44 @@ function UpdateAlumniProfile({ data }) {
     });
   };
 
-  const handleIntershipChange = (e, index) => {
-    const newIntership = [...internship];
+  const handleExperienceChange = (e, index) => {
+    const newExperience = [...experience];
     if (e.target.name === "to" || e.target.name === "from") {
-      newIntership[index][e.target.name] = Number(e.target.value);
+      newExperience[index][e.target.name] = Number(e.target.value);
     } else {
-      newIntership[index][e.target.name] = e.target.value;
+      newExperience[index][e.target.name] = e.target.value;
     }
-    setInternship(newIntership);
-    setFormDetails({ ...formDetails, internships: newIntership });
+    setExperience(newExperience);
+    setFormDetails({ ...formDetails, workExperience: newExperience });
   };
 
-  const addNewInternship = () => {
-    setInternshipCount(internshipCount + 1);
-    setInternship([
-      ...internship,
+  const addNewExperience = () => {
+    setExperienceCount(experienceCount + 1);
+    setExperience([
+      ...experience,
       {
         company: "",
         role: "",
-        from: 0,
-        to: 0,
-        contribution: "",
+        from: "",
+        to: "",
+        // Contribution: "",
       },
     ]);
   };
 
-  const removeInternship = (index) => {
-    const newIntership = [...internship];
-    newIntership.splice(index, 1);
-    setInternship(newIntership);
-    setInternshipCount(internshipCount - 1);
-    setFormDetails({ ...formDetails, internships: newIntership });
+  const removeExperience = (index) => {
+    const newExperience = [...experience];
+    newExperience.splice(index, 1);
+    setExperience(newExperience);
+    setExperienceCount(experienceCount - 1);
+    setFormDetails({ ...formDetails, workExperience: newExperience });
   };
 
   const handleProjectsChange = (e, index) => {
     const newProject = [...projects];
-    if (e.target.name === "to" || e.target.name === "from") {
-      newProject[index][e.target.name] = Number(e.target.value);
-    } else {
-      newProject[index][e.target.name] = e.target.value;
-    }
+    newProject[index][e.target.name] = e.target.value;
     setProjects(newProject);
-    setFormDetails({ ...formDetails, projects: newProject });
+    setFormDetails({ ...formDetails, publications: newProject });
   };
 
   const addNewProject = () => {
@@ -99,11 +95,8 @@ function UpdateAlumniProfile({ data }) {
     setProjects([
       ...projects,
       {
-        from: "",
-        to: "",
         title: "",
         domain: "",
-        role: "",
         link: "",
         description: "",
       },
@@ -115,7 +108,7 @@ function UpdateAlumniProfile({ data }) {
     newProject.splice(index, 1);
     setProjects(newProject);
     setProjectCount(projectCount - 1);
-    setFormDetails({ ...formDetails, projects: newProject });
+    setFormDetails({ ...formDetails, publications: newProject });
   };
 
   const InterestOptions = [
@@ -148,7 +141,7 @@ function UpdateAlumniProfile({ data }) {
     setFormDetails({ ...formDetails, profilePicPath: url });
     await axios({
       method: "post",
-      url: "student/update",
+      url: "alumni/update",
       data: { profilePicPath: url },
       headers: {
         Authorization: `bearer ${token}`,
@@ -172,7 +165,7 @@ function UpdateAlumniProfile({ data }) {
     setFormDetails({ ...formDetails, resume: url });
     await axios({
       method: "post",
-      url: "student/update",
+      url: "alumni/update",
       data: { resume: url },
       headers: {
         Authorization: `bearer ${token}`,
@@ -197,7 +190,7 @@ function UpdateAlumniProfile({ data }) {
 
       await axios({
         method: "post",
-        url: "student/update",
+        url: "alumni/update",
         data: formDetails,
         headers: {
           Authorization: `bearer ${token}`,
@@ -219,13 +212,13 @@ function UpdateAlumniProfile({ data }) {
   };
 
   useEffect(() => {
-    if (data.internships) {
-      setInternship(data.internships);
-      setInternshipCount(data.internships.length);
+    if (data.workExperience) { 
+      setExperience(data.workExperience);
+      setExperienceCount(data.workExperience.length);
     }
-    if (data.projects) {
-      setProjects(data.projects);
-      setProjectCount(data.projects.length);
+    if (data.publications) {
+      setProjects(data.publications);
+      setProjectCount(data.publications.length);
     }
     if (data.profilePicPath) {
       setProfilePic(data.profilePicPath);
@@ -264,18 +257,30 @@ function UpdateAlumniProfile({ data }) {
                     disabled
                   />
                 </div>
-                <div className="d-flex w-50">
+                <div className="d-flex">
                   <AnimatedInputField
                     name="email"
                     title="Email"
                     disabled
                     defaultValue={data.email}
                   />
-                  {/* <AnimatedInputField
-                    name="phoneNumber"
+                  <AnimatedInputField
+                    name="phone"
                     title="Phone Number"
-                    // onChange={handleChange}
-                  /> */}
+                    defaultValue={data.phone}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="d-flex">
+                  <AnimatedInputField
+                    as="textarea"
+                    name="address"
+                    title="Address"
+                    rows={4}
+                    className="mt-5"
+                    defaultValue={data.address}
+                    onChange={handleChange}
+                  />
                 </div>
               </div>
             </section>
@@ -300,31 +305,9 @@ function UpdateAlumniProfile({ data }) {
         </div>
         <section className="intro-section mt-5">
           <div className="head">Educational Qualification</div>
+
           <div className="m-4 mt-3">
-            <div className="sub-head">12th Grade</div>
-            <div className="intro-form-inner">
-              <div className="d-flex">
-                <AnimatedInputField
-                  name="board"
-                  title="Board"
-                  defaultValue={
-                    data.higherSecondary ? data.higherSecondary.board : null
-                  }
-                  onChange={handleSecondary}
-                />
-                <AnimatedInputField
-                  name="cgpa"
-                  title="Percentage"
-                  defaultValue={
-                    data.higherSecondary ? data.higherSecondary.cgpa : null
-                  }
-                  onChange={handleSecondary}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="m-4 mt-3">
-            <div className="sub-head">Undergraduate Degree</div>
+            <div className="sub-head">Program Graduated from CET</div>
             <div className="intro-form-inner">
               <div className="d-flex">
                 <AnimatedInputField
@@ -342,24 +325,9 @@ function UpdateAlumniProfile({ data }) {
                   // onChange={handleChange}
                 />
                 <AnimatedInputField
-                  name="cgpa"
-                  title="CGPA"
-                  defaultValue={data.cgpa}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="d-flex">
-                <AnimatedInputField
-                  name="yearOfJoining"
-                  title="Year of Joining"
-                  defaultValue={data.yearOfJoining}
-                  disabled
-                  // onChange={handleChange}
-                />
-                <AnimatedInputField
                   name="expectedGraduationYear"
                   title="Year of Graduation"
-                  defaultValue={data.expectedGraduationYear}
+                  defaultValue={data.yearGraduation}
                   disabled
                   // onChange={handleChange}
                 />
@@ -368,7 +336,7 @@ function UpdateAlumniProfile({ data }) {
           </div>
         </section>
         <section className="intro-section mt-5">
-          <div className="head">Areas of Interest</div>
+          <div className="head">Domain</div>
           <div className="m-4 mt-3">
             <MutliDropdown
               title="Areas of Interest"
@@ -381,16 +349,16 @@ function UpdateAlumniProfile({ data }) {
 
         <section className="intro-section mt-5">
           <div className="head d-flex">
-            Internship Experience
+            Work Experience
             <div
               className="add-experience-button d-flex ms-3"
-              onClick={addNewInternship}
+              onClick={addNewExperience}
             >
               <div className="me-3">+</div>
-              [Add another Internship]
+              [Add another Work Experience]
             </div>
           </div>
-          {[...Array(internshipCount)].map((x, i) => (
+          {[...Array(experienceCount)].map((x, i) => (
             <>
               <div className="m-4 mb-5">
                 <div className="intro-form-inner">
@@ -399,8 +367,8 @@ function UpdateAlumniProfile({ data }) {
                       id={`company${i}`}
                       name="company"
                       title="Company/Organisation"
-                      defaultValue={internship[i].company}
-                      onChange={(e) => handleIntershipChange(e, i)}
+                      defaultValue={experience[i].company}
+                      onChange={(e) => handleExperienceChange(e, i)}
                     />
                     <AnimatedInputField
                       id={`startDate${i}`}
@@ -410,8 +378,8 @@ function UpdateAlumniProfile({ data }) {
                       min="1900"
                       max="2099"
                       step="1"
-                      defaultValue={internship[i].from}
-                      onChange={(e) => handleIntershipChange(e, i)}
+                      defaultValue={experience[i].from}
+                      onChange={(e) => handleExperienceChange(e, i)}
                     />
                   </div>
                   <div className="d-flex">
@@ -419,8 +387,8 @@ function UpdateAlumniProfile({ data }) {
                       id={`role${i}`}
                       name="role"
                       title="Role/Job Title"
-                      defaultValue={internship[i].role}
-                      onChange={(e) => handleIntershipChange(e, i)}
+                      defaultValue={experience[i].role}
+                      onChange={(e) => handleExperienceChange(e, i)}
                     />
                     <AnimatedInputField
                       id={`endDate${i}`}
@@ -430,29 +398,19 @@ function UpdateAlumniProfile({ data }) {
                       step="1"
                       name="to"
                       title="To (year)"
-                      defaultValue={internship[i].to}
-                      onChange={(e) => handleIntershipChange(e, i)}
+                      defaultValue={experience[i].to}
+                      onChange={(e) => handleExperienceChange(e, i)}
                     />
                   </div>
-                  <div className="d-flex align-items-end">
-                    <AnimatedInputField
-                      id={`contribution${i}`}
-                      as="textarea"
-                      name="contribution"
-                      title="Internship Description"
-                      rows={4}
-                      className="mt-5"
-                      defaultValue={internship[i].contribution}
-                      onChange={(e) => handleIntershipChange(e, i)}
-                    />
-                    {internshipCount >= 1 && (
+                  <div className="d-flex align-items-start mt-4">
+                    {experienceCount >= 1 && (
                       <div
-                        className="d-flex align-items-center delete-experience"
+                        className="d-flex align-items-center delete-experience m-0"
                         onClick={() => {
-                          removeInternship(i);
+                          removeExperience(i);
                         }}
                       >
-                        <FaTrash className="me-2" /> Delete this Internship
+                        <FaTrash className="me-2" /> Delete this Experience
                       </div>
                     )}
                   </div>
@@ -464,13 +422,13 @@ function UpdateAlumniProfile({ data }) {
 
         <section className="intro-section mt-5">
           <div className="head d-flex">
-            Projects
+            Publications
             <div
               className="add-experience-button d-flex ms-3"
               onClick={addNewProject}
             >
               <div className="me-3">+</div>
-              [Add another project]
+              [Add another publication]
             </div>
           </div>
           {[...Array(projectCount)].map((x, i) => (
@@ -493,28 +451,13 @@ function UpdateAlumniProfile({ data }) {
                       onChange={(e) => handleProjectsChange(e, i)}
                     />
                   </div>
-                  <div className="d-flex">
-                    <AnimatedInputField
-                      id={`role${i}`}
-                      name="role"
-                      title="Role"
-                      defaultValue={projects[i].role}
-                      onChange={(e) => handleProjectsChange(e, i)}
-                    />
-                    <AnimatedInputField
-                      id={`from${i}`}
-                      name="from"
-                      title="From (year)"
-                      defaultValue={projects[i].from}
-                      onChange={(e) => handleProjectsChange(e, i)}
-                    />
-                  </div>
+
                   <div className="d-flex align-items-start">
                     <AnimatedInputField
                       id={`contribution${i}`}
                       as="textarea"
                       name="description"
-                      title="Project Description"
+                      title="Description"
                       rows={4}
                       className="mt-5"
                       defaultValue={projects[i].description}
@@ -522,25 +465,21 @@ function UpdateAlumniProfile({ data }) {
                     />
                     <div className="d-flex flex-column w-50">
                       <AnimatedInputField
-                        id={`endDate${i}`}
-                        type="number"
-                        min="1900"
-                        max="2099"
-                        step="1"
-                        name="to"
-                        title="To (year)"
-                        className="mt-4 mb-5"
-                        defaultValue={projects[i].to}
+                        id={`link${i}`}
+                        name="link"
+                        title="Link"
+                        className="mb-4"
+                        defaultValue={projects[i].link}
                         onChange={(e) => handleProjectsChange(e, i)}
                       />
                       {projectCount >= 1 && (
                         <div
-                          className="d-flex mt-4 align-items-center delete-experience"
+                          className="d-flex mt-5 align-items-center delete-experience"
                           onClick={() => {
                             removeProject(i);
                           }}
                         >
-                          <FaTrash className="me-2" /> Delete this Project
+                          <FaTrash className="me-2" /> Delete this Publication
                         </div>
                       )}
                     </div>

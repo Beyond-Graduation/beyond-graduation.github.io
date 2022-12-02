@@ -15,7 +15,7 @@ function AlumniProfile({ data }) {
 
   return (
     <div className="profile-main">
-      {/* <div className="profile-top d-flex align-items-center justify-content-between">
+      <div className="profile-top d-flex align-items-center justify-content-between">
         <div className="d-flex align-items-center">
           <img src={data.profilePicPath} alt="" />
           <div className="profile-top-name">
@@ -75,26 +75,8 @@ function AlumniProfile({ data }) {
             </div>
           </div>
           <div className="p-person-info pb-5 mb-5 border-0">
-            <div className="prof-blk-head">Educational Information</div>
-            <div className="ms-4">
-              <div className="prof-blk-subhead">12th Grade</div>
-              <div className="ms-4 d-flex">
-                <div className="prof-det">
-                  <div className="prof-det-head">Board</div>
-                  <div className="prof-det-body">
-                    {data.higherSecondary.board}
-                  </div>
-                </div>
-                <div className="prof-det">
-                  <div className="prof-det-head">Percentage</div>
-                  <div className="prof-det-body">
-                    {data.higherSecondary.cgpa}%
-                  </div>
-                </div>
-              </div>
-            </div>
             <div className="ms-4 mt-4">
-              <div className="prof-blk-subhead">Undergraduate Degree</div>
+              <div className="prof-blk-subhead">Program Graduated from CET</div>
               <div className="ms-4 d-flex">
                 <div className="prof-det-small">
                   <div className="prof-det-head">Degree</div>
@@ -111,10 +93,11 @@ function AlumniProfile({ data }) {
                 <div className="prof-det-small">
                   <div className="prof-det-head">Graduation Year</div>
                   <div className="prof-det-body det-small">
-                    {data.expectedGraduationYear}
+                    {data.yearGraduation
+}
                   </div>
                 </div>
-                <div className="ms-3 prof-det-small">
+                {/* <div className="ms-3 prof-det-small">
                   <div className="prof-det-head">Year of Study</div>
                   <div className="prof-det-body det-small">
                     {data.expectedGraduationYear - data.yearOfJoining}
@@ -123,7 +106,7 @@ function AlumniProfile({ data }) {
                 <div className="ms-3 prof-det-small">
                   <div className="prof-det-head">CGPA</div>
                   <div className="prof-det-body det-small">{data.cgpa}</div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -131,10 +114,10 @@ function AlumniProfile({ data }) {
         <div className="profile-right">
           <Accordion defaultActiveKey="0">
             <Accordion.Item eventKey="0">
-              <Accordion.Header>Areas of Interest</Accordion.Header>
+              <Accordion.Header>Domain</Accordion.Header>
               <Accordion.Body>
                 <div className="d-flex flex-wrap">
-                  {data.areasOfInterest.map((interest, i) => (
+                  {data.areasOfInterest?.map((interest, i) => (
                     <div className="interest-box my-2" key={i}>
                       {interest}
                     </div>
@@ -143,40 +126,10 @@ function AlumniProfile({ data }) {
               </Accordion.Body>
             </Accordion.Item>
             <Accordion.Item eventKey="1">
-              <Accordion.Header>Projects</Accordion.Header>
+              <Accordion.Header>Work Experience</Accordion.Header>
               <Accordion.Body>
-                {data.projects.length > 0
-                  ? data.projects.map((proj) => (
-                      <div className="project">
-                        <div className="d-flex justify-content-between  align-items-center">
-                          <div className="d-flex align-items-center ">
-                            <div className="proj-title">{proj.title}</div>
-                            <div className="proj-role ms-2">
-                              ( {proj.role} )
-                            </div>
-                          </div>
-                          <div className="d-flex align-items-center">
-                            <div className="proj-date">
-                              {proj.from} - {proj.to}
-                            </div>
-                          </div>
-                        </div>
-                        <div className="proj-contribution">
-                          {proj.description}
-                        </div>
-                        <div className="proj-domain">
-                          Domain : {proj.domain}
-                        </div>
-                      </div>
-                    ))
-                  : null}
-              </Accordion.Body>
-            </Accordion.Item>
-            <Accordion.Item eventKey="2">
-              <Accordion.Header>Internships</Accordion.Header>
-              <Accordion.Body>
-                {data.internships.length > 0
-                  ? data.internships.map((proj) => (
+                {data.workExperience?.length > 0
+                  ? data.workExperience?.map((proj) => (
                       <div className="project">
                         <div className="d-flex justify-content-between  align-items-center">
                           <div className="d-flex align-items-center ">
@@ -191,9 +144,33 @@ function AlumniProfile({ data }) {
                             </div>
                           </div>
                         </div>
-                        <div className="proj-contribution">
-                          {proj.contribution}
+                        
+                      </div>
+                    ))
+                  : null}
+              </Accordion.Body>
+            </Accordion.Item>
+            <Accordion.Item eventKey="2">
+              <Accordion.Header>Publications</Accordion.Header>
+              <Accordion.Body>
+                {data.publications?.length > 0
+                  ? data.publications?.map((proj) => (
+                      <div className="project">
+                        <div className="d-flex justify-content-between  align-items-center">
+                          <div className="d-flex align-items-center ">
+                            <div className="proj-title">{proj.title}</div>
+                            <div className="proj-role ms-2">
+                              ( {proj.domain} )
+                            </div>
+                          </div>
+                          
                         </div>
+                        <div className="proj-contribution">
+                          {proj.description}
+                        </div>
+                        <a href={proj.link} target="_blank" className="proj-contribution">
+                          {proj.link}
+                        </a>
                       </div>
                     ))
                   : null}
@@ -266,7 +243,7 @@ function AlumniProfile({ data }) {
         name={{ firstName: data.firstName, lastName: data.lastName }}
         showOverlay={showResume}
         closeOverlay={() => setShowResume(false)}
-      /> */}
+      />
     </div>
   );
 }
