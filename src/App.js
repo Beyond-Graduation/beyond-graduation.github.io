@@ -30,6 +30,7 @@ import UpdateProfile from "./pages/Private/UpdateProfile/UpdateProfile";
 import CreateBlog from "./pages/Private/Blogs/CreateBlog";
 import SingleBlog from "./pages/Private/Blogs/SingleBlog";
 import ViewStudentProfile from "./pages/Private/Profile/ViewOtherProfile/ViewStudentProfile";
+import ViewAlumniProfile from "./pages/Private/Profile/ViewOtherProfile/ViewAlumniProfile";
 
 const WithNav = () => {
   return (
@@ -154,6 +155,10 @@ function App() {
             <Route
               path="/student-profile/:userId"
               element={<PrivateRoute comp={ViewStudentProfile} />}
+            />
+            <Route
+              path="/alumni-profile/:userId"
+              element={<PrivateRoute comp={ViewAlumniProfile} />}
             />
             <Route
               path="/blogs/create"
