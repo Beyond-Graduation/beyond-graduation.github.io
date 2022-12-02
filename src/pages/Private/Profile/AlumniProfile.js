@@ -74,30 +74,28 @@ function AlumniProfile({ data }) {
               </div>
             </div>
           </div>
-          <div className="p-person-info pb-5 mb-5 border-0">
-            <div className="ms-4 mt-4">
-              <div className="prof-blk-subhead">Program Graduated from CET</div>
-              <div className="ms-4 d-flex">
-                <div className="prof-det-small">
-                  <div className="prof-det-head">Degree</div>
-                  <div className="prof-det-body det-small">{data.degree}</div>
-                </div>
-                <div className="ms-3 prof-det w-auto">
-                  <div className="prof-det-head">Branch</div>
-                  <div className="prof-det-body prof-det-department">
-                    {data.department}
-                  </div>
+          <div className="p-person-info border-0">
+            <div className="prof-blk-head">Program Graduated from CET</div>
+            <div className="ms-3 d-flex">
+              <div className="prof-det">
+                <div className="prof-det-head">Degree</div>
+                <div className="prof-det-body">{data.degree}</div>
+              </div>
+              <div className="ms-3 prof-det">
+                <div className="prof-det-head">Branch</div>
+                <div className="prof-det-body">
+                  {data.department}
                 </div>
               </div>
-              <div className="ms-4 d-flex">
-                <div className="prof-det-small">
-                  <div className="prof-det-head">Graduation Year</div>
-                  <div className="prof-det-body det-small">
-                    {data.yearGraduation
-}
-                  </div>
+            </div>
+            <div className="ms-3 d-flex">
+              <div className="prof-det-small">
+                <div className="prof-det-head">Graduation Year</div>
+                <div className="prof-det-body det-small">
+                  {data.yearGraduation}
                 </div>
-                {/* <div className="ms-3 prof-det-small">
+              </div>
+              {/* <div className="ms-3 prof-det-small">
                   <div className="prof-det-head">Year of Study</div>
                   <div className="prof-det-body det-small">
                     {data.expectedGraduationYear - data.yearOfJoining}
@@ -107,7 +105,6 @@ function AlumniProfile({ data }) {
                   <div className="prof-det-head">CGPA</div>
                   <div className="prof-det-body det-small">{data.cgpa}</div>
                 </div> */}
-              </div>
             </div>
           </div>
         </div>
@@ -144,7 +141,6 @@ function AlumniProfile({ data }) {
                             </div>
                           </div>
                         </div>
-                        
                       </div>
                     ))
                   : null}
@@ -163,12 +159,15 @@ function AlumniProfile({ data }) {
                               ( {proj.domain} )
                             </div>
                           </div>
-                          
                         </div>
                         <div className="proj-contribution">
                           {proj.description}
                         </div>
-                        <a href={proj.link} target="_blank" className="proj-contribution">
+                        <a
+                          href={proj.link}
+                          target="_blank"
+                          className="proj-contribution"
+                        >
                           {proj.link}
                         </a>
                       </div>
