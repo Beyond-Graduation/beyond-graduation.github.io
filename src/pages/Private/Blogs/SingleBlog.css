@@ -157,3 +157,26 @@
   font-weight: 500;
   cursor: pointer;
 }
+
+.bookmark-btn {
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.3 );
+  font-size: 18px;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  cursor: pointer;
+  position: absolute;
+  top: 7px;
+  left: 0;
+}
+
+.bookmark-btn.active {
+  background-color: rgba(88, 129, 87, 1);
+  color: white;
+}
+
+.bookmark-btn svg {
+  margin-top: 3px;
+}

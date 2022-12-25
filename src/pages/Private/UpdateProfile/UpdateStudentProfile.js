@@ -10,6 +10,8 @@ import FileInput from "../../../components/FileInput/FileInput";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useStateValue } from "../../../reducer/StateProvider";
+import { deleteObject, ref } from "firebase/storage";
+import storage from "../../../firebase";
 
 function UpdateStudentProfile({ data }) {
   const navigate = useNavigate();
@@ -145,6 +147,18 @@ function UpdateStudentProfile({ data }) {
   const handleProfilePicChange = async (url) => {
     const token = localStorage.getItem("authKey");
 
+    if (formDetails.profilePicPath) {
+      var storageRef = ref(storage, formDetails.profilePicPath);
+      deleteObject(storageRef)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.error("Something went wrong !!!");
+        });
+    }
+
     setFormDetails({ ...formDetails, profilePicPath: url });
     await axios({
       method: "post",
@@ -168,6 +182,18 @@ function UpdateStudentProfile({ data }) {
 
   const handleResumeChange = async (url) => {
     const token = localStorage.getItem("authKey");
+
+    if (formDetails.resume) {
+      var storageRef = ref(storage, formDetails.resume);
+      deleteObject(storageRef)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.error("Something went wrong !!!");
+        });
+    }
 
     setFormDetails({ ...formDetails, resume: url });
     await axios({
@@ -264,18 +290,30 @@ function UpdateStudentProfile({ data }) {
                     disabled
                   />
                 </div>
-                <div className="d-flex w-50">
+                <div className="d-flex">
                   <AnimatedInputField
                     name="email"
                     title="Email"
                     disabled
                     defaultValue={data.email}
                   />
-                  {/* <AnimatedInputField
-                    name="phoneNumber"
+                  <AnimatedInputField
+                    name="phone"
                     title="Phone Number"
-                    // onChange={handleChange}
-                  /> */}
+                    defaultValue={data.phone}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="d-flex">
+                  <AnimatedInputField
+                    as="textarea"
+                    name="address"
+                    title="Address"
+                    rows={4}
+                    className="mt-5"
+                    defaultValue={data.address}
+                    onChange={handleChange}
+                  />
                 </div>
               </div>
             </section>
@@ -288,6 +326,7 @@ function UpdateStudentProfile({ data }) {
                   ? "Update Profile Picture"
                   : "Select Profile Picture"
               }
+              content="student-profileImg"
               type="image"
               onUpload={handleProfilePicChange}
               onChange={(e) => {
@@ -588,6 +627,7 @@ function UpdateStudentProfile({ data }) {
             <FileInput
               label={data.resume ? "Update Resume" : "Upload Your Resume"}
               type="file"
+              content="student-resume"
               onUpload={handleResumeChange}
               onChange={(e) => {
                 setResumeFileName(e);

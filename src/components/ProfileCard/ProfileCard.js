@@ -1,13 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import "./ProfileCard.css";
 import avatarIcon from "../../assets/images/avatar.png";
+import { useEffect } from "react";
 
 function ProfileCard({ className, data }) {
+  const [profileImg, setProfileImg] = useState(avatarIcon);
+
+  useEffect(() => {
+    if (data) {
+      setProfileImg(data.profilePicPath);
+    }
+  }, [data]);
   return (
     <div
       className={`profile-main-card d-flex flex-column justify-content-around align-items-center ${className}`}
     >
-      <img src={avatarIcon} alt="" />
+      <img src={profileImg} alt="" />
       <div>
         <div className="name">
           {data.firstName} {data.lastName}

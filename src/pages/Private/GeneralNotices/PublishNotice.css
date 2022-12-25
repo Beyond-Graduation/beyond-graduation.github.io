@@ -1,0 +1,25 @@
+.notices-publish {
+  background-color: rgba(218, 215, 205, 1);
+  padding-top: 5vh;
+  padding-bottom: 12vh;
+  min-height: 100vh;
+}
+
+.notices-publish-cnt {
+  width: 80%;
+  margin: auto;
+  position: relative;
+}
+
+.notices-publish .animated-in:nth-child(2) {
+  max-width: none;
+}
+
+.notices-publish .light-mode textarea {
+  width: 100%;
+  max-width: 800px;
+}
+
+.notices-publish .light-mode.animated-in textarea.form-control {
+  border-radius: 5px 5px 0 0;
+}

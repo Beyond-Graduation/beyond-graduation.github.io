@@ -49,25 +49,25 @@ function Login() {
             type: "SET_USER_ID",
             item: res.data.userId,
           });
-          if (!res.data.userType === "Admin") {
-            await axios({
-              method: "get",
-              url:
-                res.data.userType.toLowerCase() === "student"
-                  ? `student/student_details?userId=${res.data.userId}`
-                  : `alumni/alumni_details?userId=${res.data.userId}`,
-              headers: {
-                Authorization: `bearer ${res.data.token}`,
-              },
-            }).then((res) => {
-              if (res.status === 200) {
-                dispatch({
-                  type: "SET_USER_DATA",
-                  item: res.data,
-                });
-              }
-            });
-          }
+          await axios({
+            method: "get",
+            url:
+              res.data.userType.toLowerCase() === "student"
+                ? `student/student_details?userId=${res.data.userId}`
+                : res.data.userType.toLowerCase() === "alumni"
+                ? `alumni/alumni_details?userId=${res.data.userId}`
+                : `admin/admin_details?userId=${res.data.userId}`,
+            headers: {
+              Authorization: `bearer ${res.data.token}`,
+            },
+          }).then((res) => {
+            if (res.status === 200) {
+              dispatch({
+                type: "SET_USER_DATA",
+                item: res.data,
+              });
+            }
+          });
           toast.success("Login Successfull !!");
           navigate("/dashboard");
         } else {

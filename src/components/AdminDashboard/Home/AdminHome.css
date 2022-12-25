@@ -1,0 +1,72 @@
+.admin-home-head {
+  color: black;
+  font-weight: 500;
+  font-size: calc(1rem + 1vw);
+  width: fit-content;
+  margin-bottom: 10px;
+}
+
+.admin-home-head:after {
+  content: "";
+  display: block;
+  width: 70%;
+  border-bottom: 4px solid rgba(88, 129, 87, 0.893);
+}
+
+.admin-det {
+  margin-right: 30px;
+}
+
+.admin-det-head {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.admin-det-body {
+  width: 250px;
+  background-color: white;
+  padding: 4px 10px;
+  border-radius: 5px;
+  font-size: 18px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  margin: 6px 0 10px 0;
+}
+
+.plat-stats {
+  flex-wrap: wrap;
+  row-gap: 30px;
+  margin: auto;
+  width: 90%;
+  margin-top: 20px;
+}
+
+.stats-card {
+  flex: 1 0 30%;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.stats-card-inner {
+  padding: 25px 0;
+  border-radius: 20px;
+  background-color: white;
+  max-width: 200px;
+  margin: auto;
+  box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.4);
+}
+
+.stats-card svg {
+  font-size: 30px;
+  color: rgba(52, 78, 65, 1);
+}
+
+.stats-card .stat-name {
+  margin: 10px 0;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 100%;
+}
+
+.stats-card .stat-count {
+  font-size: 20px;
+}

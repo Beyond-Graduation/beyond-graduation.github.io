@@ -15,6 +15,11 @@ const reducer = (state, action) => {
         ...state,
         userData: action.item,
       };
+    case "REMOVE_USER_DATA":
+      return {
+        ...state,
+        userData: {},
+      };
     default:
       return state;
   }

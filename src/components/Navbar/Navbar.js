@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { isAuth } from "../../auth/Auth";
 import "./Navbar.css";
@@ -13,11 +13,16 @@ function Navbar() {
   const ref = useRef();
   const checkRef = useRef();
   const overlayRef = useRef();
+  const [profileImg, setProfileImg] = useState(avatarIcon);
 
   const [{ userData, userId }, dispatch] = useStateValue();
 
   const handleLogout = () => {
     isAuth.logout();
+    dispatch({
+      type: "REMOVE_USER_DATA",
+      item: {},
+    });
     navigate("/");
   };
 
@@ -37,6 +42,10 @@ function Navbar() {
       document.removeEventListener("click", handleClickOutside, true);
     };
   }, []);
+
+  useEffect(() => {
+    setProfileImg(userData.profilePicPath);
+  }, [userData]);
 
   return (
     <div className="navbar-main d-flex align-items-center justify-content-between">
@@ -63,6 +72,9 @@ function Navbar() {
             <Link to="/blogs">
               <div className="nav-link">Blogs</div>
             </Link>
+            <Link to="/notices">
+              <div className="nav-link">Notices</div>
+            </Link>
           </>
         ) : null}
         <Link to="/about">
@@ -74,7 +86,7 @@ function Navbar() {
               <div className="profile-btn">
                 <input id="profile-btn" type="checkbox" ref={checkRef} />
                 <div>
-                  <img src={avatarIcon} alt={userData.firstName} />
+                  <img src={profileImg} alt={userData.firstName} />
                   {userData.firstName}
                 </div>
                 <div className="prof-btn-overlay" ref={overlayRef}>

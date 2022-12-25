@@ -14,6 +14,7 @@ function DashboardCarousel({
   userData,
   userType,
   create,
+  bookmark,
   ...props
 }) {
   const carouselRef = useRef();
@@ -26,7 +27,11 @@ function DashboardCarousel({
     },
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
-      items: cardCount ? cardCount : userType === "alumni" ? 2 : 3,
+      items: cardCount
+        ? cardCount
+        : userType === "alumni" && type === "blog"
+        ? 2
+        : 3,
     },
     tablet: {
       breakpoint: { max: 1024, min: 464 },
@@ -65,7 +70,14 @@ function DashboardCarousel({
                 : "lg-carousel"
             }`}
           >
-            {/* <DashBlogCard blogData={data[0]} userData={userData} /> */}
+            {data.length === 0 && bookmark ? (
+              <div className="carousel-empty p-4">
+                <span>No Bookmarked Blogs</span>
+                <Link to="/blogs">
+                  <div className="mt-4 explore-btn">Explore Blogs</div>
+                </Link>
+              </div>
+            ) : null}
             {data.map((blog) => {
               return (
                 <div className="carousel-card">
@@ -79,12 +91,22 @@ function DashboardCarousel({
         </div>
       ) : (
         <Carousel responsive={responsive} infinite={true}>
+          {data.length === 0 ? (
+            <div className="carousel-empty p-4">
+              <span>No Favourite Alumni</span>
+              <Link to="/alumni-profiles">
+                <div className="mt-4 explore-btn">Explore Alumni Profiles</div>
+              </Link>
+            </div>
+          ) : null}
           {data.map((user) => (
             <div className="carousel-card">
               <Link
                 to={
                   userType === "student"
                     ? `/student-profile/${user.userId}`
+                    : userType === "alumni"
+                    ? `/alumni-profile/${user.userId}`
                     : ""
                 }
               >

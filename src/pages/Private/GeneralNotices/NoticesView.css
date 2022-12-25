@@ -1,0 +1,51 @@
+.notices-view {
+  background-color: rgba(218, 215, 205, 1);
+  padding-top: 5vh;
+  padding-bottom: 12vh;
+  min-height: 100vh;
+}
+
+.notices-view-cnt {
+  width: 80%;
+  margin: auto;
+  position: relative;
+}
+
+.notice-heading {
+  color: black;
+  font-weight: 500;
+  font-size: calc(1rem + 2vw);
+  width: fit-content;
+  margin-bottom: 30px;
+}
+
+.notice-heading:after {
+  content: "";
+  display: block;
+  width: 70%;
+  border-bottom: 4px solid rgba(88, 129, 87, 0.893);
+}
+
+.notice-view-card {
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  width: 70%;
+  padding: 20px 3%;
+}
+
+.create-notice-btn {
+  position: absolute;
+  top: 24px;
+  right: 20px;
+  background-color: rgba(58, 90, 64, 1);
+  color: white!important;
+  width: fit-content;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 18px;
+  letter-spacing: 1px;
+  border-radius: 10px;
+  padding: 6px 12px;
+  cursor: pointer;
+  margin: auto;
+}

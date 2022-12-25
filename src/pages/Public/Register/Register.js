@@ -106,6 +106,9 @@ function Register() {
               autoComplete="off"
               placeholder="Name"
               onChange={handleChange}
+              onKeyPress={(e) => {
+                if (e.key === "Enter") handleRegister();
+              }}
             />
             <BsFillPersonFill className="icon-email-name-pswd" />
           </div>
@@ -117,6 +120,9 @@ function Register() {
               autoComplete="off"
               placeholder="Email"
               onChange={handleChange}
+              onKeyPress={(e) => {
+                if (e.key === "Enter") handleRegister();
+              }}
             />
             <HiOutlineMail className="icon-email-name-pswd" />
           </div>
@@ -128,12 +134,18 @@ function Register() {
               placeholder="Password"
               onChange={handleChange}
               ref={passToggleRef}
+              onKeyPress={(e) => {
+                if (e.key === "Enter") handleRegister();
+              }}
             />
             <BiLockAlt className="icon-email-name-pswd" />
             <AiFillEye
               className="icon-eye"
               id="pass"
               onClick={() => togglePassword("pass")}
+              onKeyPress={(e) => {
+                if (e.key === "Enter") handleRegister();
+              }}
             />
           </div>
 

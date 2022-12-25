@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./ProfilesViewCard.css";
 import avatarIcon from "../../assets/images/avatar.png";
 
 function ProfilesViewCard({ data }) {
+  const [profileImg, setProfileImg] = useState(avatarIcon);
+
+  useEffect(() => {
+    setProfileImg(data.profilePicPath);
+  }, [data]);
+
   return (
     <div className="profile-view-card-main d-flex align-items-center">
-      <img src={avatarIcon} alt="" />
+      <img src={profileImg} alt="" />
       <div className="prof-view-card-inner">
         <div className="pv-c-name">
           {data.firstName} {data.lastName}

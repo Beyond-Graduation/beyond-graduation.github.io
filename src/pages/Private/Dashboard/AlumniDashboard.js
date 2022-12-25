@@ -13,6 +13,13 @@ function AlumniDashboard() {
   const [studentData, setStudentData] = useState([]);
   const [alumniData, setAlumniData] = useState([]);
   const [blogData, setBlogData] = useState([]);
+  const [profileImg, setProfileImg] = useState(avatarIcon);
+  const [myBlogs, setMyBlogs] = useState([]);
+
+  const getMyBlogs = () => {
+    var userBlogs = blogData.filter((x) => x.userId === userData.userId);
+    setMyBlogs(userBlogs);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -61,11 +68,19 @@ function AlumniDashboard() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    if (blogData.length > 0) getMyBlogs();
+  }, [blogData]);
+
+  useEffect(() => {
+    setProfileImg(userData.profilePicPath);
+  }, [userData]);
+
   return (
     <div className="dashboard">
       <div className="dashboard-container">
         <div className="dashboard-heading d-flex align-items-center">
-          <img src={avatarIcon} alt="" />
+          <img src={profileImg} alt="" />
           <h1>Hi {userData.firstName},</h1>
         </div>
         <div className="dash-main-cnt">
@@ -75,7 +90,7 @@ function AlumniDashboard() {
               <DashboardCarousel
                 type="blog"
                 className="dash-sm-carousel"
-                data={blogData}
+                data={myBlogs}
                 userData={alumniData}
                 userType="alumni"
               />
@@ -123,7 +138,7 @@ function AlumniDashboard() {
             data={blogData}
             userData={alumniData}
             cardCount={4}
-            userType="alumni" 
+            userType="alumni"
             create={false}
           />
         </div>

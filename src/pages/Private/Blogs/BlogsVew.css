@@ -8,6 +8,7 @@
 .blogs-view-cnt {
   width: 80%;
   margin: auto;
+  position: relative;
 }
 
 .blogs-view-list {

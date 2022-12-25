@@ -12,7 +12,10 @@ import { toast } from "react-toastify";
 function StudentDashboard() {
   const [{ userData, userId }, dispatch] = useStateValue();
   const [alumniData, setAlumniData] = useState([]);
+  const [favAlumni, setFavAlumni] = useState([]);
+  const [bookmarkedBlogs, setBookmarkedBlogs] = useState([]);
   const [blogData, setBlogData] = useState([]);
+  const [profileImg, setProfileImg] = useState(avatarIcon);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,13 +51,34 @@ function StudentDashboard() {
     fetchData();
   }, []);
 
-  useEffect(() => {}, [alumniData, blogData]);
+  const getFavAlumniList = () => {
+    const fav = alumniData.filter((alu) =>
+      userData.favAlumId.includes(alu.userId)
+    );
+    setFavAlumni(fav);
+  };
+
+  const getBookmarkedBlogs = () => {
+    const bookmarked = blogData.filter((blog) =>
+      userData.bookmarkBlog.includes(blog.blogId)
+    );
+    setBookmarkedBlogs(bookmarked);
+  };
+
+  useEffect(() => {
+    if (alumniData && userData.favAlumId?.length > 0) getFavAlumniList();
+    if (blogData && userData.bookmarkBlog?.length > 0) getBookmarkedBlogs();
+  }, [alumniData, blogData]);
+
+  useEffect(() => {
+    setProfileImg(userData.profilePicPath);
+  }, [userData]);
 
   return (
     <div className="dashboard">
       <div className="dashboard-container">
         <div className="dashboard-heading d-flex align-items-center">
-          <img src={avatarIcon} alt="" />
+          <img src={profileImg} alt="" />
           <h1>Hi {userData.firstName},</h1>
         </div>
         <div className="dash-main-cnt">
@@ -64,15 +88,17 @@ function StudentDashboard() {
               <DashboardCarousel
                 type="profile"
                 className="dash-sm-carousel"
-                data={alumniData}
-              />
+                data={favAlumni}
+                userType="alumni"
+                />
             </div>
             <div className="carousel-container">
               <div className="carousel-heading">Bookmarked Blogs</div>
               <DashboardCarousel
                 type="blog"
+                bookmark={true}
                 className="dash-sm-carousel"
-                data={blogData}
+                data={bookmarkedBlogs}
                 userData={alumniData}
               />
             </div>
@@ -100,6 +126,7 @@ function StudentDashboard() {
             className="dash-lg-carousel"
             cardCount={4}
             data={alumniData}
+            userType="alumni"
           />
         </div>
         <div className="carousel-container">

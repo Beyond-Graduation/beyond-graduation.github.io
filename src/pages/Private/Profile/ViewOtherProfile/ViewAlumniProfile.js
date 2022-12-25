@@ -1,31 +1,45 @@
-// import React from 'react'
-
-// function ViewAlumniProfile() {
-//   return (
-// 	<div>ViewAlumniProfile</div>
-//   )
-// }
-
-// export default ViewAlumniProfile
-
-
 import React, { useEffect, useState } from "react";
 import "./ViewOtherProfile.css";
 import { useParams } from "react-router-dom";
 import axios from "../../../../components/axios";
 import { toast } from "react-toastify";
 import { Accordion } from "react-bootstrap";
-import { AiOutlineFileDone } from "react-icons/ai";
+import { AiFillHeart, AiOutlineFileDone, AiOutlineHeart } from "react-icons/ai";
 import FileViewOverlay from "../../../../components/FileViewOverlay/FileViewOverlay";
+import { useStateValue } from "../../../../reducer/StateProvider";
 
 function ViewStudentProfile() {
+  const [{ userData }, dispatch] = useStateValue();
   const { userId } = useParams();
   const [data, setData] = useState({});
   const [showResume, setShowResume] = useState(false);
+  const userType = localStorage.getItem("userType");
+  const token = localStorage.getItem("authKey");
+  const [isFav, setIsFav] = useState(false);
+
+  const toggleFavourite = async () => {
+    axios({
+      method: "post",
+      url: `student/favAlumAdd`,
+      data: { alumId: userId },
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        setIsFav(!isFav)
+        dispatch({
+          type: "SET_USER_DATA",
+          item: res.data,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Something went wrong!!");
+      });
+  };
 
   useEffect(() => {
-    const token = localStorage.getItem("authKey");
-
     const getData = async () => {
       await axios({
         method: "get",
@@ -47,7 +61,7 @@ function ViewStudentProfile() {
   }, []);
 
   useEffect(() => {
-    console.log(data);
+    if (data.isFavourite) setIsFav(true);
   }, [data]);
 
   return (
@@ -59,6 +73,24 @@ function ViewStudentProfile() {
             <div className="profile-top-name">
               {data.firstName} {data.lastName}
             </div>
+          </div>
+          <div>
+            {userType.toLowerCase() === "student" ? (
+              <div
+                className={`fav-btn ${isFav ? "active" : ""}`}
+                onClick={toggleFavourite}
+              >
+                {isFav ? (
+                  <div className="d-flex align-items-center">
+                    <AiFillHeart className="me-2" /> unfavourite
+                  </div>
+                ) : (
+                  <div className="d-flex align-items-center">
+                    <AiOutlineHeart className="me-2" /> FAVOURITE
+                  </div>
+                )}
+              </div>
+            ) : null}
           </div>
         </div>
         <div className="d-flex">
@@ -84,7 +116,7 @@ function ViewStudentProfile() {
             </div>
             <div className="p-person-info pb-5 mb-5 border-0">
               <div className="prof-blk-head">Program Graduated from CET</div>
-              
+
               <div className="ms-4 mt-4">
                 <div className="prof-blk-subhead">Undergraduate Degree</div>
                 <div className="ms-4 d-flex">
@@ -106,7 +138,6 @@ function ViewStudentProfile() {
                       {data.yearGraduation}
                     </div>
                   </div>
-                  
                 </div>
               </div>
             </div>
@@ -147,7 +178,6 @@ function ViewStudentProfile() {
                           <div className="proj-contribution">
                             {proj.description}
                           </div>
-                          
                         </div>
                       ))
                     : "Nothing to show"}
@@ -156,31 +186,31 @@ function ViewStudentProfile() {
               <Accordion.Item eventKey="2">
                 <Accordion.Header>Publications</Accordion.Header>
                 <Accordion.Body>
-                {data.publications?.length > 0
-                  ? data.publications?.map((proj) => (
-                      <div className="project">
-                        <div className="d-flex justify-content-between  align-items-center">
-                          <div className="d-flex align-items-center ">
-                            <div className="proj-title">{proj.title}</div>
-                            <div className="proj-role ms-2">
-                              ( {proj.domain} )
+                  {data.publications?.length > 0
+                    ? data.publications?.map((proj) => (
+                        <div className="project">
+                          <div className="d-flex justify-content-between  align-items-center">
+                            <div className="d-flex align-items-center ">
+                              <div className="proj-title">{proj.title}</div>
+                              <div className="proj-role ms-2">
+                                ( {proj.domain} )
+                              </div>
                             </div>
                           </div>
+                          <div className="proj-contribution">
+                            {proj.description}
+                          </div>
+                          <a
+                            href={proj.link}
+                            target="_blank"
+                            className="proj-contribution"
+                            rel="noreferrer"
+                          >
+                            {proj.link}
+                          </a>
                         </div>
-                        <div className="proj-contribution">
-                          {proj.description}
-                        </div>
-                        <a
-                          href={proj.link}
-                          target="_blank"
-                          className="proj-contribution"
-                        >
-                          {proj.link}
-                        </a>
-                      </div>
-                    ))
-                  : null}
-                   
+                      ))
+                    : null}
                 </Accordion.Body>
               </Accordion.Item>
               <Accordion.Item eventKey="3">

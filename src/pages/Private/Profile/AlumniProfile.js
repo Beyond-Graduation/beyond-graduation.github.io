@@ -61,16 +61,13 @@ function AlumniProfile({ data }) {
               </div>
               <div className="prof-det">
                 <div className="prof-det-head">Phone Number</div>
-                <div className="prof-det-body">9999999999</div>
+                <div className="prof-det-body">{data.phone}</div>
               </div>
             </div>
             <div className="prof-address-box d-flex align-items-center">
               <div className="prof-det-head mt-0">Address</div>
               <div className="prof-address">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Mollitia quaeratLorem ipsum dolor sit amet consectetur
-                adipisicing elit. Mollitia quaerat, neque quibusdam nostrum
-                pariatur et fugit,
+                {data.address ? data.address : "Address not provided"}
               </div>
             </div>
           </div>
@@ -83,9 +80,7 @@ function AlumniProfile({ data }) {
               </div>
               <div className="ms-3 prof-det">
                 <div className="prof-det-head">Branch</div>
-                <div className="prof-det-body">
-                  {data.department}
-                </div>
+                <div className="prof-det-body">{data.department}</div>
               </div>
             </div>
             <div className="ms-3 d-flex">
@@ -143,7 +138,7 @@ function AlumniProfile({ data }) {
                         </div>
                       </div>
                     ))
-                  : null}
+                  : "No work experience provided"}
               </Accordion.Body>
             </Accordion.Item>
             <Accordion.Item eventKey="2">
@@ -167,12 +162,13 @@ function AlumniProfile({ data }) {
                           href={proj.link}
                           target="_blank"
                           className="proj-contribution"
+                          rel="noreferrer"
                         >
                           {proj.link}
                         </a>
                       </div>
                     ))
-                  : null}
+                  : "No publications provided"}
               </Accordion.Body>
             </Accordion.Item>
             <Accordion.Item eventKey="3">

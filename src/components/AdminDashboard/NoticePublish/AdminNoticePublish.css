@@ -1,0 +1,41 @@
+.admin-notice-pub-head {
+  color: black;
+  font-weight: 500;
+  font-size: calc(1rem + 1vw);
+  width: fit-content;
+  margin-bottom: 10px;
+}
+
+.admin-notice-pub-head:after {
+  content: "";
+  display: block;
+  width: 70%;
+  border-bottom: 4px solid rgba(88, 129, 87, 0.893);
+}
+
+.admin-notice-pub .animated-in:nth-child(2) {
+  max-width: none;
+}
+
+.admin-notice-pub .light-mode textarea {
+  width: 100%;
+  max-width: 800px;
+}
+
+.admin-notice-pub .light-mode.animated-in textarea.form-control {
+  border-radius: 5px 5px 0 0;
+}
+
+.publish-btn {
+  background-color: rgba(58, 90, 64, 1);
+  color: white!important;
+  width: fit-content;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 20px;
+  letter-spacing: 1px;
+  border-radius: 20px;
+  padding: 10px 80px;
+  cursor: pointer;
+  margin: auto;
+}

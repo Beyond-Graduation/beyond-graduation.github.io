@@ -36,7 +36,7 @@
 .animated-in-ip:focus ~ .animated-in-label,
 .animate-input .animated-in-label {
   font-size: 16px;
-  top: -18px;
+  top: -12px;
   transform: none;
 }
 
@@ -115,12 +115,12 @@
 }
 
 .light-mode .animated-in-label {
-  color: rgba(58, 90, 64, 1);
+  color: rgb(42, 64, 46);
 }
 
 .light-mode.animated-in .animated-in-ip {
   border-bottom: 2px solid rgba(52, 78, 65, 1) !important;
-  color: rgba(58, 90, 64, 1) !important;
+  color: rgb(42, 64, 46) !important;
 }
 
 .light-mode.animated-in textarea.form-control {

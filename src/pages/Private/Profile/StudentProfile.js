@@ -61,17 +61,12 @@ function StudentProfile({ data }) {
               </div>
               <div className="prof-det">
                 <div className="prof-det-head">Phone Number</div>
-                <div className="prof-det-body">9999999999</div>
+                <div className="prof-det-body">{data.phone}</div>
               </div>
             </div>
             <div className="prof-address-box d-flex align-items-center">
               <div className="prof-det-head mt-0">Address</div>
-              <div className="prof-address">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Mollitia quaeratLorem ipsum dolor sit amet consectetur
-                adipisicing elit. Mollitia quaerat, neque quibusdam nostrum
-                pariatur et fugit,
-              </div>
+              <div className="prof-address">{data.address ? data.address : "Address not provided"}</div>
             </div>
           </div>
           <div className="p-person-info pb-5 mb-5 border-0">

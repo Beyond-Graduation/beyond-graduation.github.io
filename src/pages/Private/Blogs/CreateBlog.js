@@ -8,11 +8,14 @@ import axios from "../../../components/axios";
 import AnimatedInputField from "../../../components/AnimatedInputField/AnimatedInputField";
 import { MutliDropdown } from "../../../components/CustomDropdown/CustomDropdown";
 import { useNavigate } from "react-router-dom";
+import { deleteObject, ref } from "firebase/storage";
+import storage from "../../../firebase";
 
 function CreateBlog() {
   const [{ userData, userId }, dispatch] = useStateValue();
   const editorRef = useRef();
   const [blogImg, setBlogImg] = useState("");
+  const [creating, setCreating] = useState(false);
   const navigate = useNavigate();
 
   const [blogDetails, setBlogDetails] = useState({
@@ -53,44 +56,66 @@ function CreateBlog() {
     setBlogDetails({ ...blogDetails, [e.target.name]: e.target.value });
   };
 
-  const onSubmitBlog = async () => {
-    let token = localStorage.getItem("authKey");
-    if (
-      blogDetails.title === "" ||
-      blogDetails.domain === "" ||
-      blogDetails.abstract === ""
-    ) {
-      toast.error("Please fill all the fields");
-      return;
-    } else if (editorRef.current.getContent({ format: "text" }).length < 500) {
-      toast.error("Blog must contain at least 500 characters");
-      return;
-    } else if (blogDetails.abstract.length < 30) {
-      toast.error("Description must contain at least 30 characters");
-      return;
-    } else if (blogDetails.abstract.length > 200) {
-      toast.error("Description must contain less than 200 characters");
-      return;
-    } else if (blogDetails.imagePath === "") {
-      toast.error("Upload Blog Image !!");
-      return;
+  const onBlogImageChange = (e) => {
+    if (blogDetails.imagePath) {
+      var storageRef = ref(storage, blogDetails.imagePath);
+      deleteObject(storageRef)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.error("Something went wrong !!!");
+        });
     }
 
-    await axios({
-      method: "post",
-      url: "blog/create",
-      data: blogDetails,
-      headers: {
-        Authorization: `bearer ${token}`,
-      },
-    })
-      .then((res) => {
-        toast.success("Blog published successfully");
-        navigate("/dashboard");
+    setBlogDetails({ ...blogDetails, imagePath: e });
+  };
+
+  const onSubmitBlog = async () => {
+    if (!creating) {
+      let token = localStorage.getItem("authKey");
+      if (
+        blogDetails.title === "" ||
+        blogDetails.domain === "" ||
+        blogDetails.abstract === ""
+      ) {
+        toast.error("Please fill all the fields");
+        return;
+      } else if (
+        editorRef.current.getContent({ format: "text" }).length < 500
+      ) {
+        toast.error("Blog must contain at least 500 characters");
+        return;
+      } else if (blogDetails.abstract.length < 30) {
+        toast.error("Description must contain at least 30 characters");
+        return;
+      } else if (blogDetails.abstract.length > 200) {
+        toast.error("Description must contain less than 200 characters");
+        return;
+      } else if (blogDetails.imagePath === "") {
+        toast.error("Upload Blog Image !!");
+        return;
+      }
+
+      setCreating(true);
+      await axios({
+        method: "post",
+        url: "blog/create",
+        data: blogDetails,
+        headers: {
+          Authorization: `bearer ${token}`,
+        },
       })
-      .catch((e) => {
-        toast.error("Something went wrong !!");
-      });
+        .then((res) => {
+          toast.success("Blog published successfully");
+          navigate("/dashboard");
+        })
+        .catch((e) => {
+          toast.error("Something went wrong !!");
+          setCreating(false);
+        });
+    }
   };
 
   const domainOptions = [
@@ -111,7 +136,7 @@ function CreateBlog() {
 
   useEffect(() => {
     if (localStorage.getItem("userType") !== "alumni") navigate("/dashboard");
-  }, [blogDetails]);
+  }, []);
 
   return (
     <div className="create-blog">
@@ -150,10 +175,9 @@ function CreateBlog() {
               <div className="blog-img-upload ms-5 mt-4 d-flex align-items-center justify-content-center">
                 <FileInput
                   label="Upload Blog Image"
+                  content="blog"
                   type="image"
-                  onUpload={(e) => {
-                    setBlogDetails({ ...blogDetails, imagePath: e });
-                  }}
+                  onUpload={onBlogImageChange}
                   onChange={(e) => {
                     if (!e.target.files[0].name.match(/.(jpg|jpeg|png|gif)$/i))
                       alert("not an image");

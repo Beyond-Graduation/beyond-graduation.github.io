@@ -31,6 +31,8 @@ import CreateBlog from "./pages/Private/Blogs/CreateBlog";
 import SingleBlog from "./pages/Private/Blogs/SingleBlog";
 import ViewStudentProfile from "./pages/Private/Profile/ViewOtherProfile/ViewStudentProfile";
 import ViewAlumniProfile from "./pages/Private/Profile/ViewOtherProfile/ViewAlumniProfile";
+import NoticesView from "./pages/Private/GeneralNotices/NoticesView";
+import PublishNotice from "./pages/Private/GeneralNotices/PublishNotice";
 
 const WithNav = () => {
   return (
@@ -93,7 +95,9 @@ function App() {
         url:
           userType.toLowerCase() === "student"
             ? `student/student_details?userId=${userId}`
-            : `alumni/alumni_details?userId=${userId}`,
+            : userType.toLowerCase() === "alumni"
+            ? `alumni/alumni_details?userId=${userId}`
+            : `admin/admin_details?userId=${userId}`,
         headers: {
           Authorization: `bearer ${token}`,
         },
@@ -108,7 +112,7 @@ function App() {
       });
     };
 
-    if (token && userId && userType !== "admin") {
+    if (token && userId) {
       getData();
     }
   }, [dispatch]);
@@ -169,6 +173,14 @@ function App() {
               element={<PrivateRoute comp={SingleBlog} />}
             />
             <Route path="/blogs" element={<PrivateRoute comp={BlogsView} />} />
+            <Route
+              path="/notices/publish"
+              element={<PrivateRoute comp={PublishNotice} />}
+            />
+            <Route
+              path="/notices"
+              element={<PrivateRoute comp={NoticesView} />}
+            />
             <Route path="/about" element={<About />} />
             <Route path="/" element={<PublicRoute comp={Home} />} />
           </Route>

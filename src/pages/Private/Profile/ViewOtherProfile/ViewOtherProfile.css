@@ -1,11 +1,31 @@
 .view-profile {
   min-height: calc(100vh - 70px);
   background-color: rgba(218, 215, 205, 1);
-  padding-top: 5vh;
+  padding-top: 1vh;
   user-select: none;
 }
 
 .view-profile .prof-det.email .prof-det-body {
 	max-width: none;
-	width: fit-content;
+  min-width: 250px;
+}
+
+.fav-btn {
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.3 );
+  font-size: 18px;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.fav-btn.active {
+  background-color: rgba(88, 129, 87, 1);
+  color: white;
+}
+
+.fav-btn svg {
+  margin-top: 3px;
 }

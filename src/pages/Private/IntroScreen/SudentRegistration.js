@@ -10,11 +10,13 @@ import { useNavigate } from "react-router-dom";
 import { isAuth } from "../../../auth/Auth";
 import axios from "../../../components/axios";
 import { toast } from "react-toastify";
-import { saveAs } from "file-saver";
 import FileInput from "../../../components/FileInput/FileInput";
+import { deleteObject, ref } from "firebase/storage";
+import storage from "../../../firebase";
 
 function StudentRegistration({ state }) {
   const navigate = useNavigate();
+  const [registering, setRegistering] = useState(false);
   const [resumeFileName, setResumeFileName] = useState("");
   const [profilePic, setProfilePic] = useState(avatarIcon);
 
@@ -33,6 +35,7 @@ function StudentRegistration({ state }) {
     gender: "",
     profilePicPath: "",
     resume: "",
+    admissionId: "",
   });
 
   const handleChange = (e) => {
@@ -139,44 +142,72 @@ function StudentRegistration({ state }) {
   };
 
   const handleProfilePicChange = (url) => {
+    if (formDetails.profilePicPath) {
+      var storageRef = ref(storage, formDetails.profilePicPath);
+      deleteObject(storageRef)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.error("Something went wrong !!!");
+        });
+    }
     setFormDetails({ ...formDetails, profilePicPath: url });
   };
 
   const handleResumeChange = (url) => {
+    if (formDetails.resume) {
+      var storageRef = ref(storage, formDetails.resume);
+      deleteObject(storageRef)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.error("Something went wrong !!!");
+        });
+    }
+
     setFormDetails({ ...formDetails, resume: url });
   };
 
   const onRegister = async () => {
-    if (
-      formDetails.firstName === "" ||
-      formDetails.lastName === "" ||
-      formDetails.email === "" ||
-      formDetails.password === "" ||
-      formDetails.department === "" ||
-      formDetails.yearOfJoining === 0 ||
-      formDetails.expectedGraduationYear === 0 ||
-      formDetails.areasOfInterest.length === 0 ||
-      formDetails.higherSecondary.board === "" ||
-      formDetails.higherSecondary.cgpa === 0 ||
-      formDetails.degree === "" ||
-      formDetails.gender === ""
-    ) {
-      toast.error("Please fill all the fields");
-      return;
-    }
-    await axios({
-      method: "post",
-      url: "student/signup",
-      data: formDetails,
-    })
-      .then((res) => {
-        isAuth.registering = false;
-        toast.success("Registration Successful !!");
-        navigate("/login");
+    if (!registering) {
+      setRegistering(true);
+      if (
+        formDetails.firstName === "" ||
+        formDetails.lastName === "" ||
+        formDetails.email === "" ||
+        formDetails.password === "" ||
+        formDetails.department === "" ||
+        formDetails.yearOfJoining === 0 ||
+        formDetails.expectedGraduationYear === 0 ||
+        formDetails.areasOfInterest.length === 0 ||
+        formDetails.higherSecondary.board === "" ||
+        formDetails.higherSecondary.cgpa === 0 ||
+        formDetails.degree === "" ||
+        formDetails.gender === ""
+      ) {
+        toast.error("Please fill all the fields");
+        setRegistering(false);
+        return;
+      }
+      await axios({
+        method: "post",
+        url: "student/signup",
+        data: formDetails,
       })
-      .catch((e) => {
-        toast.error("Something went wrong !!");
-      });
+        .then((res) => {
+          isAuth.registering = false;
+          toast.success("Registration Successful !!");
+          navigate("/login");
+        })
+        .catch((e) => {
+          toast.error("Something went wrong !!");
+          setRegistering(false);
+        });
+    }
   };
 
   // const getFile = (e) => {
@@ -257,6 +288,12 @@ function StudentRegistration({ state }) {
                     onChange={handleChange}
                   /> */}
                 </div>
+                <div className="d-flex w-50">
+                  <AnimatedInputField
+                    name="admissionId"
+                    title="Admission Number (CET)"
+                  />
+                </div>
               </div>
             </section>
           </div>
@@ -264,6 +301,7 @@ function StudentRegistration({ state }) {
             <img src={profilePic} alt="" className="mb-4" />
             <FileInput
               label="Select Profile Picture"
+              content="student-profileImg"
               type="image"
               onUpload={handleProfilePicChange}
               onChange={(e) => {
@@ -272,22 +310,6 @@ function StudentRegistration({ state }) {
                 else setProfilePic(URL.createObjectURL(e.target.files[0]));
               }}
             />
-            {/* <div class="image-input">
-              <input
-                type="file"
-                name="image-input"
-                id="image-input"
-                class="image-input__input"
-                onChange={(e) => {
-                  if (!e.target.files[0].name.match(/.(jpg|jpeg|png|gif)$/i))
-                    alert("not an image");
-                  else setProfilePic(URL.createObjectURL(e.target.files[0]));
-                }}
-              />
-              <label class="image-input__label" for="image-input">
-                <span>Upload a profile picture</span>
-              </label>
-            </div> */}
           </div>
         </div>
         <section className="intro-section mt-5">
@@ -360,6 +382,7 @@ function StudentRegistration({ state }) {
             <FileInput
               label="Upload Your Resume"
               type="file"
+              content="student-resume"
               onUpload={handleResumeChange}
               onChange={(e) => {
                 setResumeFileName(e);
@@ -367,22 +390,6 @@ function StudentRegistration({ state }) {
             />
             <span className="uploaded-file-name">{resumeFileName}</span>
           </div>
-          {/* <div className="m-4 mt-3">
-            <div class="file-input">
-              <input
-                type="file"
-                name="file-input"
-                id="file-input"
-                class="file-input__input"
-                onChange={getFile}
-              />
-              <label class="file-input__label" for="file-input">
-                <span>Upload Your Resume</span>
-                <img src={uploadIcon} alt="Upload Resume" />
-              </label>
-              <span className="uploaded-file-name">{resumeFileName}</span>
-            </div>
-          </div> */}
         </section>
         <div className="intro-reg-btn" onClick={onRegister}>
           register

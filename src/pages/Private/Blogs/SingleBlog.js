@@ -1,18 +1,14 @@
 import React, { useEffect, useRef } from "react";
 import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "../../../components/axios";
 import parse from "html-react-parser";
 import "./SingleBlog.css";
 import { AiFillLike } from "react-icons/ai";
-import { useStateValue } from "../../../reducer/StateProvider";
-import { getData } from "../../../App";
-import { BsFillReplyFill } from "react-icons/bs";
+import { BsBookmark, BsBookmarkFill, BsFillReplyFill } from "react-icons/bs";
 
 function SingleBlog() {
-  const [{ userData, userId }, dispatch] = useStateValue();
-  const navigate = useNavigate();
   const [childCommentOpen, setChildCommentOpen] = useState([]);
 
   const { blogId } = useParams();
@@ -23,6 +19,7 @@ function SingleBlog() {
   const [childComments, setChildComments] = useState({});
   const [postCommentEnabled, setPostCommentEnabled] = useState(true);
   const [blogLiked, setBlogLiked] = useState(false);
+  const [isBookmarked, setIsBookmarked] = useState(false);
 
   const commentRef = useRef();
   const childCommentRef = useRef([]);
@@ -110,7 +107,6 @@ function SingleBlog() {
     const token = localStorage.getItem("authKey");
     let promises = [];
     for (var i = 0; i < comments.length; i++) {
-      const cId = comments[i].commentId;
       promises.push(
         axios({
           method: "get",
@@ -119,13 +115,6 @@ function SingleBlog() {
             Authorization: `bearer ${token}`,
           },
         })
-        // .then((res) => {
-        //   setChildComments({ ...childComments, [cId]: res.data });
-        // })
-        // .catch((err) => {
-        //   console.log(err);
-        //   toast.error("Something went wrong!!");
-        // })
       );
     }
     Promise.all(promises)
@@ -163,11 +152,25 @@ function SingleBlog() {
         Authorization: `bearer ${token}`,
       },
     })
+      .then((res) => {})
+      .catch((err) => {
+        console.log(err);
+        toast.error("Something went wrong!!");
+      });
+  };
+
+  const bookmarkBlog = async () => {
+    const token = localStorage.getItem("authKey");
+    axios({
+      method: "post",
+      url: `blog/bookmark`,
+      data: { blogId: blogId },
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
+    })
       .then((res) => {
-        // dispatch({
-        //   type: "SET_USER_DATA",
-        //   item: res.data,
-        // });
+        setIsBookmarked(!isBookmarked);
       })
       .catch((err) => {
         console.log(err);
@@ -202,6 +205,7 @@ function SingleBlog() {
 
   useEffect(() => {
     setBlogLiked(blogData.isLiked);
+    setIsBookmarked(blogData.isBookmarked);
   }, [blogData]);
 
   useEffect(() => {
@@ -212,6 +216,21 @@ function SingleBlog() {
     <div className="single-blog">
       <div className="single-blog-cnt">
         <div className="single-blog-main">
+          <div
+            className={`bookmark-btn ${isBookmarked ? "active" : ""}`}
+            onClick={bookmarkBlog}
+          >
+            {isBookmarked ? (
+              <div className="d-flex align-items-center">
+                <BsBookmarkFill className="me-2" /> remove bookmark
+              </div>
+            ) : (
+              <div className="d-flex align-items-center">
+                <BsBookmark className="me-2" /> bookmark
+              </div>
+            )}
+          </div>
+
           <div
             className={`blog-like-btn d-flex align-items-center ${
               blogLiked ? "active" : ""

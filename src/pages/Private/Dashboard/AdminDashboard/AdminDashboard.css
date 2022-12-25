@@ -3,6 +3,7 @@
   min-height: 100vh;
   min-width: 100vw;
   padding: 2%;
+  position: relative;
 }
 
 .admin-dash-left {
@@ -10,7 +11,7 @@
 }
 
 .admin-dash-right {
-  padding: 2% 4vh;
+  padding: 2% 4vw;
   width: 80%;
   background-color: rgba(163, 177, 138, 1);
   border-radius: 20px 0 0 20px;

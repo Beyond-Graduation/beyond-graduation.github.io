@@ -6,14 +6,18 @@ import axios from "../../../../components/axios";
 import { FaPowerOff } from "react-icons/fa";
 import { isAuth } from "../../../../auth/Auth";
 import { useNavigate } from "react-router-dom";
-
-const Sample = () => {
-  return <></>;
-};
+import AdminHome from "../../../../components/AdminDashboard/Home/AdminHome";
+import { useStateValue } from "../../../../reducer/StateProvider";
+import UnderConstruction from "../../../../components/AdminDashboard/UnderConstruction/UnderConstruction";
+import AdminNoticePublish from '../../../../components/AdminDashboard/NoticePublish/AdminNoticePublish';
+import AdminNoticeView from "../../../../components/AdminDashboard/AdminNoticeView/AdminNoticeView";
+import AdminNoticeVerification from "../../../../components/AdminDashboard/AdminNoticeVerification/AdminNoticeVerification";
 
 const AdminDashboard = () => {
+  const [{ userData, userId }, dispatch] = useStateValue();
   const navigate = useNavigate();
-  const [activeMenu, setActiveMenu] = useState(0);
+  const [activeMenu, setActiveMenu] = useState(1);
+  const [profImg, setProfImg] = useState(avatarIcon);
 
   const [pending, setPending] = useState([]);
   const token = localStorage.getItem("authKey");
@@ -33,6 +37,10 @@ const AdminDashboard = () => {
 
   const handleLogout = () => {
     isAuth.logout();
+    dispatch({
+      type: "REMOVE_USER_DATA",
+      item: {},
+    });
     navigate("/");
   };
 
@@ -40,10 +48,14 @@ const AdminDashboard = () => {
     getData();
   }, []);
 
+  useEffect(() => {
+    setProfImg(userData.profilePicPath);
+  }, [userData]);
+
   const menuOptions = [
     {
       name: "Home",
-      component: <Sample />,
+      component: <AdminHome data={userData} />,
     },
     {
       name: "Alumni Verification",
@@ -51,20 +63,20 @@ const AdminDashboard = () => {
     },
     {
       name: "Notices Verification",
-      component: <Sample />,
+      component: <AdminNoticeVerification />,
     },
     {
       name: "Notice Publication",
-      component: <Sample />,
+      component: <AdminNoticePublish />,
     },
     {
       name: "Notices View",
-      component: <Sample />,
+      component: <AdminNoticeView />,
     },
-    {
-      name: "Data Modification",
-      component: <Sample />,
-    },
+    // {
+    //   name: "Data Modification",
+    //   component: <UnderConstruction />,
+    // },
   ];
 
   return (
@@ -73,7 +85,7 @@ const AdminDashboard = () => {
         <div className="d-flex flex-column justify-content-between h-100">
           <div>
             <div className="admin-profile-icon d-flex align-items-center ms-4">
-              <img src={avatarIcon} alt="" />
+              <img src={profImg} alt="" />
               <span>Admin</span>
             </div>
             <div className="admin-nav mt-5 ms-4">

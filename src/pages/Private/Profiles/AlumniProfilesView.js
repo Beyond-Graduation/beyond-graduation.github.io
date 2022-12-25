@@ -1,10 +1,11 @@
 import React, { useEffect, useRef } from "react";
 import { useState } from "react";
-import "./ProfilesView.css"
+import "./ProfilesView.css";
 import { FaFilter, FaSearch, FaBan } from "react-icons/fa";
 import axios from "../../../components/axios";
 import ProfilesViewCard from "../../../components/ProfilesViewCard/ProfilesViewCard";
 import Select from "react-select";
+import { Link } from "react-router-dom";
 
 function AlumniProfilesView() {
   const [alumniData, setAlumniData] = useState([]);
@@ -197,7 +198,11 @@ function AlumniProfilesView() {
         </div>
         <div className="profiles-view-list mt-5">
           {searchAlumniData.map((alumni) => (
-            <ProfilesViewCard key={alumni.__id} data={alumni} />
+            <Link
+              to={`/alumni-profile/${alumni.userId}`}
+            >
+              <ProfilesViewCard key={alumni.__id} data={alumni} />
+            </Link>
           ))}
           {/* {searchAlumniData.map((alumni) => (
             <ProfilesViewCard key={alumni.__id} data={alumni} />

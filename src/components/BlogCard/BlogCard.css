@@ -7,6 +7,10 @@
   box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
 }
 
+.blog-card-main * {
+  color: black;
+}
+
 .blog-card-img {
   width: 280px;
   height: 150px;
@@ -41,7 +45,7 @@
   overflow: hidden;
 }
 
-.blog-card-author {
+.blog-card-author * {
   color: rgba(66, 60, 60, 1);
   text-align: right;
 }

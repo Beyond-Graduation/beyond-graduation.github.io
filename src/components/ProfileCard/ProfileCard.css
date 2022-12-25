@@ -12,9 +12,10 @@
 }
 
 .profile-main-card img {
-  border-inline: 3px solid rgba(52, 78, 65, 1);
+  box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.4);
   border-radius: 50%;
   width: 60%;
+  aspect-ratio: 1/1;
   margin-bottom: 5%;
 }
 

@@ -33,3 +33,16 @@
 .react-multiple-carousel__arrow--right {
   right: 0;
 }
+
+.carousel-empty span {
+  font-size: 24px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.7);
+  white-space: nowrap;
+}
+
+.carousel-empty .explore-btn {
+  width: fit-content;
+  padding: 8px 20px;
+  white-space: nowrap;
+}

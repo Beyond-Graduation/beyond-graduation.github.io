@@ -10,6 +10,8 @@ import FileInput from "../../../components/FileInput/FileInput";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useStateValue } from "../../../reducer/StateProvider";
+import { deleteObject, ref } from "firebase/storage";
+import storage from "../../../firebase";
 
 function UpdateAlumniProfile({ data }) {
   const navigate = useNavigate();
@@ -138,6 +140,18 @@ function UpdateAlumniProfile({ data }) {
   const handleProfilePicChange = async (url) => {
     const token = localStorage.getItem("authKey");
 
+    if (formDetails.profilePicPath) {
+      var storageRef = ref(storage, formDetails.profilePicPath);
+      deleteObject(storageRef)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.error("Something went wrong !!!");
+        });
+    }
+
     setFormDetails({ ...formDetails, profilePicPath: url });
     await axios({
       method: "post",
@@ -161,6 +175,18 @@ function UpdateAlumniProfile({ data }) {
 
   const handleResumeChange = async (url) => {
     const token = localStorage.getItem("authKey");
+
+    if (formDetails.resume) {
+      var storageRef = ref(storage, formDetails.resume);
+      deleteObject(storageRef)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.error("Something went wrong !!!");
+        });
+    }
 
     setFormDetails({ ...formDetails, resume: url });
     await axios({
@@ -212,7 +238,7 @@ function UpdateAlumniProfile({ data }) {
   };
 
   useEffect(() => {
-    if (data.workExperience) { 
+    if (data.workExperience) {
       setExperience(data.workExperience);
       setExperienceCount(data.workExperience.length);
     }
@@ -293,6 +319,7 @@ function UpdateAlumniProfile({ data }) {
                   ? "Update Profile Picture"
                   : "Select Profile Picture"
               }
+              content="alumni-profileImg"
               type="image"
               onUpload={handleProfilePicChange}
               onChange={(e) => {
@@ -526,6 +553,7 @@ function UpdateAlumniProfile({ data }) {
           <div className="m-4 mt-3 d-flex align-items-center">
             <FileInput
               label={data.resume ? "Update Resume" : "Upload Your Resume"}
+              content="alumni-resume"
               type="file"
               onUpload={handleResumeChange}
               onChange={(e) => {

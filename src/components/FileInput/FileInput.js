@@ -9,6 +9,7 @@ import { buildStyles } from "react-circular-progressbar";
 
 const FileInput = ({
   name,
+  content,
   label,
   value,
   type,
@@ -33,8 +34,13 @@ const FileInput = ({
   const handleUpload = () => {
     setProgressShow(true);
 
-    const fileName = new Date().getTime() + inputRef.current.files[0].name;
-    const storageRef = ref(storage, `/files/${fileName}`);
+    const fileName =
+      content +
+      "_" +
+      new Date().getTime() +
+      "_" +
+      inputRef.current.files[0].name;
+    const storageRef = ref(storage, `/${content}/${fileName}`);
     const uploadTask = uploadBytesResumable(
       storageRef,
       inputRef.current.files[0]
@@ -66,6 +72,8 @@ const FileInput = ({
         ref={inputRef}
         onChange={(e) => {
           setFile(inputRef.current.files[0]);
+          setProgress(0);
+          setProgressShow(false);
           if (checkFileSize()) {
             if (type === "image") onChange(e);
             else onChange(inputRef.current.files[0].name);
