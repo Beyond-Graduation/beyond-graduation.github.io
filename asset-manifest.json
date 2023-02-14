@@ -1,12 +1,11 @@
 {
   "files": {
-    "main.css": "/static/css/main.0dfcc289.css",
-    "main.js": "/static/js/main.6f4a4666.js",
+    "main.css": "/static/css/main.4096f762.css",
+    "main.js": "/static/js/main.18145153.js",
     "static/js/787.5bc012d4.chunk.js": "/static/js/787.5bc012d4.chunk.js",
     "static/media/login-bck-img.png": "/static/media/login-bck-img.e5bf987585859111d538.png",
     "static/media/beyond-grad.jpeg": "/static/media/beyond-grad.024a95d20305f498f691.jpeg",
     "static/media/home-background.jpeg": "/static/media/home-background.92005c3779b2b2caa1b8.jpeg",
-    "static/media/blog-card.png": "/static/media/blog-card.ef08e9ad3c8d598d4345.png",
     "static/media/nanda kishor.jpg": "/static/media/nanda kishor.eb61c285a265952c2c0a.jpg",
     "static/media/sourav.jpeg": "/static/media/sourav.358d391ae32b728a5f46.jpeg",
     "static/media/paurnami.jpg": "/static/media/paurnami.522dae6ea0bc17111731.jpg",
@@ -18,12 +17,13 @@
     "static/media/add-icon.svg": "/static/media/add-icon.4a295f5df3630f5fbab9293a63b83b4b.svg",
     "static/media/upload-file.svg": "/static/media/upload-file.b4ad9c59064ebac2b4481353ce6aa268.svg",
     "index.html": "/index.html",
-    "main.0dfcc289.css.map": "/static/css/main.0dfcc289.css.map",
-    "main.6f4a4666.js.map": "/static/js/main.6f4a4666.js.map",
+    "static/media/search.svg": "/static/media/search.435b2d1f45db29ce4272a872ccb177a2.svg",
+    "main.4096f762.css.map": "/static/css/main.4096f762.css.map",
+    "main.18145153.js.map": "/static/js/main.18145153.js.map",
     "787.5bc012d4.chunk.js.map": "/static/js/787.5bc012d4.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.0dfcc289.css",
-    "static/js/main.6f4a4666.js"
+    "static/css/main.4096f762.css",
+    "static/js/main.18145153.js"
   ]
 }
