@@ -36,16 +36,19 @@ function StudentRegistration({ state }) {
     profilePicPath: "",
     resume: "",
     admissionId: "",
+    cgpa: 0,
   });
 
   const handleChange = (e) => {
     const n = e.target.name;
     if (
       n === "cgpa" ||
+      n === "hcgpa" ||
       n === "yearOfJoining" ||
       n === "expectedGraduationYear"
     ) {
-      setFormDetails({ ...formDetails, [n]: Number(e.target.value) });
+      if (n === "cgpa")
+        setFormDetails({ ...formDetails, [n]: Number(e.target.value) });
     } else {
       setFormDetails({ ...formDetails, [e.target.name]: e.target.value });
     }
@@ -65,7 +68,7 @@ function StudentRegistration({ state }) {
       higherSecondary: {
         ...formDetails.higherSecondary,
         [e.target.name]:
-          e.target.name === "cgpa" ? Number(e.target.value) : e.target.value,
+          e.target.name === "hcgpa" ? Number(e.target.value) : e.target.value,
       },
     });
   };
@@ -187,7 +190,8 @@ function StudentRegistration({ state }) {
         formDetails.higherSecondary.board === "" ||
         formDetails.higherSecondary.cgpa === 0 ||
         formDetails.degree === "" ||
-        formDetails.gender === ""
+        formDetails.gender === "" ||
+        formDetails.cgpa === 0
       ) {
         toast.error("Please fill all the fields");
         setRegistering(false);
@@ -324,7 +328,7 @@ function StudentRegistration({ state }) {
                   onChange={handleSecondary}
                 />
                 <AnimatedInputField
-                  name="cgpa"
+                  name="hcgpa"
                   title="Percentage"
                   onChange={handleSecondary}
                 />
