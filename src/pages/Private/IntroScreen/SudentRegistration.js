@@ -37,6 +37,7 @@ function StudentRegistration({ state }) {
     resume: "",
     admissionId: "",
     cgpa: 0,
+    phone: 0,
   });
 
   const handleChange = (e) => {
@@ -46,12 +47,9 @@ function StudentRegistration({ state }) {
       n === "hcgpa" ||
       n === "yearOfJoining" ||
       n === "expectedGraduationYear"
-    ) {
-      if (n === "cgpa")
-        setFormDetails({ ...formDetails, [n]: Number(e.target.value) });
-    } else {
-      setFormDetails({ ...formDetails, [e.target.name]: e.target.value });
-    }
+    )
+      setFormDetails({ ...formDetails, [n]: Number(e.target.value) });
+    else setFormDetails({ ...formDetails, [e.target.name]: e.target.value });
   };
 
   const handleInterstChange = (e) => {
@@ -63,11 +61,12 @@ function StudentRegistration({ state }) {
   };
 
   const handleSecondary = (e) => {
+    const n = e.target.name === "hcgpa" ? "cgpa" : "board";
     setFormDetails({
       ...formDetails,
       higherSecondary: {
         ...formDetails.higherSecondary,
-        [e.target.name]:
+        [n]:
           e.target.name === "hcgpa" ? Number(e.target.value) : e.target.value,
       },
     });
@@ -178,7 +177,9 @@ function StudentRegistration({ state }) {
   const onRegister = async () => {
     if (!registering) {
       setRegistering(true);
+      console.log(formDetails);
       if (
+        formDetails.admissionId === "" ||
         formDetails.firstName === "" ||
         formDetails.lastName === "" ||
         formDetails.email === "" ||
@@ -292,10 +293,16 @@ function StudentRegistration({ state }) {
                     onChange={handleChange}
                   /> */}
                 </div>
-                <div className="d-flex w-50">
+                <div className="d-flex">
                   <AnimatedInputField
                     name="admissionId"
                     title="Admission Number (CET)"
+                    onChange={handleChange}
+                  />
+                  <AnimatedInputField
+                    name="phone"
+                    title="Phone Number"
+                    onChange={handleChange}
                   />
                 </div>
               </div>
