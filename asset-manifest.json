@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.4096f762.css",
-    "main.js": "/static/js/main.45af8fe1.js",
+    "main.js": "/static/js/main.ea88e2f1.js",
     "static/js/787.5bc012d4.chunk.js": "/static/js/787.5bc012d4.chunk.js",
     "static/media/login-bck-img.png": "/static/media/login-bck-img.e5bf987585859111d538.png",
     "static/media/beyond-grad.jpeg": "/static/media/beyond-grad.024a95d20305f498f691.jpeg",
@@ -19,11 +19,11 @@
     "index.html": "/index.html",
     "static/media/search.svg": "/static/media/search.435b2d1f45db29ce4272a872ccb177a2.svg",
     "main.4096f762.css.map": "/static/css/main.4096f762.css.map",
-    "main.45af8fe1.js.map": "/static/js/main.45af8fe1.js.map",
+    "main.ea88e2f1.js.map": "/static/js/main.ea88e2f1.js.map",
     "787.5bc012d4.chunk.js.map": "/static/js/787.5bc012d4.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.4096f762.css",
-    "static/js/main.45af8fe1.js"
+    "static/js/main.ea88e2f1.js"
   ]
 }
