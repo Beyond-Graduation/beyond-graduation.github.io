@@ -13,7 +13,8 @@ function ViewStudentProfile() {
   const [showResume, setShowResume] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem("authKey");
+    const token =
+      localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
 
     const getData = async () => {
       await axios({

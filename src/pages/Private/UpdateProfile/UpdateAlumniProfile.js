@@ -138,7 +138,8 @@ function UpdateAlumniProfile({ data }) {
   };
 
   const handleProfilePicChange = async (url) => {
-    const token = localStorage.getItem("authKey");
+    const token =
+      localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
 
     if (formDetails.profilePicPath) {
       var storageRef = ref(storage, formDetails.profilePicPath);
@@ -174,7 +175,8 @@ function UpdateAlumniProfile({ data }) {
   };
 
   const handleResumeChange = async (url) => {
-    const token = localStorage.getItem("authKey");
+    const token =
+      localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
 
     if (formDetails.resume) {
       var storageRef = ref(storage, formDetails.resume);
@@ -212,7 +214,8 @@ function UpdateAlumniProfile({ data }) {
   const onUpdate = async () => {
     if (updateEnabled) {
       setUpdateEnabled(false);
-      const token = localStorage.getItem("authKey");
+      const token =
+        localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
 
       await axios({
         method: "post",

@@ -49,7 +49,8 @@ function AdminNoticePublish() {
 
   const onPublishNotice = async () => {
     if (!creating) {
-      let token = localStorage.getItem("authKey");
+      let token =
+        localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
       if (noticeDetails.title === "" || noticeDetails.content === "") {
         toast.error("Please fill all the fields");
         return;

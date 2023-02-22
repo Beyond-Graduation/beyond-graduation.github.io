@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import AdminHome from "../../../../components/AdminDashboard/Home/AdminHome";
 import { useStateValue } from "../../../../reducer/StateProvider";
 import UnderConstruction from "../../../../components/AdminDashboard/UnderConstruction/UnderConstruction";
-import AdminNoticePublish from '../../../../components/AdminDashboard/NoticePublish/AdminNoticePublish';
+import AdminNoticePublish from "../../../../components/AdminDashboard/NoticePublish/AdminNoticePublish";
 import AdminNoticeView from "../../../../components/AdminDashboard/AdminNoticeView/AdminNoticeView";
 import AdminNoticeVerification from "../../../../components/AdminDashboard/AdminNoticeVerification/AdminNoticeVerification";
 
@@ -20,7 +20,8 @@ const AdminDashboard = () => {
   const [profImg, setProfImg] = useState(avatarIcon);
 
   const [pending, setPending] = useState([]);
-  const token = localStorage.getItem("authKey");
+  const token =
+    localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
   const getData = async () => {
     await axios({
       method: "get",

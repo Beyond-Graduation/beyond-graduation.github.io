@@ -11,7 +11,8 @@ import { useState } from "react";
 
 function AdminHome({ data }) {
   const [stats, setStats] = useState({});
-  const token = localStorage.getItem("authKey");
+  const token =
+    localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
   const getData = async () => {
     await axios({
       method: "get",

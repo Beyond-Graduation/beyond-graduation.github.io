@@ -23,7 +23,8 @@ function AlumniDashboard() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const token = localStorage.getItem("authKey");
+      const token =
+        localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
       axios({
         method: "get",
         url: `student/student_list`,
@@ -35,7 +36,8 @@ function AlumniDashboard() {
       });
     };
     const fetchAlumniData = async () => {
-      const token = localStorage.getItem("authKey");
+      const token =
+        localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
       axios({
         method: "get",
         url: `alumni/alumni_list`,
@@ -47,7 +49,8 @@ function AlumniDashboard() {
       });
     };
     const fetchBlogData = async () => {
-      const token = localStorage.getItem("authKey");
+      const token =
+        localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
       axios({
         method: "get",
         url: "/blog",

@@ -156,6 +156,9 @@ function Register() {
               placeholder="Confirm Password"
               onChange={handleChange}
               ref={confPassToggleRef}
+              onKeyPress={(e) => {
+                if (e.key === "Enter") handleRegister();
+              }}
             />
             <BiLockAlt className="icon-email-name-pswd" />
             <AiFillEye

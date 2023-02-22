@@ -1,0 +1,43 @@
+.message-cnt-other {
+  width: 60%;
+  margin: 15px;
+  margin-bottom: 30px;
+}
+
+.message-cnt-own {
+  width: 60%;
+  margin: 15px;
+  margin-left: auto;
+  flex-direction: row-reverse;
+  margin-bottom: 30px;
+}
+
+.msg-content {
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.msg-sender {
+  background-color: rgb(148, 20, 148);
+  color: white;
+  width: 80px;
+  font-weight: 500;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  aspect-ratio: 1 / 1;
+  margin-left: 10px;
+}
+
+.message-cnt-other .msg-content {
+  background-color: rgb(0, 85, 255);
+  color: white;
+}
+
+.message-cnt-other .msg-sender {
+  margin-left: 0;
+  margin-right: 10px;
+}

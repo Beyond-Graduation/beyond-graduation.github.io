@@ -47,7 +47,8 @@ function PublishNotice() {
 
   const onPublishNotice = async () => {
     if (!creating) {
-      let token = localStorage.getItem("authKey");
+      let token =
+        localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
       if (noticeDetails.title === "" || noticeDetails.content === "") {
         toast.error("Please fill all the fields");
         return;
@@ -102,7 +103,11 @@ function PublishNotice() {
   }, [noticeDetails]);
 
   useEffect(() => {
-    if (localStorage.getItem("userType") !== "alumni") navigate("/dashboard");
+    if (
+      localStorage.getItem("userType") !== "alumni" ||
+      sessionStorage.getItem("userType") !== "alumni"
+    )
+      navigate("/dashboard");
   }, []);
 
   return (

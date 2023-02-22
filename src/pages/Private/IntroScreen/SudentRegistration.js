@@ -198,6 +198,12 @@ function StudentRegistration({ state }) {
         setRegistering(false);
         return;
       }
+
+      if (formDetails.resume === "") {
+        toast.error("Upload your resume");
+        return;
+      }
+
       await axios({
         method: "post",
         url: "student/signup",

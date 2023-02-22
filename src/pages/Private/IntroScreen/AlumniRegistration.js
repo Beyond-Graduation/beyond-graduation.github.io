@@ -44,6 +44,7 @@ function AluminiRegistration({ state }) {
     gender: "",
     admissionId: "",
     phone: "",
+    resume: "",
   });
 
   const degreeOptions = [
@@ -215,6 +216,12 @@ function AluminiRegistration({ state }) {
         setRegistering(false);
         return;
       }
+
+      if (formDetails.resume === "") {
+        toast.error("Upload your resume");
+        return;
+      }
+
       await axios({
         method: "post",
         url: "alumni/signup",
@@ -347,6 +354,16 @@ function AluminiRegistration({ state }) {
           </div>
         </section>
         <section className="intro-section mt-5">
+          <div className="head">Domain</div>
+          <div className="m-4 mt-3">
+            <MutliDropdown
+              title="Domain (select from the menu or type)"
+              options={InterestOptions}
+              onChange={(e) => handleInterstChange(e)}
+            />
+          </div>
+        </section>
+        <section className="intro-section mt-5">
           <div className="head d-flex">
             Work Experience
             <div
@@ -423,16 +440,6 @@ function AluminiRegistration({ state }) {
               </div>
             </>
           ))}
-        </section>
-        <section className="intro-section mt-5">
-          <div className="head">Domain</div>
-          <div className="m-4 mt-3">
-            <MutliDropdown
-              title="Domain (select from the menu or type)"
-              options={InterestOptions}
-              onChange={(e) => handleInterstChange(e)}
-            />
-          </div>
         </section>
         <section className="intro-section mt-5">
           <div className="head">Resume</div>

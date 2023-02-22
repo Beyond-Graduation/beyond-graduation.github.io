@@ -6,7 +6,8 @@ import axios from "../../axios";
 import "./AlumniVerification.css";
 
 function AlumniVerification() {
-  const token = localStorage.getItem("authKey");
+  const token =
+    localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
   const [overlayOpen, setOverlayOpen] = useState(false);
   const [pending, setPending] = useState([]);
   const [currUser, setCurrUser] = useState("");
@@ -86,7 +87,10 @@ function AlumniVerification() {
         <div className="reject-overlay-cnt d-flex flex-column">
           <div className="reject-overlay-head d-flex align-items-center justify-content-between">
             <div>Reason for Rejection</div>
-            <AiOutlineClose className="close-btn" onClick={() => setOverlayOpen(false)}/>
+            <AiOutlineClose
+              className="close-btn"
+              onClick={() => setOverlayOpen(false)}
+            />
           </div>
           <div className="text-center my-3">
             <textarea

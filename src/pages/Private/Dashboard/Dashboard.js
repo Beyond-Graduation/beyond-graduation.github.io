@@ -9,12 +9,16 @@ import { Navigate } from "react-router-dom";
 
 function Dashboard() {
   const [{ userData, userId }, dispatch] = useStateValue();
-  const userType = localStorage.getItem("userType");
+  const userType =
+    localStorage.getItem("userType") || sessionStorage.getItem("userType");
 
   useEffect(() => {
-    const userType = localStorage.getItem("userType");
-    const token = localStorage.getItem("authKey");
-    const userId = localStorage.getItem("userId");
+    const userType =
+      localStorage.getItem("userType") || sessionStorage.getItem("userType");
+    const token =
+      localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
+    const userId =
+      localStorage.getItem("userId") || sessionStorage.getItem("userId");
 
     const getData = async () => {
       await axios({

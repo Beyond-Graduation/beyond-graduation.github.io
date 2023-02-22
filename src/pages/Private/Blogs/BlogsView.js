@@ -9,7 +9,8 @@ import { Link } from "react-router-dom";
 import { FaBloggerB } from "react-icons/fa";
 
 function BlogsView() {
-  const userType = localStorage.getItem("userType");
+  const userType =
+    localStorage.getItem("userType") || sessionStorage.getItem("userType");
   const [blogData, setBlogData] = useState([]);
   const searchRef = useRef();
   const filterRef = useRef();
@@ -18,7 +19,8 @@ function BlogsView() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const token = localStorage.getItem("authKey");
+      const token =
+        localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
       axios({
         method: "get",
         url: "/blog",
@@ -38,7 +40,8 @@ function BlogsView() {
   }, []);
 
   const filterChange = (e) => {
-    const token = localStorage.getItem("authKey");
+    const token =
+      localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
     axios({
       method: "get",
       url: `/blog?sort=${blogsFilter[e]}`,
@@ -82,7 +85,7 @@ function BlogsView() {
             </Dropdown.Item>
             <Dropdown.Item eventKey="0">MOST POPULAR</Dropdown.Item>
             <Dropdown.Item eventKey="2">FORMER BLOGS</Dropdown.Item>
-            <Dropdown.Item eventKey="3">ALPAHABETICAL SORT</Dropdown.Item>
+            <Dropdown.Item eventKey="3">ALPHABETICAL SORT</Dropdown.Item>
             {/* <Dropdown.Divider />
             <Dropdown.Item href="#/action-4">Separated link</Dropdown.Item> */}
           </DropdownButton>

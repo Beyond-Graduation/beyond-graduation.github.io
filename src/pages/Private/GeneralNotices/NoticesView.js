@@ -6,8 +6,10 @@ import "./NoticesView.css";
 import { Link } from "react-router-dom";
 
 function NoticesView() {
-  const token = localStorage.getItem("authKey");
-  const userType = localStorage.getItem("userType");
+  const token =
+    localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
+  const userType =
+    localStorage.getItem("userType") || sessionStorage.getItem("userType");
   const [notices, setNotices] = useState([]);
 
   const getData = async () => {

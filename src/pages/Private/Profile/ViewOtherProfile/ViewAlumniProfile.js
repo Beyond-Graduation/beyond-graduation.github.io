@@ -13,8 +13,10 @@ function ViewStudentProfile() {
   const { userId } = useParams();
   const [data, setData] = useState({});
   const [showResume, setShowResume] = useState(false);
-  const userType = localStorage.getItem("userType");
-  const token = localStorage.getItem("authKey");
+  const userType =
+    localStorage.getItem("userType") || sessionStorage.getItem("userType");
+  const token =
+    localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
   const [isFav, setIsFav] = useState(false);
 
   const toggleFavourite = async () => {
@@ -27,7 +29,7 @@ function ViewStudentProfile() {
       },
     })
       .then((res) => {
-        setIsFav(!isFav)
+        setIsFav(!isFav);
         dispatch({
           type: "SET_USER_DATA",
           item: res.data,

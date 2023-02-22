@@ -5,7 +5,8 @@ import axios from "../../../components/axios";
 import "./AdminNoticeVerification.css";
 
 function AdminNoticeVerification() {
-  const token = localStorage.getItem("authKey");
+  const token =
+    localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
   const [pendingNotices, setPendingNotices] = useState([]);
 
   const getData = async () => {
@@ -70,7 +71,9 @@ function AdminNoticeVerification() {
 
   return (
     <div>
-      <div className="admin-notice-view-head mb-5">General Notices Verification</div>
+      <div className="admin-notice-view-head mb-5">
+        General Notices Verification
+      </div>
       {pendingNotices.length !== 0 ? (
         pendingNotices.map((notice) => (
           <div className="notice-ver-card mt-4">

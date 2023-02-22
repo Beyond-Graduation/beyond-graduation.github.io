@@ -74,7 +74,8 @@ function CreateBlog() {
 
   const onSubmitBlog = async () => {
     if (!creating) {
-      let token = localStorage.getItem("authKey");
+      let token =
+        localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
       if (
         blogDetails.title === "" ||
         blogDetails.domain === "" ||
@@ -135,7 +136,11 @@ function CreateBlog() {
   };
 
   useEffect(() => {
-    if (localStorage.getItem("userType") !== "alumni") navigate("/dashboard");
+    if (
+      localStorage.getItem("userType") !== "alumni" ||
+      sessionStorage.getItem("userType") !== "alumni"
+    )
+      navigate("/dashboard");
   }, []);
 
   return (

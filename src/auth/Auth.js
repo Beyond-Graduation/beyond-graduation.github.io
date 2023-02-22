@@ -7,22 +7,31 @@ export const isAuth = {
   userType: "",
   registering: true,
   authenticate() {
-    if (localStorage.getItem("authKey")) {
+    if (localStorage.getItem("authKey") || sessionStorage.getItem("authKey")) {
       this.isAuthenticated = true;
     } else {
       this.userType = "";
     }
   },
-  login(authKey, userId, userType) {
-    localStorage.setItem("authKey", authKey);
-    localStorage.setItem("userId", userId);
-    localStorage.setItem("userType", userType);
+  login(authKey, userId, userType, remember) {
+    if (remember) {
+      localStorage.setItem("authKey", authKey);
+      localStorage.setItem("userId", userId);
+      localStorage.setItem("userType", userType);
+    } else {
+      sessionStorage.setItem("authKey", authKey);
+      sessionStorage.setItem("userId", userId);
+      sessionStorage.setItem("userType", userType);
+    }
     this.isAuthenticated = true;
   },
   logout() {
     localStorage.removeItem("authKey");
     localStorage.removeItem("userId");
     localStorage.removeItem("userType");
+    sessionStorage.removeItem("authKey");
+    sessionStorage.removeItem("userId");
+    sessionStorage.removeItem("userType");
     this.isAuthenticated = false;
   },
   checkAuth() {

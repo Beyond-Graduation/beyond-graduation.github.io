@@ -60,12 +60,15 @@ function StudentProfilesView() {
     if (Object.keys(filterDataWithoutEmptyArray).length === 0) {
       fetchData();
     } else {
+      const token =
+        localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
+
       await axios({
         method: "post",
         url: "alumni/filter",
         data: filterDataWithoutEmptyArray,
         headers: {
-          Authorization: `bearer ${localStorage.getItem("authKey")}`,
+          Authorization: `bearer ${token}`,
         },
       }).then((res) => {
         setSearchAlumniData(res.data);
@@ -74,7 +77,8 @@ function StudentProfilesView() {
   };
 
   const fetchData = async () => {
-    const token = localStorage.getItem("authKey");
+    const token =
+      localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
     axios({
       method: "get",
       url: `student/student_list`,

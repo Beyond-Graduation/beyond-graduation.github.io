@@ -42,7 +42,8 @@ function Login() {
           isAuth.login(
             res.data.token,
             res.data.userId,
-            res.data.userType.toLowerCase()
+            res.data.userType.toLowerCase(),
+            rememberRef.current.checked
           );
           isAuth.userType = res.data.userType.toLowerCase();
           dispatch({
@@ -107,7 +108,6 @@ function Login() {
                 if (e.key === "Enter") handleLogin();
               }}
             ></input>
-            {/* placholder space = padding for input (remind me to explain this) */}
             <HiOutlineMail className="icon-email-pswd" />
           </div>
           <div className="input-cnt">
@@ -132,9 +132,6 @@ function Login() {
           <div className="login-button" onClick={handleLogin}>
             LOGIN
           </div>
-          {/* <p id="bottom-line"> Don't have an account already? Register Now.</p>
-                Use className so that we can reuse this class for register page
-           */}
           <p className="bottom-line">
             Don't have an account already ?
             <Link to="/register"> Register Now.</Link>

@@ -47,7 +47,8 @@ function SingleBlog() {
         setPostCommentEnabled(true);
         return;
       }
-      const token = localStorage.getItem("authKey");
+      const token =
+        localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
       const commData =
         type === "parent"
           ? {
@@ -85,7 +86,8 @@ function SingleBlog() {
   };
 
   const fetchBlogComments = async () => {
-    const token = localStorage.getItem("authKey");
+    const token =
+      localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
     axios({
       method: "get",
       url: `blog/getComments?blogId=${blogId}`,
@@ -104,7 +106,8 @@ function SingleBlog() {
   };
 
   const fetchChildComments = async () => {
-    const token = localStorage.getItem("authKey");
+    const token =
+      localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
     let promises = [];
     for (var i = 0; i < comments.length; i++) {
       promises.push(
@@ -143,7 +146,8 @@ function SingleBlog() {
       setBlogLiked(true);
     }
 
-    const token = localStorage.getItem("authKey");
+    const token =
+      localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
     axios({
       method: "post",
       url: `blog/like`,
@@ -160,7 +164,8 @@ function SingleBlog() {
   };
 
   const bookmarkBlog = async () => {
-    const token = localStorage.getItem("authKey");
+    const token =
+      localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
     axios({
       method: "post",
       url: `blog/bookmark`,
@@ -180,7 +185,8 @@ function SingleBlog() {
 
   useEffect(() => {
     const fetchBlogData = async () => {
-      const token = localStorage.getItem("authKey");
+      const token =
+        localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
       axios({
         method: "get",
         url: `blog?blogId=${blogId}`,

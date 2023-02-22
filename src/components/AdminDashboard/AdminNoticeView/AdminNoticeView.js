@@ -4,7 +4,8 @@ import axios from "../../axios";
 import { CgAttachment } from "react-icons/cg";
 
 function AdminNoticeView() {
-  const token = localStorage.getItem("authKey");
+  const token =
+    localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
   const [notices, setNotices] = useState([]);
 
   const getData = async () => {
@@ -16,7 +17,7 @@ function AdminNoticeView() {
       },
     }).then((res) => {
       if (res.status === 200) {
-		console.log(res.data);
+        console.log(res.data);
         setNotices(res.data);
       }
     });

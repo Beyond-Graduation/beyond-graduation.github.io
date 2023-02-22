@@ -33,6 +33,7 @@ import ViewStudentProfile from "./pages/Private/Profile/ViewOtherProfile/ViewStu
 import ViewAlumniProfile from "./pages/Private/Profile/ViewOtherProfile/ViewAlumniProfile";
 import NoticesView from "./pages/Private/GeneralNotices/NoticesView";
 import PublishNotice from "./pages/Private/GeneralNotices/PublishNotice";
+import Chats from "./pages/Private/Chats/Chats";
 
 const WithNav = () => {
   return (
@@ -46,7 +47,8 @@ const WithNav = () => {
 };
 
 const AdminDash = () => {
-  return localStorage.getItem("userType") === "admin" ? (
+  return localStorage.getItem("userType") === "admin" ||
+    sessionStorage.getItem("userType") === "admin" ? (
     <AdminDashboard />
   ) : (
     <Navigate to="/" replace />
@@ -54,7 +56,8 @@ const AdminDash = () => {
 };
 
 const PrivateRoute = ({ comp: Component }) => {
-  const userType = localStorage.getItem("userType");
+  const userType =
+    localStorage.getItem("userType") || sessionStorage.getItem("userType");
 
   return userType === "admin" ? (
     <Navigate to="/admin" replace />
@@ -85,9 +88,12 @@ function App() {
   const [{ userData, userId }, dispatch] = useStateValue();
 
   useEffect(() => {
-    const userType = localStorage.getItem("userType");
-    const token = localStorage.getItem("authKey");
-    const userId = localStorage.getItem("userId");
+    const userType =
+      localStorage.getItem("userType") || sessionStorage.getItem("userType");
+    const token =
+      localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
+    const userId =
+      localStorage.getItem("userId") || sessionStorage.getItem("userId");
 
     const getData = async () => {
       await axios({
@@ -181,6 +187,7 @@ function App() {
               path="/notices"
               element={<PrivateRoute comp={NoticesView} />}
             />
+            <Route path="/chats" element={<PrivateRoute comp={Chats} />} />
             <Route path="/about" element={<About />} />
             <Route path="/" element={<PublicRoute comp={Home} />} />
           </Route>
