@@ -1,0 +1,38 @@
+.changePass {
+  min-height: calc(100vh - 70px);
+  height: fit-content;
+  background-color: rgba(0, 12, 2, 0.89);
+  color: white;
+  padding-top: 8vh;
+  user-select: none;
+  padding-bottom: 15vh;
+  user-select: none;
+}
+
+.changePass-container {
+  width: 80%;
+  margin: auto;
+}
+
+.changePass-heading {
+  font-size: calc(1rem + 1.5vw);
+  margin: auto;
+  width: fit-content;
+}
+
+.changePass-heading::after {
+  content: "";
+  display: block;
+  width: 60%;
+  margin: auto;
+  margin-top: 4px;
+  height: 3px;
+  border-radius: 5px;
+  background-color: rgba(163, 177, 138, 1);
+}
+
+.changePass .register-form {
+	margin: auto;
+	margin-top: 40px;
+	width: 40%;
+}

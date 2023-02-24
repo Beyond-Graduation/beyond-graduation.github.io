@@ -47,7 +47,8 @@ a {
 }
 
 .profile-btn {
-  padding: 6px 14px;
+  padding: 6px 20px 6px 14px;
+  margin-right: 30px;
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -73,7 +74,7 @@ a {
   background-color: rgba(58, 90, 64, 1);
   top: 64px;
   left: 0px;
-  width: 120%;
+  width: fit-content;
   font-weight: 400;
   padding: 5px 0 10px 0;
   border-radius: 8px;
@@ -90,18 +91,18 @@ a {
 }
 
 .prof-btn-overlay .prof-btn-link {
-  padding: 6px 14px;
+  padding: 0px 14px;
   margin: 5px 0;
   color: white;
   text-decoration: none;
   display: flex;
-  font-size: 22px;
+  font-size: 20px;
   align-items: center;
   gap: 8px;
 }
 
 .prof-btn-overlay span {
-  font-size: 18px;
+  font-size: 16px;
   white-space: nowrap;
 }
 

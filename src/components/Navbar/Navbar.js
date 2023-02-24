@@ -4,7 +4,8 @@ import { isAuth } from "../../auth/Auth";
 import "./Navbar.css";
 import { useStateValue } from "../../reducer/StateProvider";
 import avatarIcon from "../../assets/images/avatar.png";
-import { FaHome, FaPowerOff } from "react-icons/fa";
+import { FaPowerOff } from "react-icons/fa";
+import { AiFillLock } from "react-icons/ai";
 import { BsPersonCircle } from "react-icons/bs";
 import { useRef } from "react";
 
@@ -100,6 +101,12 @@ function Navbar() {
                     <div className="prof-btn-link">
                       <BsPersonCircle />
                       <span>My Profile</span>
+                    </div>
+                  </Link>
+                  <Link to="/change_password">
+                    <div className="prof-btn-link">
+                      <AiFillLock />
+                      <span>Change Password</span>
                     </div>
                   </Link>
                   <div className="prof-btn-link" onClick={handleLogout}>

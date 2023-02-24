@@ -34,6 +34,7 @@ import ViewAlumniProfile from "./pages/Private/Profile/ViewOtherProfile/ViewAlum
 import NoticesView from "./pages/Private/GeneralNotices/NoticesView";
 import PublishNotice from "./pages/Private/GeneralNotices/PublishNotice";
 import Chats from "./pages/Private/Chats/Chats";
+import ChangePassword from "./pages/Private/ChangePassword/ChangePassword";
 
 const WithNav = () => {
   return (
@@ -150,6 +151,10 @@ function App() {
               element={<PrivateRoute comp={Dashboard} />}
             />
             <Route path="/profile" element={<PrivateRoute comp={Profile} />} />
+            <Route
+              path="/change_password"
+              element={<PrivateRoute comp={ChangePassword} />}
+            />
             <Route
               path="/update"
               element={<PrivateRoute comp={UpdateProfile} />}

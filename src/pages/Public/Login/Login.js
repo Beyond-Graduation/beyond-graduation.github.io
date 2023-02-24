@@ -30,7 +30,7 @@ function Login() {
   const handleLogin = async () => {
     await axios({
       method: "post",
-      url: "login",
+      url: "user/login",
       data: {
         email: credentials.email,
         password: credentials.password,
