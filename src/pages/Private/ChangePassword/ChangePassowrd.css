@@ -2,16 +2,22 @@
   min-height: calc(100vh - 70px);
   height: fit-content;
   background-color: rgba(0, 12, 2, 0.89);
+  background-image: url("../../../assets/images/login-bck-img.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position-y: -2px;
   color: white;
-  padding-top: 8vh;
-  user-select: none;
-  padding-bottom: 15vh;
   user-select: none;
 }
 
 .changePass-container {
-  width: 80%;
+  min-height: calc(100vh - 70px);
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 0 10%;
   margin: auto;
+  padding-top: 8vh;
+  padding-bottom: 15vh;
 }
 
 .changePass-heading {
@@ -32,7 +38,7 @@
 }
 
 .changePass .register-form {
-	margin: auto;
-	margin-top: 40px;
-	width: 40%;
+  margin: auto;
+  margin-top: 40px;
+  width: 35%;
 }
