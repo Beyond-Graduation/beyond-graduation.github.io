@@ -11,7 +11,7 @@
       rgba(105, 152, 104, 0.7) 63.88%,
       rgba(92, 152, 103, 0.7) 96.13%
     ),
-    url("../../../assets/images/home-background.jpeg");
+    url("../../../assets/images/home-background.webp");
   background-size: cover;
   background-position-y: bottom;
   height: calc(100vh - 70px);
@@ -27,7 +27,7 @@
   font-size: 200px;
   line-height: 199px;
   text-align: right;
-  background: url("../../../assets/images/beyond-grad.jpeg") center right;
+  background: url("../../../assets/images/beyond-grad.webp") center right;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
