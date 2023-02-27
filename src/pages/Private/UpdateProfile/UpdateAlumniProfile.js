@@ -326,9 +326,8 @@ function UpdateAlumniProfile({ data }) {
               type="image"
               onUpload={handleProfilePicChange}
               onChange={(e) => {
-                if (!e.target.files[0].name.match(/.(jpg|jpeg|png|gif)$/i))
-                  alert("not an image");
-                else setProfilePic(URL.createObjectURL(e.target.files[0]));
+                if (e.target.files[0].name.match(/.(jpg|jpeg|png|gif)$/i))
+                  setProfilePic(URL.createObjectURL(e.target.files[0]));
               }}
             />
           </div>

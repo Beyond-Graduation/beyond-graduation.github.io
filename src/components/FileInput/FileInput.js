@@ -75,8 +75,11 @@ const FileInput = ({
           setProgress(0);
           setProgressShow(false);
           if (checkFileSize()) {
-            if (type === "image") onChange(e);
-            else onChange(inputRef.current.files[0].name);
+            if (type === "image") {
+              onChange(e);
+              if (!e.target.files[0].name.match(/.(jpg|jpeg|png|gif)$/i))
+                  alert("not an image");
+            } else onChange(inputRef.current.files[0].name);
           } else {
             e.target.value = null;
           }

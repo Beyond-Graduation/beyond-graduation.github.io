@@ -35,6 +35,7 @@ import NoticesView from "./pages/Private/GeneralNotices/NoticesView";
 import PublishNotice from "./pages/Private/GeneralNotices/PublishNotice";
 import Chats from "./pages/Private/Chats/Chats";
 import ChangePassword from "./pages/Private/ChangePassword/ChangePassword";
+import ResetPassword from "./pages/Public/ResetPassword/ResetPassword";
 
 const WithNav = () => {
   return (
@@ -143,6 +144,7 @@ function App() {
         <Routes>
           <Route exact path="/login" element={<PublicRoute comp={Login} />} />
           <Route path="/register" element={<PublicRoute comp={Register} />} />
+          <Route exact path="/reset_password/:token" element={<PublicRoute comp={ResetPassword} />} />
           <Route path="/admin" element={<AdminDash />} />
           <Route element={<WithNav />}>
             <Route path="/intro" element={<RegisterRoute comp={Intro} />} />

@@ -18,7 +18,7 @@ function Login() {
   const forgotPasswordEmailRef = useRef();
   const overlayCntRef = useRef();
   const overlayRef = useRef();
-  const [forgotOverlay, setForgotOverlay] = React.useState(true);
+  const [forgotOverlay, setForgotOverlay] = React.useState(false);
 
   const [{ userData, userId }, dispatch] = useStateValue();
 
@@ -80,7 +80,7 @@ function Login() {
         }
       })
       .catch((err) => {
-        toast.error(err.response.data.error);
+        toast.error(err.response.data);
       });
   };
 
