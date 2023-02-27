@@ -113,7 +113,9 @@ function Login() {
       })
         .then(async (res) => {
           if (res.status === 200) {
-            toast.success("Reset Password Link sent to registered mail")
+            forgotPasswordEmailRef.current.value = "";
+            setForgotOverlay(false);
+            toast.success("Reset Password Link sent to registered mail");
           }
         })
         .catch((err) => {
