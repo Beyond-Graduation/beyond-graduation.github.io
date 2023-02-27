@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import "./ResetPassword.css";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
 import { BiLockAlt } from "react-icons/bi";
 import { AiFillEye } from "react-icons/ai";
@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import axios from "../../../components/axios";
 
 function ResetPassword() {
+  const navigate = useNavigate();
   const { token } = useParams();
   const passToggleRef = useRef();
   const confPassToggleRef = useRef();
@@ -46,7 +47,8 @@ function ResetPassword() {
       })
         .then(async (res) => {
           if (res.status === 200) {
-            console.log(res);
+            toast.success("Password reset successful");
+            navigate("/login");
           } else {
             toast.error("Something went wrong !!");
           }
