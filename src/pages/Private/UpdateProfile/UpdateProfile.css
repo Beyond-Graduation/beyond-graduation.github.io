@@ -48,8 +48,8 @@
 .intro-avatar img {
   width: 180px;
   height: 180px;
-  object-fit: cover;
-  border-radius: 90px;
+  object-fit: contain;
+  /* border-radius: 90px; */
 }
 
 .image-input {

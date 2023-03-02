@@ -2,6 +2,10 @@
   background: rgb(27, 41, 34);
 }
 
+.App .Toastify__toast-container {
+  z-index: 10002
+}
+
 /* .App {
   padding-top: 70px;
 } */

@@ -6,6 +6,10 @@ import "./FileInput.css";
 import { toast } from "react-toastify";
 import { CircularProgressbar } from "react-circular-progressbar";
 import { buildStyles } from "react-circular-progressbar";
+import "react-image-crop/dist/ReactCrop.css";
+import ReactCrop from "react-image-crop";
+import { Button } from "react-bootstrap";
+import sampleImg from "../../assets/images/home-background.webp";
 
 const FileInput = ({
   name,
@@ -21,6 +25,20 @@ const FileInput = ({
   const [file, setFile] = useState("");
   const [progress, setProgress] = useState(0);
   const [progressShow, setProgressShow] = useState(false);
+  const [srcImg, setSrcImg] = useState(null);
+  //save the image that used to be crop
+  const [image, setImage] = useState(null);
+  //change the aspect ratio of crop tool as you preferred
+  const [crop, setCrop] = useState({
+    unit: "px",
+    width: 150,
+    height: 150,
+    x: 0,
+    y: 0,
+  });
+  //save the resulted image
+  const [result, setResult] = useState(null);
+  const [showCropOverlay, setShowCropOverlay] = useState(false);
 
   const checkFileSize = () => {
     if (inputRef.current.files[0].size > 512000) {
@@ -29,6 +47,75 @@ const FileInput = ({
       return;
     }
     return 1;
+  };
+
+  const handleImage = async (event) => {
+    setSrcImg(URL.createObjectURL(event.target.files[0]));
+    console.log(event.target.files[0]);
+  };
+
+  const getCroppedImg = async () => {
+    try {
+      const canvas = document.createElement("canvas");
+      const cropImage = document.getElementById("crop-image");
+      const imageMain = new Image();
+      imageMain.src = srcImg;
+      const ctx = canvas.getContext("2d");
+
+      console.log(imageMain.naturalHeight, cropImage.height);
+
+      if (!ctx) {
+        throw new Error("No 2d context");
+      }
+
+      const scaleX = imageMain.naturalWidth / cropImage.width;
+      const scaleY = imageMain.naturalHeight / cropImage.height;
+      const pixelRatio = window.devicePixelRatio;
+
+      canvas.width = Math.floor(crop.width * scaleX * pixelRatio);
+      canvas.height = Math.floor(crop.height * scaleY * pixelRatio);
+
+      ctx.scale(pixelRatio, pixelRatio);
+      ctx.imageSmoothingQuality = "high";
+
+      const cropX = crop.x * scaleX;
+      const cropY = crop.y * scaleY;
+
+      const rotateRads = 0;
+      const centerX = imageMain.naturalWidth / 2;
+      const centerY = imageMain.naturalHeight / 2;
+
+      ctx.save();
+
+      ctx.translate(-cropX, -cropY);
+      ctx.translate(centerX, centerY);
+      ctx.rotate(rotateRads);
+      ctx.scale(1, 1);
+      ctx.translate(-centerX, -centerY);
+      ctx.drawImage(
+        imageMain,
+        0,
+        0,
+        imageMain.width,
+        imageMain.height,
+        0,
+        0,
+        imageMain.width,
+        imageMain.height
+      );
+
+      ctx.save();
+
+      const base64Image = canvas.toDataURL("image/", 1);
+
+      if (canvas.height < 50) toast.error("Select a larger area !!");
+      else {
+        onChange(base64Image);
+        setResult(base64Image);
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const handleUpload = () => {
@@ -76,9 +163,10 @@ const FileInput = ({
           setProgressShow(false);
           if (checkFileSize()) {
             if (type === "image") {
-              onChange(e);
+              // onChange(e);
               if (!e.target.files[0].name.match(/.(jpg|jpeg|png|gif)$/i))
-                  alert("not an image");
+                toast.error("not an image");
+              else handleImage(e);
             } else onChange(inputRef.current.files[0].name);
           } else {
             e.target.value = null;
@@ -122,6 +210,32 @@ const FileInput = ({
           <img src={check} alt="check circle" className="check_img" />
         </div>
       )}
+      <div>
+        {srcImg && (
+          <div className="crop-overlay">
+            <div className="crop-cnt">
+              <div className="crop-head">Crop your image</div>
+              <ReactCrop
+                style={{ maxWidth: "50%" }}
+                src={srcImg}
+                onImageLoaded={setImage}
+                crop={crop}
+                onChange={setCrop}
+                aspect={1}
+                circularCrop={true}
+              >
+                <img
+                  src={srcImg}
+                  alt=""
+                  id="crop-image"
+                  className="image-crop"
+                />
+              </ReactCrop>
+              <Button onClick={getCroppedImg}>crop</Button>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
