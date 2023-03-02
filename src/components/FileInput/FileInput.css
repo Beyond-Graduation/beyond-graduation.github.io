@@ -79,10 +79,10 @@
 
 .crop-cnt {
   background-color: rgba(218, 215, 205, 1);
-  max-height: 70%;
-  max-width: 60%; 
+  max-height: 75%;
+  max-width: 60%;
   min-height: 60%;
-  min-width: 50%; 
+  min-width: 50%;
   height: fit-content;
   width: fit-content;
   display: flex;
