@@ -144,7 +144,11 @@ function App() {
         <Routes>
           <Route exact path="/login" element={<PublicRoute comp={Login} />} />
           <Route path="/register" element={<PublicRoute comp={Register} />} />
-          <Route exact path="/reset_password/:token" element={<PublicRoute comp={ResetPassword} />} />
+          <Route
+            exact
+            path="/reset_password/:token"
+            element={<PublicRoute comp={ResetPassword} />}
+          />
           <Route path="/admin" element={<AdminDash />} />
           <Route element={<WithNav />}>
             <Route path="/intro" element={<RegisterRoute comp={Intro} />} />
@@ -177,6 +181,7 @@ function App() {
               path="/alumni-profile/:userId"
               element={<PrivateRoute comp={ViewAlumniProfile} />}
             />
+            <Route path="/blogs" element={<PrivateRoute comp={BlogsView} />} />
             <Route
               path="/blogs/create"
               element={<PrivateRoute comp={CreateBlog} />}
@@ -185,7 +190,6 @@ function App() {
               path="/blogs/:blogId"
               element={<PrivateRoute comp={SingleBlog} />}
             />
-            <Route path="/blogs" element={<PrivateRoute comp={BlogsView} />} />
             <Route
               path="/notices/publish"
               element={<PrivateRoute comp={PublishNotice} />}

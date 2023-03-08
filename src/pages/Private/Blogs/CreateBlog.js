@@ -137,7 +137,7 @@ function CreateBlog() {
 
   useEffect(() => {
     if (
-      localStorage.getItem("userType") !== "alumni" ||
+      localStorage.getItem("userType") !== "alumni" &&
       sessionStorage.getItem("userType") !== "alumni"
     )
       navigate("/dashboard");
