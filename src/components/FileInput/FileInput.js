@@ -51,7 +51,21 @@ const FileInput = ({
 
   const handleImage = async (event) => {
     setSrcImg(URL.createObjectURL(event.target.files[0]));
+    setShowCropOverlay(true);
     console.log(event.target.files[0]);
+  };
+
+  const convertBase64ToFile = function (image) {
+    const byteString = atob(image.split(",")[1]);
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+    for (let i = 0; i < byteString.length; i += 1) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+    const newBlob = new Blob([ab], {
+      type: "image/jpg",
+    });
+    return newBlob;
   };
 
   const getCroppedImg = async () => {
@@ -113,6 +127,7 @@ const FileInput = ({
         onChange(base64Image);
         setResult(base64Image);
       }
+      setShowCropOverlay(false);
     } catch (e) {
       console.log(e);
     }
@@ -121,6 +136,7 @@ const FileInput = ({
   const handleUpload = () => {
     setProgressShow(true);
 
+    const fileToUpload = convertBase64ToFile(result);
     const fileName =
       content +
       "_" +
@@ -128,10 +144,7 @@ const FileInput = ({
       "_" +
       inputRef.current.files[0].name;
     const storageRef = ref(storage, `/${content}/${fileName}`);
-    const uploadTask = uploadBytesResumable(
-      storageRef,
-      inputRef.current.files[0]
-    );
+    const uploadTask = uploadBytesResumable(storageRef, fileToUpload);
     uploadTask.on(
       "state_changed",
       (snapshot) => {
@@ -145,8 +158,8 @@ const FileInput = ({
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-          // console.log(url);
           onUpload(url);
+          inputRef.current.value = "";
         });
       }
     );
@@ -212,7 +225,7 @@ const FileInput = ({
       )}
       <div>
         {srcImg && (
-          <div className="crop-overlay">
+          <div className="crop-overlay" hidden={!showCropOverlay}>
             <div className="crop-cnt">
               <div className="crop-head">Crop your image</div>
               <ReactCrop
