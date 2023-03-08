@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.cd9c7403.css",
-    "main.js": "/static/js/main.6ff2e780.js",
+    "main.js": "/static/js/main.0fea2751.js",
     "static/js/787.5bc012d4.chunk.js": "/static/js/787.5bc012d4.chunk.js",
     "static/media/beyond-grad.webp": "/static/media/beyond-grad.8f7554dddd063cebef7d.webp",
     "static/media/home-background.webp": "/static/media/home-background.eeec1f2aac7d3a0997af.webp",
@@ -19,11 +19,11 @@
     "index.html": "/index.html",
     "static/media/search.svg": "/static/media/search.435b2d1f45db29ce4272a872ccb177a2.svg",
     "main.cd9c7403.css.map": "/static/css/main.cd9c7403.css.map",
-    "main.6ff2e780.js.map": "/static/js/main.6ff2e780.js.map",
+    "main.0fea2751.js.map": "/static/js/main.0fea2751.js.map",
     "787.5bc012d4.chunk.js.map": "/static/js/787.5bc012d4.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.cd9c7403.css",
-    "static/js/main.6ff2e780.js"
+    "static/js/main.0fea2751.js"
   ]
 }
