@@ -318,9 +318,7 @@ function AluminiRegistration({ state }) {
               type="image"
               onUpload={handleProfilePicChange}
               onChange={(e) => {
-                if (!e.target.files[0].name.match(/.(jpg|jpeg|png|gif)$/i))
-                  alert("not an image");
-                else setProfilePic(URL.createObjectURL(e.target.files[0]));
+                setProfilePic(e);
               }}
             />
           </div>

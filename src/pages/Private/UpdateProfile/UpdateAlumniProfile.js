@@ -323,7 +323,6 @@ function UpdateAlumniProfile({ data }) {
               onUpload={handleProfilePicChange}
               onChange={(e) => {
                 setProfilePic(e);
-                setProfilePic(e);
               }}
             />
           </div>
