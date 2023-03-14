@@ -81,8 +81,8 @@
   background-color: rgba(218, 215, 205, 1);
   max-height: 75%;
   max-width: 60%;
-  min-height: 60%;
-  min-width: 50%;
+  /* min-height: 60%;
+  min-width: 50%; */
   height: fit-content;
   width: fit-content;
   display: flex;
@@ -104,8 +104,35 @@
   border-radius: 0;
   height: fit-content;
   width: fit-content;
+  
 }
 
 .crop-cnt button {
   margin-top: 15px;
+}
+
+@media (max-width: 768px) {
+  .select-file-btn {
+    font-size: 14px;
+  }
+
+  .crop-head {
+    font-size: calc(0.7rem + 0.8vw);
+  }
+
+  .crop-cnt button {
+    font-size: 14px;
+    padding: 2px 6px;
+  }
+}
+
+@media (max-width: 500px) {
+  .crop-cnt {
+    width: 90%;
+    max-width: none;
+  }
+
+  .file-input {
+    padding: 10px;
+  }
 }

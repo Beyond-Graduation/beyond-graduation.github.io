@@ -77,6 +77,7 @@ const FileInput = ({
       const ctx = canvas.getContext("2d");
 
       console.log(imageMain.naturalHeight, cropImage.height);
+      console.log(inputRef.current.files[0])
 
       if (!ctx) {
         throw new Error("No 2d context");
@@ -136,7 +137,10 @@ const FileInput = ({
   const handleUpload = () => {
     setProgressShow(true);
 
-    const fileToUpload = convertBase64ToFile(result);
+    const fileToUpload =
+      type === "image"
+        ? convertBase64ToFile(result)
+        : inputRef.current.files[0];
     const fileName =
       content +
       "_" +
@@ -176,7 +180,8 @@ const FileInput = ({
           setProgressShow(false);
           if (checkFileSize()) {
             if (type === "image") {
-              // onChange(e);
+              console.log(inputRef.current.files[0].name)
+
               if (!e.target.files[0].name.match(/.(jpg|jpeg|png|gif)$/i))
                 toast.error("not an image");
               else handleImage(e);
@@ -229,7 +234,7 @@ const FileInput = ({
             <div className="crop-cnt">
               <div className="crop-head">Crop your image</div>
               <ReactCrop
-                style={{ maxWidth: "50%" }}
+                style={{ maxWidth: "80%" }}
                 src={srcImg}
                 onImageLoaded={setImage}
                 crop={crop}
@@ -244,7 +249,7 @@ const FileInput = ({
                   className="image-crop"
                 />
               </ReactCrop>
-              <Button onClick={getCroppedImg}>crop</Button>
+              <Button onClick={getCroppedImg}>CROP</Button>
             </div>
           </div>
         )}

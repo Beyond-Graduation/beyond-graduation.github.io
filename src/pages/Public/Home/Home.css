@@ -1,6 +1,8 @@
 .home {
   min-height: calc(100vh - 70px);
+  width: 100vw;
   user-select: none;
+  overflow: hidden;
 }
 
 .home-main {
@@ -15,23 +17,67 @@
   background-size: cover;
   background-position-y: bottom;
   height: calc(100vh - 70px);
-  padding-right: 100px;
+  width: 100vw;
   position: relative;
   animation: backMove 10s linear infinite;
 }
 
 .home-heading {
   text-transform: uppercase;
-  padding-top: 20vh;
   font-weight: 900;
-  font-size: 200px;
-  line-height: 199px;
+  font-size: calc(5rem + 4vw);
+  padding-top: 15vh;
+  padding-right: 6vw;
   text-align: right;
   background: url("../../../assets/images/beyond-grad.webp") center right;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: backMove 20s linear infinite;
+}
+
+.home-subheading {
+  text-align: right;
+  font-size: calc(2rem + 1.5vw);
+  padding-right: 6vw;
+  font-weight: 900;
+  letter-spacing: 0em;
+  color: rgba(36, 61, 48, 1);
+  text-align: right;
+}
+
+.home-logo {
+  position: absolute;
+  left: 10%;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 50%;
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+}
+
+@media (max-width: 700px) {
+  .home-heading {
+    font-size: calc(2rem + 3vw);
+  }
+  .home-subheading {
+    margin-top: 20px;
+    font-size: calc(1rem + 1.2vw);
+  }
+}
+
+@media (min-width: 701px) and (max-width: 900px) {
+  .home-heading {
+    font-size: calc(3rem + 4vw);
+  }
+}
+
+@media (max-width: 1400px) {
+  .home-logo {
+    display: none;
+  }
 }
 
 @keyframes moveBackground {
@@ -50,25 +96,4 @@
   to {
     background-position-x: left;
   }
-}
-
-.home-subheading {
-  text-align: right;
-  font-size: 64px;
-  font-weight: 900;
-  line-height: 64px;
-  letter-spacing: 0em;
-  color: rgba(36, 61, 48, 1);
-  text-align: right;
-}
-
-.home-logo {
-  position: absolute;
-  left: 20%;
-  top: 5%;
-  height: 50%;
-  -webkit-user-drag: none;
-  -khtml-user-drag: none;
-  -moz-user-drag: none;
-  -o-user-drag: none;
 }

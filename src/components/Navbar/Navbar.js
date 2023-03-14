@@ -14,6 +14,8 @@ function Navbar() {
   const ref = useRef();
   const checkRef = useRef();
   const overlayRef = useRef();
+  const hamburgerRef = useRef();
+  const mobileNavRef = useRef();
   const [profileImg, setProfileImg] = useState(avatarIcon);
 
   const [{ userData, userId }, dispatch] = useStateValue();
@@ -27,6 +29,11 @@ function Navbar() {
     navigate("/");
   };
 
+  const hideNavbar = () => {
+    hamburgerRef.current.classList.remove("toggle");
+    mobileNavRef.current.classList.remove("show");
+  };
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -38,9 +45,22 @@ function Navbar() {
       }
     };
 
+    const clickOutsideNav = (event) => {
+      if (
+        mobileNavRef.current &&
+        !mobileNavRef.current.contains(event.target) &&
+        !hamburgerRef.current.contains(event.target)
+      ) {
+        hamburgerRef.current.classList.remove("toggle");
+        mobileNavRef.current.classList.remove("show");
+      }
+    };
+
     document.addEventListener("click", handleClickOutside, true);
+    document.addEventListener("click", clickOutsideNav, true);
     return () => {
       document.removeEventListener("click", handleClickOutside, true);
+      document.removeEventListener("click", clickOutsideNav, true);
     };
   }, []);
 
@@ -49,11 +69,11 @@ function Navbar() {
   }, [userData]);
 
   return (
-    <div className="navbar-main d-flex align-items-center justify-content-between">
+    <div className="navbar-main d-flex">
       <Link to="/" className="nav-logo">
         BeGrad
       </Link>
-      <div className="d-flex align-items-center navbar-links">
+      <div className="d-flex align-items-center navbar-links navbar-desktop">
         <Link to="/">
           <div className="nav-link">Home</div>
         </Link>
@@ -127,6 +147,56 @@ function Navbar() {
             </Link>
           </>
         )}
+      </div>
+      <div className="navbar-mobile">
+        <div
+          className="hamburger"
+          ref={hamburgerRef}
+          onClick={() => {
+            hamburgerRef.current.classList.toggle("toggle");
+            mobileNavRef.current.classList.toggle("show");
+          }}
+        >
+          <div className="line1"></div>
+          <div className="line2"></div>
+          <div className="line3"></div>
+        </div>
+        <ul className="mobile-nav-links" ref={mobileNavRef}>
+          <li>
+            <Link to="" onClick={hideNavbar}>Home</Link>
+          </li>
+          {isAuth.checkAuth() ? (
+            <>
+              <li>
+                <Link to="/alumni-profiles" onClick={hideNavbar}>Alumni</Link>
+              </li>
+              <li>
+                <Link to="/student-profiles" onClick={hideNavbar}>Student</Link>
+              </li>
+              <li>
+                <Link to="/blogs" onClick={hideNavbar}>Blogs</Link>
+              </li>
+              <li>
+                <Link to="/notices" onClick={hideNavbar}>Notices</Link>
+              </li>
+            </>
+          ) : null}
+          <li>
+            <Link to="/about" onClick={hideNavbar}>About</Link>
+          </li>
+          {isAuth.checkAuth() ? (
+            <></>
+          ) : (
+            <>
+              <li>
+                <Link to="/login" onClick={hideNavbar}>Login</Link>
+              </li>
+              <li>
+                <Link to="/register" onClick={hideNavbar}>Register</Link>
+              </li>
+            </>
+          )}
+        </ul>
       </div>
     </div>
   );

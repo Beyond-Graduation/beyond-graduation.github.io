@@ -10,7 +10,7 @@ const About = () => {
     <div className="about">
       <div className="about-cnt">
         <div className="about-head mt-5">What is Beyond Graduation?</div>
-        <div className="d-flex about-main">
+        <div className="d-lg-flex about-main align-items-center justify-content-between">
           <div>
             Beyond Graduation is a platform where alumni and students can
             interact with each other by sharing experiences and getting
@@ -19,13 +19,15 @@ const About = () => {
             connect with Alumni with similar interests and grow beyond
             graduation.
           </div>
-          <img
-            src="https://images.shiksha.com/mediadata/images/1568879912phpvKYujb.jpeg"
-            alt=""
-          />
+          <div>
+            <img
+              src="https://images.shiksha.com/mediadata/images/1568879912phpvKYujb.jpeg"
+              alt=""
+            />
+          </div>
         </div>
         <div className="about-head mt-5">Our Team</div>
-        <div className="d-flex">
+        <div className="d-flex flex-wrap">
           <div className="about-person text-center">
             <img src={sourav} alt="Sourav Satheesh" />
             <div className="about-name">Sourav Satheesh</div>

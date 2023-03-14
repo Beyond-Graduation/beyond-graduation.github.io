@@ -14,8 +14,9 @@
   width: fit-content;
   color: black;
   font-weight: 500;
-  font-size: calc(1rem + 2vw);
+  font-size: calc(1rem + 1.8vw);
   margin-bottom: 20px;
+  line-height: 110%;
 }
 
 .about-head:after {
@@ -23,43 +24,62 @@
   display: block;
   width: 70%;
   border-bottom: 4px solid rgba(88, 129, 87, 0.893);
+  margin-top: 6px;
 }
 
 .about-main div {
   font-size: 22px;
-  letter-spacing: 1px;
+  font-size: calc(1rem + 0.5vw);
   margin-top: 20px;
+  width: 45%;
+  text-align: justify;
 }
 
 .about-main img {
-  height: 350px;
-  margin-top: -80px;
-  margin-left: 50px;
+  width: 45%;
   border-radius: 10px;
 }
 
 .about-person {
-	margin: 20px auto;
-	background-color: white;
-	padding: 30px;
-	border-radius: 40px 0;
-	box-shadow: 0px 0px 4px 0.5px rgba(0, 0, 0, 0.2);
+  margin: 20px auto;
+  background-color: white;
+  padding: 30px;
+  border-radius: 40px 0;
+  box-shadow: 0px 0px 4px 0.5px rgba(0, 0, 0, 0.2);
 }
 
-.about-person img{
-	width: 200px;
+.about-person img {
+  width: 200px;
   height: 200px;
-	border-radius: 50%;
+  border-radius: 50%;
 }
 
 .about-name {
-	font-size: 22px;
-	font-weight: 600;
-	text-transform: uppercase;
-	margin-top: 14px;
+  font-size: calc(1rem + 0.5vw);
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-top: 14px;
 }
 
 .about-role {
-	color: rgba(115, 105, 105, 1);
-	margin-top: -3px;
+  color: rgba(115, 105, 105, 1);
+  margin-top: -3px;
+}
+
+@media (max-width: 992px) {
+  .about {
+    padding-top: 0.5vh;
+  }
+
+  .about-main div {
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  .about-main img {
+    width: 80%;
+    margin: auto;
+    margin-top: 20px;
+  }
 }

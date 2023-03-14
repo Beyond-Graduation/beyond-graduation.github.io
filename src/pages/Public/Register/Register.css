@@ -2,7 +2,6 @@
   background-image: url("../../../assets/images/login-bck-img.webp");
   background-size: cover;
   background-repeat: no-repeat;
-  background-position-y: -2px;
   height: 100vh;
   display: flex;
   user-select: none;
@@ -73,4 +72,30 @@
 
 .register-form .login-button {
   margin: 25px 0 8px 0;
+}
+
+@media (max-width: 768px) {
+  .register-inputs input {
+    height: 35px;
+    width: 100%;
+    padding-left: 32px;
+    font-size: 14px;
+  }
+
+  .icon-email-name-pswd {
+    left: 12px;
+    height: 14px;
+    width: 14px;
+  }
+
+  .register-tab {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+
+  .reg-tab-head:first-child {
+    padding-right: 10px;
+    margin-right: 10px;
+  }
+  
 }

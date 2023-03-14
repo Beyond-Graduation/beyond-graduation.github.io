@@ -1,34 +1,24 @@
 import React, { useEffect, useState } from "react";
 import AnimatedInputField from "../../../components/AnimatedInputField/AnimatedInputField";
 import avatarIcon from "../../../assets/images/avatar.png";
+import uploadIcon from "../../../assets/icons/upload-file.svg";
 import {
   CustomDropdown,
   MutliDropdown,
 } from "../../../components/CustomDropdown/CustomDropdown";
-import { FaTrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { isAuth } from "../../../auth/Auth";
 import axios from "../../../components/axios";
 import { toast } from "react-toastify";
-import { isAuth } from "../../../auth/Auth";
 import FileInput from "../../../components/FileInput/FileInput";
 import { deleteObject, ref } from "firebase/storage";
 import storage from "../../../firebase";
 
-function AluminiRegistration({ state }) {
+function StudentRegistration({ state }) {
   const navigate = useNavigate();
-
   const [registering, setRegistering] = useState(false);
-  const [profilePic, setProfilePic] = useState(avatarIcon);
-  const [workCount, setWorkCount] = useState(1);
   const [resumeFileName, setResumeFileName] = useState("");
-  const [workExp, setWorkExp] = useState([
-    {
-      company: "",
-      role: "",
-      from: 0,
-      to: 0,
-    },
-  ]);
+  const [profilePic, setProfilePic] = useState(avatarIcon);
 
   const [formDetails, setFormDetails] = useState({
     userId: "",
@@ -37,45 +27,29 @@ function AluminiRegistration({ state }) {
     firstName: "",
     lastName: "",
     areasOfInterest: [],
+    higherSecondary: { board: "", cgpa: 0 },
     department: "",
-    yearGraduation: "",
+    expectedGraduationYear: 0,
+    yearOfJoining: 0,
     degree: "",
-    workExperience: [],
     gender: "",
-    admissionId: "",
-    phone: "",
+    profilePicPath: "",
     resume: "",
+    admissionId: "",
+    cgpa: 0,
+    phone: 0,
   });
 
-  const degreeOptions = [
-    { value: "B-Tech", label: "B-Tech" },
-    { value: "M-Tech", label: "M-Tech" },
-    { value: "B-Arch", label: "B-Arch" },
-    { value: "M-Arch", label: "M-Arch" },
-    { value: "PhD", label: "PhD" },
-  ];
-
-  const InterestOptions = [
-    { value: "Web Development", label: "Web Development" },
-    { value: "App Development", label: "App Development" },
-    { value: "Machine Learning", label: "Machine Learning" },
-    { value: "Data Science", label: "Data Science" },
-    { value: "Block Chain", label: "Block Chain" },
-  ];
-
   const handleChange = (e) => {
-    setFormDetails({ ...formDetails, [e.target.name]: e.target.value });
-  };
-
-  const handleWorkExpChange = (e, index) => {
-    const newWorkExp = [...workExp];
-    if (e.target.name === "to" || e.target.name === "from") {
-      newWorkExp[index][e.target.name] = Number(e.target.value);
-    } else {
-      newWorkExp[index][e.target.name] = e.target.value;
-    }
-    setWorkExp(newWorkExp);
-    setFormDetails({ ...formDetails, workExperience: newWorkExp });
+    const n = e.target.name;
+    if (
+      n === "cgpa" ||
+      n === "hcgpa" ||
+      n === "yearOfJoining" ||
+      n === "expectedGraduationYear"
+    )
+      setFormDetails({ ...formDetails, [n]: Number(e.target.value) });
+    else setFormDetails({ ...formDetails, [e.target.name]: e.target.value });
   };
 
   const handleInterstChange = (e) => {
@@ -86,35 +60,23 @@ function AluminiRegistration({ state }) {
     setFormDetails({ ...formDetails, areasOfInterest: areas });
   };
 
+  const handleSecondary = (e) => {
+    const n = e.target.name === "hcgpa" ? "cgpa" : "board";
+    setFormDetails({
+      ...formDetails,
+      higherSecondary: {
+        ...formDetails.higherSecondary,
+        [n]:
+          e.target.name === "hcgpa" ? Number(e.target.value) : e.target.value,
+      },
+    });
+  };
+
   const handleDepartmentChange = (e) => {
     if (e === null) {
       setFormDetails({ ...formDetails, department: "" });
     } else {
       setFormDetails({ ...formDetails, department: e.value });
-    }
-  };
-
-  const handleDegreeChange = (e) => {
-    if (e === null) {
-      setFormDetails({ ...formDetails, degree: "" });
-    } else {
-      setFormDetails({ ...formDetails, degree: e.value });
-    }
-  };
-
-  const genderOptions = [
-    { value: "Male", label: "Male" },
-    { value: "Female", label: "Female" },
-    { value: "Transgender", label: "Transgender" },
-    { value: "Non-binary/non-conforming", label: "Non-binary/non-conforming" },
-    { value: "Prefer not to say", label: "Prefer not to say" },
-  ];
-
-  const handleGenderChange = (e) => {
-    if (e === null) {
-      setFormDetails({ ...formDetails, gender: "" });
-    } else {
-      setFormDetails({ ...formDetails, gender: e.value });
     }
   };
 
@@ -138,27 +100,47 @@ function AluminiRegistration({ state }) {
       label: "Electrical and Electronics Engineering",
     },
     { value: "Civil Engineering", label: "Civil Engineering" },
-    { value: "Architecture", label: "Architecture" },
+    { value: "Architecture (B. Arch.)", label: "Architecture (B. Arch.)" },
   ];
 
-  const addNewExp = () => {
-    setWorkCount(workCount + 1);
-    setWorkExp([
-      ...workExp,
-      {
-        company: "",
-        role: "",
-        from: 0,
-        to: 0,
-      },
-    ]);
+  const degreeOptions = [
+    { value: "B-Tech", label: "B-Tech" },
+    { value: "M-Tech", label: "M-Tech" },
+    { value: "B-Arch", label: "B-Arch" },
+    { value: "M-Arch", label: "M-Arch" },
+    { value: "PhD", label: "PhD" },
+  ];
+
+  const handleDegreeChange = (e) => {
+    if (e === null) {
+      setFormDetails({ ...formDetails, degree: "" });
+    } else {
+      setFormDetails({ ...formDetails, degree: e.value });
+    }
   };
 
-  const removeExp = (index) => {
-    const newWorkExp = [...workExp];
-    newWorkExp.splice(index, 1);
-    setWorkExp(newWorkExp);
-    setWorkCount(workCount - 1);
+  const InterestOptions = [
+    { value: "webevelopment", label: "Web Development" },
+    { value: "appevelopment", label: "App Development" },
+    { value: "machineLearning", label: "Machine Learning" },
+    { value: "dataScience", label: "Data Science" },
+    { value: "blockChain", label: "Block Chain" },
+  ];
+
+  const genderOptions = [
+    { value: "Male", label: "Male" },
+    { value: "Female", label: "Female" },
+    { value: "Transgender", label: "Transgender" },
+    { value: "Non-binary/non-conforming", label: "Non-binary/non-conforming" },
+    { value: "Prefer not to say", label: "Prefer not to say" },
+  ];
+
+  const handleGenderChange = (e) => {
+    if (e === null) {
+      setFormDetails({ ...formDetails, gender: "" });
+    } else {
+      setFormDetails({ ...formDetails, gender: e.value });
+    }
   };
 
   const handleProfilePicChange = (url) => {
@@ -173,7 +155,6 @@ function AluminiRegistration({ state }) {
           toast.error("Something went wrong !!!");
         });
     }
-
     setFormDetails({ ...formDetails, profilePicPath: url });
   };
 
@@ -196,21 +177,22 @@ function AluminiRegistration({ state }) {
   const onRegister = async () => {
     if (!registering) {
       setRegistering(true);
-      if (formDetails.workExperience.length !== 0) {
-        if (
-          formDetails.workExperience[0].company === "" &&
-          formDetails.workExperience[0].role === ""
-        ) {
-          setFormDetails({ ...formDetails, workExperience: [] });
-        }
-      }
-
+      console.log(formDetails);
       if (
+        formDetails.admissionId === "" ||
         formDetails.firstName === "" ||
         formDetails.lastName === "" ||
         formDetails.email === "" ||
         formDetails.password === "" ||
-        formDetails.areasOfInterest.length === 0
+        formDetails.department === "" ||
+        formDetails.yearOfJoining === 0 ||
+        formDetails.expectedGraduationYear === 0 ||
+        formDetails.areasOfInterest.length === 0 ||
+        formDetails.higherSecondary.board === "" ||
+        formDetails.higherSecondary.cgpa === 0 ||
+        formDetails.degree === "" ||
+        formDetails.gender === "" ||
+        formDetails.cgpa === 0
       ) {
         toast.error("Please fill all the fields");
         setRegistering(false);
@@ -224,7 +206,7 @@ function AluminiRegistration({ state }) {
 
       await axios({
         method: "post",
-        url: "alumni/signup",
+        url: "student/signup",
         data: formDetails,
       })
         .then((res) => {
@@ -239,13 +221,30 @@ function AluminiRegistration({ state }) {
     }
   };
 
-  useEffect(() => {}, [workCount, formDetails]);
+  // const getFile = (e) => {
+  //   setResumeFileName(e.target.files[0].name);
+  //   const file = e.target.files[0];
+
+  //   var reader = new FileReader();
+  //   reader.readAsDataURL(file);
+  //   reader.onload = () => {
+  //     console.log(typeof reader.result);
+  //   };
+  //   reader.onerror = (error) => {
+  //     console.log("Error: ", error);
+  //   };
+
+  //   setTimeout(() => {
+  //     console.log("object");
+  //     saveAs(reader.result, "sampele.png");
+  //   }, 5000);
+  // };
 
   useEffect(() => {
     const generateUserId = () => {
       let userId = "";
       const possible =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
       for (let i = 0; i < 5; i++) {
         userId += possible.charAt(Math.floor(Math.random() * possible.length));
       }
@@ -263,7 +262,7 @@ function AluminiRegistration({ state }) {
   return (
     <div className="intro-main">
       <div className="intro-container">
-        <h1 className="intro-heading">Alumni Registration Form</h1>
+        <h1 className="intro-heading">Student Registration Form</h1>
         <h4>Tell us more about you !</h4>
         <div className="d-flex flex-lg-row flex-column-reverse">
           <div>
@@ -294,6 +293,11 @@ function AluminiRegistration({ state }) {
                     options={genderOptions}
                     onChange={(e) => handleGenderChange(e)}
                   />
+                  {/* <AnimatedInputField
+                    name="phoneNumber"
+                    title="Phone Number"
+                    onChange={handleChange}
+                  /> */}
                 </div>
                 <div className="d-md-flex">
                   <AnimatedInputField
@@ -314,139 +318,88 @@ function AluminiRegistration({ state }) {
             <img src={profilePic} alt="" className="mb-4" />
             <FileInput
               label="Select Profile Picture"
-              content="alumni-profileImg"
+              content="student-profileImg"
               type="image"
               onUpload={handleProfilePicChange}
               onChange={(e) => {
-                setProfilePic(e);
+                if (!e.target.files[0].name.match(/.(jpg|jpeg|png|gif)$/i))
+                  alert("not an image");
+                else setProfilePic(URL.createObjectURL(e.target.files[0]));
               }}
             />
           </div>
         </div>
         <section className="intro-section mt-5">
-          <div className="head">
-            Program Graduated from College of Engineering Trivandrum
+          <div className="head">Educational Qualification</div>
+          <div className="m-2 mt-3">
+            <div className="sub-head">12th Grade</div>
+            <div className="intro-form-inner">
+              <div className="d-md-flex">
+                <AnimatedInputField
+                  name="board"
+                  title="Board"
+                  onChange={handleSecondary}
+                />
+                <AnimatedInputField
+                  name="hcgpa"
+                  title="Percentage"
+                  onChange={handleSecondary}
+                />
+              </div>
+            </div>
           </div>
-          <div className="intro-form-inner">
-            <div className="d-md-flex">
-              <CustomDropdown
-                title="Degree"
-                options={degreeOptions}
-                onChange={(e) => handleDegreeChange(e)}
-              />
-              <CustomDropdown
-                title="Department"
-                options={departmentOptions}
-                onChange={(e) => handleDepartmentChange(e)}
-              />
-              <AnimatedInputField
-                name="yearGraduation"
-                title="Year of Graduation"
-                type="number"
-                min="1900"
-                max="2099"
-                step="1"
-                onChange={handleChange}
-              />
+          <div className="m-2 mt-3">
+            <div className="sub-head">Undergraduate Degree</div>
+            <div className="intro-form-inner">
+              <div className="d-md-flex">
+                <CustomDropdown
+                  title="Degree"
+                  options={degreeOptions}
+                  onChange={(e) => handleDegreeChange(e)}
+                />
+                <CustomDropdown
+                  title="Department"
+                  options={departmentOptions}
+                  onChange={(e) => handleDepartmentChange(e)}
+                />
+                <AnimatedInputField
+                  name="cgpa"
+                  title="CGPA"
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="d-md-flex">
+                <AnimatedInputField
+                  name="yearOfJoining"
+                  title="Year of Joining"
+                  onChange={handleChange}
+                />
+                <AnimatedInputField
+                  name="expectedGraduationYear"
+                  title="Year of Graduation"
+                  onChange={handleChange}
+                />
+              </div>
             </div>
           </div>
         </section>
         <section className="intro-section mt-5">
-          <div className="head">Domain</div>
-          <div className="m-4 mt-3">
+          <div className="head">Areas of Interest</div>
+          <div className="m-2 mt-3">
             <MutliDropdown
-              title="Domain (select from the menu or type)"
+              title="Areas of Interest"
               options={InterestOptions}
               onChange={(e) => handleInterstChange(e)}
             />
           </div>
         </section>
         <section className="intro-section mt-5">
-          <div className="head d-md-flex">
-            Work Experience
-            <div
-              className="add-experience-button d-flex ms-3"
-              onClick={addNewExp}
-            >
-              <div className="me-3">+</div>
-              [Add another experience]
-            </div>
-          </div>
-          {[...Array(workCount)].map((x, i) => (
-            <>
-              <div className="m-md-4 my-md-5 m-2">
-                <div className="intro-form-inner">
-                  <div className="d-md-flex">
-                    <AnimatedInputField
-                      id={`company${i}`}
-                      name="company"
-                      title="Company/Organisation"
-                      value={workExp[i].company}
-                      onChange={(e) => handleWorkExpChange(e, i)}
-                    />
-                    <AnimatedInputField
-                      id={`startDate${i}`}
-                      name="from"
-                      title="From (year)"
-                      type="number"
-                      min="1900"
-                      max="2099"
-                      step="1"
-                      onChange={(e) => handleWorkExpChange(e, i)}
-                    />
-                  </div>
-                  <div className="d-md-flex">
-                    <AnimatedInputField
-                      id={`role${i}`}
-                      name="role"
-                      title="Role/Job Title"
-                      onChange={(e) => handleWorkExpChange(e, i)}
-                    />
-                    <AnimatedInputField
-                      id={`endDate${i}`}
-                      type="number"
-                      min="1900"
-                      max="2099"
-                      step="1"
-                      name="to"
-                      title="To (year)"
-                      onChange={(e) => handleWorkExpChange(e, i)}
-                    />
-                  </div>
-                  <div className="d-flex align-items-end mt-5 ms-4">
-                    {/* <AnimatedInputField
-                      id={`description${i}`}
-                      as="textarea"
-                      name="description"
-                      title="Job Description"
-                      rows={4}
-                      className="mt-5"
-                      onChange={(e) => handleWorkExpChange(e, i)}
-                    /> */}
-                    {workCount > 1 && (
-                      <div
-                        className="d-flex align-items-center justify-content-aroundnp delete-experience"
-                        onClick={() => {
-                          removeExp(i);
-                        }}
-                      >
-                        <FaTrash className="me-2" />
-                        <span>Delete this Experience</span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </>
-          ))}
-        </section>
-        <section className="intro-section mt-md-5">
           <div className="head">Resume</div>
-          <div className="m-4 mt-3 d-md-flex align-items-center">
+          <div className="m-2 mt-3 d-flex align-items-center">
             <FileInput
               label="Upload Your Resume"
               type="file"
-              content="alumni-resume"
+              content="student-resume"
               onUpload={handleResumeChange}
               onChange={(e) => {
                 setResumeFileName(e);
@@ -455,7 +408,6 @@ function AluminiRegistration({ state }) {
             <span className="uploaded-file-name">{resumeFileName}</span>
           </div>
         </section>
-
         <div className="intro-reg-btn" onClick={onRegister}>
           register
         </div>
@@ -464,4 +416,4 @@ function AluminiRegistration({ state }) {
   );
 }
 
-export default AluminiRegistration;
+export default StudentRegistration;

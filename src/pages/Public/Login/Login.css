@@ -2,7 +2,6 @@
   background-image: url("../../../assets/images/login-bck-img.webp");
   background-size: cover;
   background-repeat: no-repeat;
-  background-position-y: -2px;
   min-height: 100vh;
   user-select: none;
   position: relative;
@@ -63,6 +62,7 @@
   color: white;
   margin: 10px 0;
   padding-left: 45px;
+  outline: none;
 }
 
 .login-form .input-cnt {
@@ -75,9 +75,6 @@
   top: 50%;
   left: 15px;
   transform: translateY(-50%);
-}
-
-.input-cnt svg {
   height: 18px;
   width: 18px;
 }
@@ -150,7 +147,7 @@
 }
 
 .bottom-line {
-  font-size: 12px;
+  font-size: 14px;
   /* margin-left: 52px; */
   text-align: center; /* use this instead of margin to align center */
   color: white;
@@ -179,6 +176,7 @@
   position: relative;
   width: 40%;
   max-height: 50%;
+  min-width: 480px;
   min-height: fit-content;
   background-color: rgb(34, 55, 38);
   border-radius: 20px;
@@ -195,7 +193,7 @@
 }
 
 .forgot-overlay-head {
-  font-size: 28px;
+  font-size: calc(1rem + 0.5vw);
   font-weight: 500;
   text-transform: uppercase;
   text-align: center;
@@ -213,12 +211,13 @@
 .forgot-overlay .input-cnt input {
   /* no need for new class when we can do this :) */
   height: 40px;
-  width: 100%;
+  width: 120%;
   border-radius: 10px;
   background: rgba(0, 0, 0, 0.6) !important;
   border: 1.1px solid #ffffff6e;
   color: white;
   margin: 10px 0;
+  margin-left: -10%;
   padding-left: 45px;
   outline: none;
 }
@@ -233,7 +232,7 @@
   color: white;
   position: absolute;
   top: 50%;
-  left: 15px;
+  left: calc(15px - 10%);
   transform: translateY(-50%);
 }
 
@@ -245,12 +244,110 @@
 .forgot-overlay .forgot-btn {
   background-color: rgba(163, 177, 138, 1);
   text-transform: uppercase;
-  font-size: 18px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: 600;
   padding: 6px;
   text-align: center;
   border-radius: 5px;
   width: 50%;
   margin: 20px auto;
   cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .home-btn {
+    height: 35px;
+    width: 35px;
+    padding: 8px;
+  }
+
+  .login-heading {
+    font-size: calc(1rem + 4vw);
+  }
+
+  .input-cnt input {
+    height: 35px;
+    width: 100%;
+    padding-left: 32px;
+    font-size: 14px;
+  }
+
+  .icon-email-pswd {
+    left: 12px;
+    height: 14px;
+    width: 14px;
+  }
+
+  .icon-eye {
+    right: 12px;
+  }
+
+  #fp {
+    font-size: 12px; /* dont make text too small */
+  }
+
+  .rem-cb {
+    font-size: 12px;
+    margin-top: 10px;
+  }
+
+  .rem-cb input {
+    width: 13px;
+    height: 13px;
+  }
+
+  .login-button {
+    font-size: 16px;
+    padding: 3px 0;
+  }
+
+  .bottom-line {
+    font-size: 12px;
+  }
+
+  .forgot-overlay-cnt {
+    min-width: 280px;
+    max-height: none;
+  }
+
+  .forgot-overlay-head {
+    font-size: 1rem;
+  }
+
+  .forgot-overlay p {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 120%;
+  }
+
+  .forgot-overlay .input-cnt input {
+    height: 30px;
+    font-size: 12px;
+    padding-left: 30px;
+  }
+
+  .forgot-overlay .input-cnt {
+    width: 100%;
+  }
+
+  .forgot-overlay .icon-email-pswd {
+    left: calc(10px - 10%);
+  }
+
+  .forgot-overlay .input-cnt svg {
+    height: 14px;
+    width: 14px;
+  }
+
+  .forgot-overlay .forgot-btn {
+    font-size: 12px;
+    font-weight: 600;
+    width: fit-content;
+  }
+
+  .forgot-overlay .overlay-close {
+    right: 20px;
+    top: 20px;
+    font-size: 18px;
+  }
 }

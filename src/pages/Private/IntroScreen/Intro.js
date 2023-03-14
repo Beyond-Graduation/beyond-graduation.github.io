@@ -1,6 +1,6 @@
 import React from "react";
 import "./Intro.css";
-import StudentRegistration from "./SudentRegistration";
+import StudentRegistration from "./StudentRegistration";
 import AluminiRegistration from "./AlumniRegistration";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";

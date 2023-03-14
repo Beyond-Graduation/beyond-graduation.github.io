@@ -1,7 +1,8 @@
 .navbar-main {
   background-color: rgba(58, 90, 64, 1);
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+  justify-content: space-between;
   height: 70px;
   user-select: none;
   position: fixed;
@@ -162,6 +163,17 @@ a {
   animation: rotateX 300ms 100ms ease-in-out forwards;
 }
 
+.navbar-mobile {
+  display: none;
+}
+
+.hamburger div {
+  width: 30px;
+  height: 3px;
+  background: #f2f5f7;
+  margin: 5px;
+}
+
 @-moz-keyframes rotateX {
   0% {
     opacity: 0;
@@ -218,5 +230,74 @@ a {
 @keyframes pulse {
   50% {
     transform: scale(0.98);
+  }
+}
+
+@media (max-width: 900px) {
+  .navbar-main {
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+  .nav-logo {
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+  .navbar-desktop.navbar-links {
+    display: none !important;
+  }
+  .navbar-mobile {
+    display: block;
+  }
+  .hamburger {
+    display: block;
+    position: absolute;
+    cursor: pointer;
+    right: 5%;
+    top: 50%;
+    transform: translate(-5%, -50%);
+    z-index: 2;
+    transition: all 0.7s ease;
+  }
+  .hamburger .line1,
+  .hamburger .line3 {
+    transition: all 0.5s ease;
+  }
+  .hamburger .line2 {
+    transition: all 0.3s ease;
+  }
+  .mobile-nav-links {
+    transform: translateX(100%);
+    list-style: none;
+    background-color: rgba(58, 90, 64, 1);
+    height: calc(100vh - 70px);
+    padding: 0;
+    margin-top: 70px;
+    width: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.15);
+    transition: all 0.5s ease-in-out;
+  }
+  .mobile-nav-links.show {
+    transform: translateX(0);
+    width: fit-content;
+    transition: all 0.5s ease-in-out;
+  }
+  .mobile-nav-links li {
+    cursor: pointer;
+    padding: 20px 60px;
+    text-align: center;
+  }
+  .mobile-nav-links li a {
+    color: white;
+    font-size: 20px;
+  }
+  .toggle .line1 {
+    transform: rotate(-45deg) translate(-5px, 6px);
+  }
+  .toggle .line2 {
+    width: 0;
+  }
+  .toggle .line3 {
+    transform: rotate(45deg) translate(-5px, -6px);
   }
 }

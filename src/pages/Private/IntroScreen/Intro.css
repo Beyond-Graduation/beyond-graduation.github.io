@@ -123,7 +123,7 @@
 
 .intro-reg-btn {
   background-color: rgba(58, 90, 64, 0.5);
-  color: white!important;
+  color: white !important;
   width: fit-content;
   text-transform: uppercase;
   font-weight: 500;
@@ -141,7 +141,88 @@
   background-color: rgba(88, 129, 87, 1);
   padding: 6px 20px;
   border-radius: 16px;
-  height: fit-content ;
+  height: fit-content;
   font-weight: 500;
   cursor: pointer;
+}
+
+.add-experience-button > div {
+  font-weight: 600;
+  background-color: rgba(58, 90, 64, 1);
+  height: 30px;
+  width: 30px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  color: white;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.769);
+  cursor: pointer;
+}
+
+.add-experience-button {
+  color: rgba(88, 129, 87, 1);
+  font-weight: 500;
+}
+@media (max-width: 1024px) {
+  .intro-avatar {
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+    border-left: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .intro-form-inner {
+    margin-left: 10px !important;
+  }
+
+  .intro-container h4 {
+    margin-bottom: 25px;
+  }
+
+  .intro-section .head {
+    font-size: 18px;
+  }
+
+  .intro-section .sub-head {
+    font-size: 16px;
+  }
+
+  .add-experience-button {
+    font-size: 14px;
+    margin-top: 15px;
+  }
+
+  .add-experience-button div {
+    height: 20px;
+    width: 20px;
+    font-size: 18px;
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.769);
+  }
+
+  .delete-experience {
+    padding: 4px 10px;
+    border-radius: 10px;
+    line-height: 120%;
+  }
+
+  .delete-experience svg {
+    font-size: 20px;
+  }
+
+  .delete-experience span {
+    margin-left: 15px;
+  }
+
+  .uploaded-file-name {
+    margin-left: 0px !important;
+    font-size: 16px !important;
+    margin-top: 10px;
+    max-width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
 }

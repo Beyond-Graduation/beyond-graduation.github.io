@@ -7,7 +7,7 @@ function Home() {
     <div className="home">
       <div className="home-main">
 		<img src={home_logo} className="home-logo" alt="" />
-		<h1 className="home-heading">Beyond Graduation</h1>
+		<h1 className="home-heading">Beyond<br/> Graduation</h1>
 		<h2 className="home-subheading">Keeping connections alive</h2>
 	  </div>
     </div>

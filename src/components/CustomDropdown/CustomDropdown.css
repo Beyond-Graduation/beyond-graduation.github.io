@@ -205,3 +205,19 @@
 .light-mode .multi-dd .multi-select__multi-value__remove:hover {
   background-color: rgba(58, 90, 64, 1);
 }
+
+@media (max-width: 768px) {
+  .custom-dd__input-container,
+  .custom-dd__input {
+    font-size: 14px;
+  }
+
+  .custom-dd {
+    margin: 10px 50px 0 0;
+  }
+
+  .multi-dd {
+    font-size: 14px;
+    line-height: 110%;
+  }
+}
