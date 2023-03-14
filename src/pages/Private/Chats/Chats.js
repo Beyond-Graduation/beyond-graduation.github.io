@@ -1,8 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Message from "../../../components/Messages/Message";
 import "./Chats.css";
+import { chatInstance } from "../../../components/axios";
 
 function Chats() {
+  const [conversations, setConversations] = useState([]);
+  const userId =
+    localStorage.getItem("userId") || sessionStorage.getItem("userId");
+
+  useEffect(() => {
+    const getConversations = async () => {
+      const res = await chatInstance({
+        method: "get",
+        url: "/conversations/" + userId,
+      })
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      console.log(res);
+    };
+
+    getConversations();
+  }, []);
+
   return (
     <div className="chats d-flex">
       <div className="chats-left">left</div>
