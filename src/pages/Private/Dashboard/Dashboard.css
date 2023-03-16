@@ -23,17 +23,7 @@
   border-radius: 50%;
 }
 
-.dash-main-cnt {
-  display: flex;
-  align-items: center;
-}
-
-.dash-main-left {
-  width: 60%;
-}
-
 .dash-main-right {
-  width: 40%;
   height: 100%;
 }
 
@@ -47,7 +37,7 @@
 }
 
 .carousel-heading {
-  font-size: calc(0.7rem + 1vw);
+  font-size: calc(0.7rem + 1.2vw);
   font-weight: 500;
   margin-top: 5vh;
 }
@@ -101,3 +91,49 @@
   border-radius: 10px;
   cursor: pointer;
 }
+
+@media (min-width: 768px) {
+  .dash-main-left {
+    width: 60%;
+  }
+
+  .dash-main-right {
+    width: 40%;
+  }
+}
+
+@media (max-width: 464px) {
+  .carousel-container .dash-sm-carousel,
+  .carousel-container .dash-lg-carousel {
+    width: 80%;
+    margin: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard {
+    padding-top: 4vh;
+  }
+
+  .carousel-heading {
+    font-size: 20px;
+  }
+
+  .dashboard-heading img {
+    height: 60px;
+    width: 60px;
+  }
+
+  .explore-btn {
+    font-size: 14px;
+    padding: 6px 15px;
+    border-radius: 6px;
+  }
+}
+
+@media (max-width: 768px) and (min-width: 465px) {
+  .dash-lg-carousel .carousel-card {
+    height: 300px;
+    margin: 5%;
+  }
+} ;

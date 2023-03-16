@@ -36,3 +36,31 @@
   line-height: 20px;
   color: rgba(115, 105, 105, 1);
 }
+
+@media (max-width: 768px) {
+  .profile-main-card {
+    margin-right: auto;
+    margin-top: 30px;
+    padding: 30px 0;
+    max-width: 350px;
+    border-radius: 30px;
+    box-shadow: 0px 0px 3px 5px rgba(58, 90, 64, 0.316);
+    border: 4px solid rgba(52, 78, 65, 1);
+  }
+
+  .profile-main-card img {
+    width: 40%;
+  }
+
+  .profile-main-card .name {
+    font-size: 22px;
+  }
+
+  .profile-main-card .department {
+    font-size: 18px;
+  }
+
+  .profile-main-card .batch {
+    font-size: 14px;
+  }
+}

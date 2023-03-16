@@ -52,9 +52,9 @@ function DashboardCarousel({
   return (
     <div {...props}>
       {type?.toLowerCase() === "blog" ? (
-        <div className="d-flex">
+        <div className="d-flex justify-content-center">
           {userType === "alumni" && create !== false ? (
-            <div className="carousel-card create-card">
+            <div className="carousel-card create-card d-none d-lg-block">
               <Link to="/blogs/create">
                 <DashBlogCard type="create" />
               </Link>

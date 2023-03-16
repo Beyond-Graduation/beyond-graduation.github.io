@@ -86,7 +86,7 @@ function AlumniDashboard() {
           <img src={profileImg} alt="" />
           <h1>Hi {userData.firstName},</h1>
         </div>
-        <div className="dash-main-cnt">
+        <div className="d-flex flex-column-reverse flex-md-row ">
           <div className="dash-main-left">
             <div className="carousel-container">
               <div className="carousel-heading">My Blogs</div>
@@ -98,14 +98,14 @@ function AlumniDashboard() {
                 userType="alumni"
               />
             </div>
-            <div className="carousel-container">
+            {/* <div className="carousel-container">
               <div className="carousel-heading">Faculties</div>
               <DashboardCarousel
                 type="profile"
                 className="dash-sm-carousel"
                 data={studentData}
               />
-            </div>
+            </div> */}
           </div>
           <div className="dash-main-right">
             <Link to="/profile">

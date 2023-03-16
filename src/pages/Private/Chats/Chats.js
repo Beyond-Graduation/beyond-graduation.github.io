@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Message from "../../../components/Messages/Message";
 import "./Chats.css";
 import { chatInstance } from "../../../components/axios";
+import Conversations from "../../../components/Conversations/Conversations";
 
 function Chats() {
   const [conversations, setConversations] = useState([]);
@@ -15,7 +16,7 @@ function Chats() {
         url: "/conversations/" + userId,
       })
         .then((res) => {
-          console.log(res.data);
+          setConversations(res.data);
         })
         .catch((err) => {
           console.log(err);
@@ -28,7 +29,11 @@ function Chats() {
 
   return (
     <div className="chats d-flex">
-      <div className="chats-left">left</div>
+      <div className="chats-left">
+        {conversations.map((conversation) => (
+          <Conversations conversation={conversation} currUser={userId} />
+        ))}
+      </div>
       <div className="chats-right">
         <div className="message-top">
           <Message own={1} />

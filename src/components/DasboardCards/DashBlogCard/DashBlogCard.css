@@ -130,7 +130,25 @@
   color: rgba(52, 78, 65, 1) !important;
 }
 
-.d-b-card-likes svg{
+.d-b-card-likes svg {
   margin-top: -1px;
   margin-right: 2px;
+}
+
+@media (max-width: 768px) {
+  .d-b-card-lower .title {
+    font-size: 16px !important;
+  }
+
+  .d-b-card-lower .author {
+    font-size: 14px !important;
+  }
+
+  .dash-lg-carousel .d-b-card-lower .description {
+    margin-top: 0;
+  }
+
+  .dash-lg-carousel .d-b-card-lower {
+    padding: 8px 12px;
+  }
 }

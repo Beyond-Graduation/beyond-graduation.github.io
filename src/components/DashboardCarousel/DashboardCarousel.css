@@ -46,3 +46,9 @@
   padding: 8px 20px;
   white-space: nowrap;
 }
+
+@media (max-width: 1024px) {
+  .sm-carousel {
+    width: 100%;
+  }
+}
