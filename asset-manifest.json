@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.eacd3891.css",
-    "main.js": "/static/js/main.ea7539d5.js",
+    "main.css": "/static/css/main.6679f61d.css",
+    "main.js": "/static/js/main.9ba50824.js",
     "static/js/787.5bc012d4.chunk.js": "/static/js/787.5bc012d4.chunk.js",
     "static/media/beyond-grad.webp": "/static/media/beyond-grad.8f7554dddd063cebef7d.webp",
     "static/media/home-background.webp": "/static/media/home-background.eeec1f2aac7d3a0997af.webp",
@@ -18,12 +18,12 @@
     "static/media/upload-file.svg": "/static/media/upload-file.e9877910c769a16df29c59e3d0bdc12f.svg",
     "index.html": "/index.html",
     "static/media/search.svg": "/static/media/search.dc980cad147f8b725dec649a21191cff.svg",
-    "main.eacd3891.css.map": "/static/css/main.eacd3891.css.map",
-    "main.ea7539d5.js.map": "/static/js/main.ea7539d5.js.map",
+    "main.6679f61d.css.map": "/static/css/main.6679f61d.css.map",
+    "main.9ba50824.js.map": "/static/js/main.9ba50824.js.map",
     "787.5bc012d4.chunk.js.map": "/static/js/787.5bc012d4.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.eacd3891.css",
-    "static/js/main.ea7539d5.js"
+    "static/css/main.6679f61d.css",
+    "static/js/main.9ba50824.js"
   ]
 }
