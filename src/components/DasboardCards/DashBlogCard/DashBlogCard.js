@@ -1,14 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { AiFillLike } from "react-icons/ai";
 import "./DashBlogCard.css";
 
 function DashBlogCard({ blogData, type, userData }) {
-  const [author, setAuthor] = useState({});
-  useEffect(() => {
-    if (type !== "create")
-      setAuthor(userData.find((x) => x.userId === blogData.userId));
-  }, [userData]);
-
   return (
     <div className="dash-blog-card">
       {type === "create" ? (
@@ -25,7 +19,10 @@ function DashBlogCard({ blogData, type, userData }) {
             <div className="title">{blogData.title}</div>
             <div className="description">{blogData.abstract}</div>
             <div className="author d-flex justify-content-between align-items-between">
-              <div className="d-flex align-items-center d-b-card-likes"><AiFillLike />{blogData.likes}</div>
+              <div className="d-flex align-items-center d-b-card-likes">
+                <AiFillLike />
+                {blogData.likes}
+              </div>
               <div className="name">
                 {blogData.firstName} {blogData.lastName}
               </div>

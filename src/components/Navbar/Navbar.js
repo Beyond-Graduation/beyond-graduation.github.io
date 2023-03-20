@@ -163,36 +163,55 @@ function Navbar() {
         </div>
         <ul className="mobile-nav-links" ref={mobileNavRef}>
           <li>
-            <Link to="" onClick={hideNavbar}>Home</Link>
+            <Link to="" onClick={hideNavbar}>
+              Home
+            </Link>
           </li>
           {isAuth.checkAuth() ? (
             <>
               <li>
-                <Link to="/alumni-profiles" onClick={hideNavbar}>Alumni</Link>
+                <Link to="/alumni-profiles" onClick={hideNavbar}>
+                  Alumni Profiles
+                </Link>
               </li>
               <li>
-                <Link to="/student-profiles" onClick={hideNavbar}>Student</Link>
+                <Link to="/student-profiles" onClick={hideNavbar}>
+                  Student Profiles
+                </Link>
               </li>
               <li>
-                <Link to="/blogs" onClick={hideNavbar}>Blogs</Link>
+                <Link to="/blogs" onClick={hideNavbar}>
+                  Blogs
+                </Link>
               </li>
               <li>
-                <Link to="/notices" onClick={hideNavbar}>Notices</Link>
+                <Link to="/notices" onClick={hideNavbar}>
+                  Notices
+                </Link>
               </li>
             </>
           ) : null}
           <li>
-            <Link to="/about" onClick={hideNavbar}>About</Link>
+            <Link to="/about" onClick={hideNavbar}>
+              About
+            </Link>
           </li>
           {isAuth.checkAuth() ? (
-            <></>
+            <li className="text-nowrap" onClick={handleLogout}>
+              <FaPowerOff />
+              <span className="ps-2">Logout</span>
+            </li>
           ) : (
             <>
               <li>
-                <Link to="/login" onClick={hideNavbar}>Login</Link>
+                <Link to="/login" onClick={hideNavbar}>
+                  Login
+                </Link>
               </li>
               <li>
-                <Link to="/register" onClick={hideNavbar}>Register</Link>
+                <Link to="/register" onClick={hideNavbar}>
+                  Register
+                </Link>
               </li>
             </>
           )}

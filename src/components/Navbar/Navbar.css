@@ -233,7 +233,13 @@ a {
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1300px) and (min-width: 1100px) {
+  .navbar-main .nav-link {
+    padding: 0 10px;
+  }
+}
+
+@media (max-width: 1100px) {
   .navbar-main {
     align-items: flex-start;
     justify-content: space-between;
@@ -284,12 +290,13 @@ a {
   }
   .mobile-nav-links li {
     cursor: pointer;
-    padding: 20px 60px;
+    padding: 15px 60px;
     text-align: center;
   }
-  .mobile-nav-links li a {
+  .mobile-nav-links li a,
+  .mobile-nav-links li {
     color: white;
-    font-size: 20px;
+    font-size: 18px;
   }
   .toggle .line1 {
     transform: rotate(-45deg) translate(-5px, 6px);
@@ -299,5 +306,11 @@ a {
   }
   .toggle .line3 {
     transform: rotate(45deg) translate(-5px, -6px);
+  }
+}
+
+@media (max-width: 330px) {
+  .mobile-nav-links.show {
+    transform: translateX(-15%);
   }
 }

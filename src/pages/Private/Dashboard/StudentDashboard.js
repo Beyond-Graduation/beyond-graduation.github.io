@@ -83,7 +83,7 @@ function StudentDashboard() {
           <img src={profileImg} alt="" />
           <h1>Hi {userData.firstName},</h1>
         </div>
-        <div className="dash-main-cnt">
+        <div className="dash-main-cnt d-md-flex align-items-center">
           <div className="dash-main-left">
             <div className="carousel-container">
               <div className="carousel-heading">Favourite Profiles</div>

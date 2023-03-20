@@ -26,15 +26,19 @@ function DashboardCarousel({
       items: 5,
     },
     desktop: {
-      breakpoint: { max: 3000, min: 1024 },
+      breakpoint: { max: 3000, min: 1200 },
       items: cardCount
         ? cardCount
         : userType === "alumni" && type === "blog"
         ? 2
         : 3,
     },
+    smallDesktop: {
+      breakpoint: { max: 1200, min: 900 },
+      items: 3,
+    },
     tablet: {
-      breakpoint: { max: 1024, min: 464 },
+      breakpoint: { max: 900, min: 464 },
       items: 2,
     },
     mobile: {
@@ -52,7 +56,7 @@ function DashboardCarousel({
   return (
     <div {...props}>
       {type?.toLowerCase() === "blog" ? (
-        <div className="d-flex justify-content-center">
+        <div className="d-flex">
           {userType === "alumni" && create !== false ? (
             <div className="carousel-card create-card d-none d-lg-block">
               <Link to="/blogs/create">
@@ -60,37 +64,38 @@ function DashboardCarousel({
               </Link>
             </div>
           ) : null}
-          <Carousel
-            responsive={responsive}
-            infinite={true}
-            ref={carouselRef}
-            className={`${
-              userType === "alumni" && create !== false
-                ? "sm-carousel"
-                : "lg-carousel"
-            }`}
-          >
-            {data.length === 0 && bookmark ? (
-              <div className="carousel-empty p-4">
-                <span>No Bookmarked Blogs</span>
-                <Link to="/blogs">
-                  <div className="mt-4 explore-btn">Explore Blogs</div>
-                </Link>
-              </div>
-            ) : null}
-            {data.map((blog) => {
-              return (
-                <div className="carousel-card">
-                  <Link to={`/blogs/${blog.blogId}`}>
-                    <DashBlogCard blogData={blog} userData={userData} />
-                  </Link>
-                </div>
-              );
-            })}
-          </Carousel>
+          {data.length === 0 && bookmark ? (
+            <div className="carousel-empty p-4">
+              <span>No Bookmarked Blogs</span>
+              <Link to="/blogs">
+                <div className="mt-4 explore-btn">Explore Blogs</div>
+              </Link>
+            </div>
+          ) : (
+            <Carousel
+              responsive={responsive}
+              infinite={true}
+              ref={carouselRef}
+              className={`${
+                userType === "alumni" && create !== false
+                  ? "sm-carousel"
+                  : "lg-carousel"
+              }`}
+            >
+              {data.map((blog) => {
+                return (
+                  <div className="carousel-card">
+                    <Link to={`/blogs/${blog.blogId}`}>
+                      <DashBlogCard blogData={blog} userData={userData} />
+                    </Link>
+                  </div>
+                );
+              })}
+            </Carousel>
+          )}
         </div>
       ) : (
-        <Carousel responsive={responsive} infinite={true}>
+        <>
           {data.length === 0 ? (
             <div className="carousel-empty p-4">
               <span>No Favourite Alumni</span>
@@ -98,23 +103,26 @@ function DashboardCarousel({
                 <div className="mt-4 explore-btn">Explore Alumni Profiles</div>
               </Link>
             </div>
-          ) : null}
-          {data.map((user) => (
-            <div className="carousel-card">
-              <Link
-                to={
-                  userType === "student"
-                    ? `/student-profile/${user.userId}`
-                    : userType === "alumni"
-                    ? `/alumni-profile/${user.userId}`
-                    : ""
-                }
-              >
-                <DashProfilCard userData={user} />
-              </Link>
-            </div>
-          ))}
-        </Carousel>
+          ) : (
+            <Carousel responsive={responsive} infinite={true}>
+              {data.map((user) => (
+                <div className="carousel-card">
+                  <Link
+                    to={
+                      userType === "student"
+                        ? `/student-profile/${user.userId}`
+                        : userType === "alumni"
+                        ? `/alumni-profile/${user.userId}`
+                        : ""
+                    }
+                  >
+                    <DashProfilCard userData={user} />
+                  </Link>
+                </div>
+              ))}
+            </Carousel>
+          )}
+        </>
       )}
     </div>
   );

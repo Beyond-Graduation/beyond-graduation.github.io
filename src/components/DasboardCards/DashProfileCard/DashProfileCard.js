@@ -15,7 +15,7 @@ function DashProfileCard({ userData }) {
       <div className="d-p-card-upper">
         <img src={profImg} alt="" />
       </div>
-      <div className="d-p-card-lower">
+      <div className="d-p-card-lower d-flex flex-column justify-content-around">
         <div className="name">
           {userData.firstName} {userData.lastName}
         </div>

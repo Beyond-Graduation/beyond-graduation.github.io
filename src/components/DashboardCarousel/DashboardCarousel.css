@@ -52,3 +52,26 @@
     width: 100%;
   }
 }
+
+@media (max-width: 768px) {
+  .carousel-empty {
+    text-align: center;
+    margin: auto;
+  }
+
+  .carousel-empty a {
+    display: block;
+    width: fit-content;
+    margin: auto;
+  }
+
+  .carousel-empty span {
+    font-size: 16px;
+  }
+  
+  .carousel-empty .explore-btn {
+    padding: 6px 10px;
+    font-size: 14px;
+    margin: auto;
+  }
+}

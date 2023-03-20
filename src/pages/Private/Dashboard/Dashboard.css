@@ -105,7 +105,7 @@
 @media (max-width: 464px) {
   .carousel-container .dash-sm-carousel,
   .carousel-container .dash-lg-carousel {
-    width: 80%;
+    width: 90%;
     margin: auto;
   }
 }

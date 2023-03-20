@@ -23,6 +23,7 @@
   color: black;
   font-size: 30px;
   font-weight: 500;
+  line-height: 110%;
 }
 
 .profile-main-card .department {
@@ -35,6 +36,13 @@
   font-weight: 500;
   line-height: 20px;
   color: rgba(115, 105, 105, 1);
+}
+
+@media (max-width: 1024px) and (min-width: 768px) {
+  .profile-main-card {
+    padding: 50px 10px;
+    width: 100%;
+  }
 }
 
 @media (max-width: 768px) {

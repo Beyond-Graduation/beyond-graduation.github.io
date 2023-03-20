@@ -28,6 +28,8 @@
 
 .d-p-card-lower {
   margin-top: 20%;
+  height: 30%;
+  padding: 0 5px;
 }
 
 .d-p-card-lower .name {
@@ -48,4 +50,24 @@
   font-size: 14px;
   line-height: 100%;
   margin-top: 2%;
+}
+
+@media (max-width: 768px) {
+  .d-p-card-upper img {
+    max-height: 140px;
+  }
+
+  .d-p-card-lower .name {
+    font-size: 16px;
+    line-height: 120%;
+  }
+  
+  .d-p-card-lower .department {
+    font-size: 14px;
+  }
+  
+  .d-p-card-lower .batch {
+    font-size: 12px;
+  }
+  
 }
