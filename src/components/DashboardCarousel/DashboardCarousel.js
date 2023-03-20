@@ -35,7 +35,7 @@ function DashboardCarousel({
     },
     smallDesktop: {
       breakpoint: { max: 1200, min: 900 },
-      items: 3,
+      items: props.className === "dash-sm-carousel" ? 2 : 3,
     },
     tablet: {
       breakpoint: { max: 900, min: 464 },
@@ -58,7 +58,7 @@ function DashboardCarousel({
       {type?.toLowerCase() === "blog" ? (
         <div className="d-flex">
           {userType === "alumni" && create !== false ? (
-            <div className="carousel-card create-card d-none d-lg-block">
+            <div className="carousel-card create-card d-none d-xl-block">
               <Link to="/blogs/create">
                 <DashBlogCard type="create" />
               </Link>

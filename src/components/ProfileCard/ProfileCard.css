@@ -41,7 +41,8 @@
 @media (max-width: 1024px) and (min-width: 768px) {
   .profile-main-card {
     padding: 50px 10px;
-    width: 100%;
+    width: 90%;
+    margin-left: auto;
   }
 }
 
