@@ -9,7 +9,6 @@ import { buildStyles } from "react-circular-progressbar";
 import "react-image-crop/dist/ReactCrop.css";
 import ReactCrop from "react-image-crop";
 import { Button } from "react-bootstrap";
-import sampleImg from "../../assets/images/home-background.webp";
 
 const FileInput = ({
   name,
@@ -51,7 +50,8 @@ const FileInput = ({
 
   const handleImage = async (event) => {
     setSrcImg(URL.createObjectURL(event.target.files[0]));
-    setShowCropOverlay(true);
+    if (content !== "blog") setShowCropOverlay(true);
+    else onChange(event);
     console.log(event.target.files[0]);
   };
 
@@ -77,7 +77,7 @@ const FileInput = ({
       const ctx = canvas.getContext("2d");
 
       console.log(imageMain.naturalHeight, cropImage.height);
-      console.log(inputRef.current.files[0])
+      console.log(inputRef.current.files[0]);
 
       if (!ctx) {
         throw new Error("No 2d context");
@@ -138,7 +138,7 @@ const FileInput = ({
     setProgressShow(true);
 
     const fileToUpload =
-      type === "image"
+      type === "image" && content !== "blog"
         ? convertBase64ToFile(result)
         : inputRef.current.files[0];
     const fileName =
@@ -180,8 +180,6 @@ const FileInput = ({
           setProgressShow(false);
           if (checkFileSize()) {
             if (type === "image") {
-              console.log(inputRef.current.files[0].name)
-
               if (!e.target.files[0].name.match(/.(jpg|jpeg|png|gif)$/i))
                 toast.error("not an image");
               else handleImage(e);
