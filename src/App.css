@@ -3,7 +3,7 @@
 }
 
 .App .Toastify__toast-container {
-  z-index: 10002
+  z-index: 10002;
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap");
@@ -14,4 +14,10 @@
 
 input {
   outline: none;
+}
+
+.App,
+.App > div {
+  width: 100vw;
+  overflow-y: hidden;
 }

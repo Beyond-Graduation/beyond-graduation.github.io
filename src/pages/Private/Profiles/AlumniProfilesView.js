@@ -135,59 +135,61 @@ function AlumniProfilesView() {
     <div className="profiles-view">
       <div className="profiles-view-cnt">
         <h1 className="profiles-view-head">Alumni Profiles</h1>
-        <div className="filter-container mt-5">
-          <div className="filter-inner mb-4 d-flex align-items-center">
-            <Select
-              name="department"
-              className="department me-3"
-              classNamePrefix="filter-dept"
-              placeholder="Department"
-              isClearable={true}
-              options={deptList}
-              onChange={(e) =>
-                e
-                  ? handleFilterChange("department", e.value)
-                  : handleFilterChange("department", "")
-              }
-            />
-            <Select
-              isMulti
-              name="areasOfInterest"
-              className="department me-3"
-              classNamePrefix="filter-dept"
-              placeholder="Domain"
-              options={interestList}
-              onChange={(e) => handleFilterChange("areasOfInterest", e)}
-            />
-            <span className="grad-year-label">Graduation Year:</span>
-            <input
-              type="number"
-              name="after"
-              min={1943}
-              maxLength={4}
-              className="me-3 grad"
-              placeholder="After"
-              onChange={(e) =>
-                handleFilterChange(e.target.name, e.target.value)
-              }
-            />
-            <input
-              type="number"
-              name="before"
-              min={1943}
-              maxLength={4}
-              className="grad"
-              placeholder="Before"
-              onChange={(e) =>
-                handleFilterChange(e.target.name, e.target.value)
-              }
-            />
-          </div>
-          <div className="d-flex align-items-center justify-content-between">
-            <div className="search-cnt d-flex align-items-center">
-              <input type="text" placeholder="Search" ref={searchRef} />
-              <FaSearch className="search-ic" onClick={handleSearch} />
+        <div className="filter-container mt-4">
+          <div className="filter-inner mb-4 align-items-center">
+            <div className="d-sm-flex d-block align-items-center mb-4">
+              <Select
+                name="department"
+                className="department me-3 mt-2"
+                classNamePrefix="filter-dept"
+                placeholder="Department"
+                isClearable={true}
+                options={deptList}
+                onChange={(e) =>
+                  e
+                    ? handleFilterChange("department", e.value)
+                    : handleFilterChange("department", "")
+                }
+              />
+              <Select
+                isMulti
+                name="areasOfInterest"
+                className="department me-3 mt-2"
+                classNamePrefix="filter-dept"
+                placeholder="Domain"
+                options={interestList}
+                onChange={(e) => handleFilterChange("areasOfInterest", e)}
+              />
             </div>
+            <div className="d-sm-flex d-block align-items-center ">
+              <div className="grad-year-label">Graduation Year:</div>
+              <div className="d-flex">
+                <input
+                  type="number"
+                  name="after"
+                  min={1943}
+                  maxLength={4}
+                  className="me-3 grad"
+                  placeholder="After"
+                  onChange={(e) =>
+                    handleFilterChange(e.target.name, e.target.value)
+                  }
+                />
+                <input
+                  type="number"
+                  name="before"
+                  min={1943}
+                  maxLength={4}
+                  className="grad"
+                  placeholder="Before"
+                  onChange={(e) =>
+                    handleFilterChange(e.target.name, e.target.value)
+                  }
+                />
+              </div>
+            </div>
+          </div>
+          <div className="d-md-flex flex-row-reverse d-block align-items-center justify-content-end">
             <div className="d-flex">
               <div className="apply-filter" onClick={applyFilter}>
                 <FaFilter className="me-1" />
@@ -198,6 +200,15 @@ function AlumniProfilesView() {
                 Clear Filters
               </div>
             </div>
+            <div className="search-cnt d-flex align-items-center me-3">
+              <input
+                type="text"
+                placeholder="Search"
+                ref={searchRef}
+                onChange={handleSearch}
+              />
+              <FaSearch className="search-ic" onClick={handleSearch} />
+            </div>
           </div>
         </div>
         <div className="profiles-view-list mt-5">
@@ -206,12 +217,6 @@ function AlumniProfilesView() {
               <ProfilesViewCard key={alumni.__id} data={alumni} />
             </Link>
           ))}
-          {/* {searchAlumniData.map((alumni) => (
-            <ProfilesViewCard key={alumni.__id} data={alumni} />
-          ))}
-          {searchAlumniData.map((alumni) => (
-            <ProfilesViewCard key={alumni.__id} data={alumni} />
-          ))} */}
         </div>
       </div>
     </div>

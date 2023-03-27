@@ -5,6 +5,8 @@
   position: relative;
   color: black;
   height: 160px;
+  max-width: 400px;
+  margin: auto;
 }
 
 .profile-view-card-main img {
@@ -56,3 +58,23 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+@media (max-width: 768px) {
+  .profile-view-card-main {
+    height: 130px;
+  }
+
+  .profile-view-card-main img {
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    object-fit: fill;
+  }
+}
+
+@media (max-width: 350px) {
+  .profile-view-card-main {
+    max-width: 250px;
+    padding: 5px 10px;
+    margin: 0;
+  }}

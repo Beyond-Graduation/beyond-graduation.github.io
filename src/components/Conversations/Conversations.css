@@ -1,5 +1,13 @@
 .conversation-img {
-  height: 20px;
-  width: 20px;
+  height: 40px;
+  width: 40px;
   border-radius: 50%;
+}
+
+.conversation-name {
+  font-size: 22px;
+}
+
+.conversations {
+  cursor: pointer;
 }

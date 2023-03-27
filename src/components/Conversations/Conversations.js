@@ -6,7 +6,12 @@ import axios from "../../components/axios";
 import { toast } from "react-toastify";
 import "./Conversations.css";
 
-export default function Conversations({ conversation, currUser }) {
+export default function Conversations({
+  conversation,
+  currUser,
+  setOtherUserName,
+  setCurrentChat,
+}) {
   const [user, setUser] = useState({});
 
   useEffect(() => {
@@ -24,7 +29,6 @@ export default function Conversations({ conversation, currUser }) {
       })
         .then((res) => {
           setUser(res.data);
-          console.log(res);
         })
         .catch((err) => {
           console.log(err);
@@ -35,15 +39,22 @@ export default function Conversations({ conversation, currUser }) {
     getData();
   }, []);
   return (
-    <div className="conversations d-flex align-items-center">
-      <img
-        className="conversation-img"
-        src={user.profilePicPath || avatarIcon}
-        alt={user.firstName}
-      />
-      <span className="conversation-name">
-        {user.firstName} {user.lastName}
-      </span>
+    <div
+      onClick={() => {
+        setCurrentChat(conversation);
+        setOtherUserName(user.firstName);
+      }}
+    >
+      <div className="conversations d-flex align-items-center mb-3">
+        <img
+          className="conversation-img"
+          src={user.profilePicPath || avatarIcon}
+          alt={user.firstName}
+        />
+        <span className="conversation-name ms-2">
+          {user.firstName} {user.lastName}
+        </span>
+      </div>
     </div>
   );
 }
