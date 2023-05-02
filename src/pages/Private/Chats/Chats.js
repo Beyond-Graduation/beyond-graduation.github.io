@@ -71,6 +71,7 @@ function Chats() {
       setArrivalMessage({
         sender: data.senderId,
         text: data.text,
+        createdAt: Date.now(),
       });
     });
   }, []);

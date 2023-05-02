@@ -41,9 +41,9 @@ const WithNav = () => {
   return (
     <>
       <Navbar />
-      <div style={{ paddingTop: "70px" }}>
+      {/* <div style={{ paddingTop: "70px" }}> */}
         <Outlet />
-      </div>
+      {/* </div> */}
     </>
   );
 };
@@ -166,7 +166,7 @@ function App() {
               element={<PrivateRoute comp={UpdateProfile} />}
             />
             <Route
-              path="/alumni-profiles"
+              path="/     "
               element={<PrivateRoute comp={AlumniProfilesView} />}
             />
             <Route

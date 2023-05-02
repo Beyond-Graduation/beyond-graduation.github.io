@@ -58,6 +58,28 @@
 .chat-type textarea {
   width: 80%;
   resize: none;
+  outline: none;
+  border-radius: 5px;
+  padding: 6px 10px;
+  scrollbar-width: auto;
+  scrollbar-color: #ababab #ffffff;
+}
+
+/* Chrome, Edge, and Safari */
+.chat-type textarea::-webkit-scrollbar {
+  width: 8px;
+  border-radius: 5px;
+}
+
+.chat-type textarea::-webkit-scrollbar-track {
+  background: #ffffff00;
+  border-radius: 5px;
+}
+
+.chat-type textarea::-webkit-scrollbar-thumb {
+  background-color: #ababab;
+  border-radius: 10px;
+  border: 3px solid #ffffff;
 }
 
 .chat-type .send-btn {
