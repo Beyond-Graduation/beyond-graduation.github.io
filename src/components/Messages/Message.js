@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Message.css";
 
 function Message({ message, own, curr, other, colors }) {
+  useEffect(() => {}, [curr, other]);
   return (
     <div
       className={`${

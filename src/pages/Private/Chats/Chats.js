@@ -5,8 +5,10 @@ import { chatInstance } from "../../../components/axios";
 import Conversations from "../../../components/Conversations/Conversations";
 import { useStateValue } from "../../../reducer/StateProvider";
 import { io } from "socket.io-client";
+import { useParams } from "react-router-dom";
 
 function Chats() {
+  const { chatId } = useParams();
   const scrollRef = useRef();
   const socket = useRef();
   const [{ userData }, dispatch] = useStateValue();
@@ -56,6 +58,10 @@ function Chats() {
       })
         .then((res) => {
           setConversations(res.data);
+          if (chatId) {
+            let current = res.data?.filter((x) => x._id === chatId);
+            if (current.length !== 0) setCurrentChat(current[0]);
+          }
         })
         .catch((err) => {
           console.log(err);
@@ -84,9 +90,6 @@ function Chats() {
 
   useEffect(() => {
     socket.current.emit("addUser", userId);
-    socket.current.on("getUsers", (users) => {
-      console.log(users);
-    });
   }, [userId]);
 
   useEffect(() => {
@@ -110,51 +113,42 @@ function Chats() {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  console.log(socket);
-
-  const randomColors = () => {
-    // generate an array of 2 random colors
-    const color1 = Math.floor(Math.random() * 16777215)
-      .toString(16)
-      .padStart(6, "0")
-      .toUpperCase();
-    const color2 = Math.floor(Math.random() * 16777215)
-      .toString(16)
-      .padStart(6, "0")
-      .toUpperCase();
-    return [color1, color2];
-  };
-
   return (
     <div className="chats d-flex">
       <div className="chats-left d-flex flex-column">
-        {conversations.map((conversation) => (
-          <Conversations
-            conversation={conversation}
-            currUser={userId}
-            setOtherUserName={setOtherUserName}
-            setCurrentChat={setCurrentChat}
-          />
-        ))}
+        <div className="d-flex flex-column mx-auto my-5">
+          {conversations.map((conversation) => (
+            <Conversations
+              conversation={conversation}
+              currUser={userId}
+              setOtherUserName={setOtherUserName}
+              setCurrentChat={setCurrentChat}
+            />
+          ))}
+        </div>
       </div>
       <div className="chats-right">
         {currentChat ? (
           <>
             <div className="message-top">
-              {messages.map((m) => {
-                const colors = randomColors();
-                return (
-                  <div ref={scrollRef}>
-                    <Message
-                      message={m}
-                      own={m.sender === userId}
-                      curr={userData.firstName}
-                      other={otherUserName}
-                      colors={colors}
-                    />
-                  </div>
-                );
-              })}
+              {messages.length > 0 ? (
+                messages.map((m) => {
+                  return (
+                    <div style={{ scrollBehavior: "smooth" }} ref={scrollRef}>
+                      <Message
+                        message={m}
+                        own={m.sender === userId}
+                        curr={userData.firstName}
+                        other={otherUserName}
+                      />
+                    </div>
+                  );
+                })
+              ) : (
+                <div className="no-conversation-text">
+                  Send a message to start conversation
+                </div>
+              )}
             </div>
             <div className="message-bottom">
               <div className="chat-type d-flex align-items-center justify-content-around">

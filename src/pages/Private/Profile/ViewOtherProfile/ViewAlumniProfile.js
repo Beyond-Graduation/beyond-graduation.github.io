@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./ViewOtherProfile.css";
-import { useParams } from "react-router-dom";
-import axios from "../../../../components/axios";
+import { useNavigate, useParams } from "react-router-dom";
+import axios, { chatInstance } from "../../../../components/axios";
 import { toast } from "react-toastify";
 import { Accordion } from "react-bootstrap";
+import { BsChatRightTextFill } from "react-icons/bs";
 import { AiFillHeart, AiOutlineFileDone, AiOutlineHeart } from "react-icons/ai";
 import FileViewOverlay from "../../../../components/FileViewOverlay/FileViewOverlay";
 import { useStateValue } from "../../../../reducer/StateProvider";
@@ -18,6 +19,24 @@ function ViewStudentProfile() {
   const token =
     localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
   const [isFav, setIsFav] = useState(false);
+  const navigate = useNavigate();
+  const currUser =
+    localStorage.getItem("userId") || sessionStorage.getItem("userId");
+
+  const startChat = async () => {
+    await chatInstance({
+      method: "post",
+      url: "/conversations",
+      data: { senderId: currUser, receiverId: userId },
+    })
+      .then((res) => {
+        console.log(res.data._id);
+        navigate(`/chats/${res.data._id}`);
+      })
+      .catch((err) => {
+        toast.error("Something went wrong!!");
+      });
+  };
 
   const toggleFavourite = async () => {
     axios({
@@ -76,8 +95,8 @@ function ViewStudentProfile() {
               {data.firstName} {data.lastName}
             </div>
           </div>
-          <div>
-            {userType.toLowerCase() === "student" ? (
+          {userType.toLowerCase() === "student" ? (
+            <div className="d-flex">
               <div
                 className={`fav-btn ${isFav ? "active" : ""}`}
                 onClick={toggleFavourite}
@@ -92,8 +111,14 @@ function ViewStudentProfile() {
                   </div>
                 )}
               </div>
-            ) : null}
-          </div>
+              <div>
+                <div className="chat-btn" onClick={startChat}>
+                  <BsChatRightTextFill className="me-1" /> Chat with{" "}
+                  {data.firstName}
+                </div>
+              </div>
+            </div>
+          ) : null}
         </div>
         <div className="d-flex">
           <div className="profile-left">

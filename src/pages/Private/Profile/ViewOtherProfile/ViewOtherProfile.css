@@ -6,13 +6,13 @@
 }
 
 .view-profile .prof-det.email .prof-det-body {
-	max-width: none;
+  max-width: none;
   min-width: 250px;
 }
 
 .fav-btn {
   background-color: white;
-  border: 1px solid rgba(0, 0, 0, 0.3 );
+  border: 1px solid rgba(0, 0, 0, 0.3);
   font-size: 18px;
   font-weight: 600;
   padding: 10px 20px;
@@ -28,4 +28,14 @@
 
 .fav-btn svg {
   margin-top: 3px;
+}
+
+.chat-btn {
+  background-color: #3a5a40;
+  color: white;
+  border-radius: 8px;
+  padding: 11px 20px;
+  cursor: pointer;
+  font-size: 18px;
+  margin-left: 20px;
 }

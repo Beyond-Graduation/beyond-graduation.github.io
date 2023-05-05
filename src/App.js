@@ -168,7 +168,7 @@ function App() {
               element={<PrivateRoute comp={UpdateProfile} />}
             />
             <Route
-              path="/     "
+              path="/alumni-profiles"
               element={<PrivateRoute comp={AlumniProfilesView} />}
             />
             <Route
@@ -200,8 +200,15 @@ function App() {
               path="/notices"
               element={<PrivateRoute comp={NoticesView} />}
             />
-            <Route path="/internships/post" element={<PrivateRoute comp={InternshipPosting} />} />
-            <Route path="/internships/apply" element={<PrivateRoute comp={InternshipApplication} />} />
+            <Route
+              path="/internships/post"
+              element={<PrivateRoute comp={InternshipPosting} />}
+            />
+            <Route
+              path="/internships/apply"
+              element={<PrivateRoute comp={InternshipApplication} />}
+            />
+            <Route path="/chats/:chatId" element={<PrivateRoute comp={Chats} />} />
             <Route path="/chats" element={<PrivateRoute comp={Chats} />} />
             <Route path="/about" element={<About />} />
             <Route path="/" element={<PublicRoute comp={Home} />} />

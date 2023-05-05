@@ -6,7 +6,7 @@ import { useStateValue } from "../../reducer/StateProvider";
 import avatarIcon from "../../assets/images/avatar.png";
 import { FaPowerOff } from "react-icons/fa";
 import { AiFillLock } from "react-icons/ai";
-import { BsPersonCircle } from "react-icons/bs";
+import { BsChatRightTextFill, BsPersonCircle } from "react-icons/bs";
 import { useRef } from "react";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 
@@ -85,16 +85,16 @@ function NavbarMain() {
                     <span>{userData.firstName}</span>
                   </div>
                   <div className="prof-btn-overlay" ref={overlayRef}>
-                    {/* <Link to="/dashboard">
-                    <div className="prof-btn-link">
-                      <FaHome />
-                      <span>Dashboard</span>
-                    </div>
-                  </Link> */}
                     <Link to="/profile">
                       <div className="prof-btn-link">
                         <BsPersonCircle />
                         <span>My Profile</span>
+                      </div>
+                    </Link>
+                    <Link to="/chats">
+                      <div className="prof-btn-link">
+                        <BsChatRightTextFill />
+                        <span>Chats</span>
                       </div>
                     </Link>
                     <Link to="/change_password">
