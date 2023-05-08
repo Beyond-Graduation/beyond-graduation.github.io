@@ -6,6 +6,7 @@ import Conversations from "../../../components/Conversations/Conversations";
 import { useStateValue } from "../../../reducer/StateProvider";
 import { io } from "socket.io-client";
 import { useParams } from "react-router-dom";
+import { Button } from "react-bootstrap";
 
 function Chats() {
   const { chatId } = useParams();
@@ -128,6 +129,7 @@ function Chats() {
         </div>
       </div>
       <div className="chats-right">
+        {currentChat?.blocked && <div className="blocked-overlay"></div>}
         {currentChat ? (
           <>
             <div className="message-top">
@@ -151,18 +153,48 @@ function Chats() {
               )}
             </div>
             <div className="message-bottom">
-              <div className="chat-type d-flex align-items-center justify-content-around">
-                <textarea
-                  name="send-msg"
-                  id="send-msg"
-                  rows={4}
-                  onChange={(e) => setNewMessage(e.target.value)}
-                  value={newMessage}
-                ></textarea>
-                <div className="send-btn" onClick={handleSubmit}>
-                  Send
+              {!currentChat.blocked ? (
+                <div className="chat-type d-flex align-items-center justify-content-around">
+                  <textarea
+                    name="send-msg"
+                    id="send-msg"
+                    rows={4}
+                    onChange={(e) => setNewMessage(e.target.value)}
+                    value={newMessage}
+                  ></textarea>
+                  <Button
+                    variant="success"
+                    className="send-btn"
+                    onClick={handleSubmit}
+                  >
+                    Send
+                  </Button>
                 </div>
-              </div>
+              ) : currentChat.blockedBy !== userId ? (
+                <div className="cannot-reply text-center">
+                  You cannot reply to this conversation.
+                </div>
+              ) : (
+                <div className="chat-type d-flex align-items-center justify-content-around">
+                  <textarea
+                    name="send-msg"
+                    id="send-msg"
+                    rows={4}
+                    disabled={true}
+                    placeholder="Unblock this chat to continue conversation"
+                    onChange={(e) => setNewMessage(e.target.value)}
+                    value={newMessage}
+                  ></textarea>
+                  <Button
+                    variant="success"
+                    disabled={true}
+                    className="send-btn"
+                    onClick={handleSubmit}
+                  >
+                    Send
+                  </Button>
+                </div>
+              )}
             </div>
           </>
         ) : (

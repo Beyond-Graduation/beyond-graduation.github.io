@@ -24,3 +24,13 @@
   font-size: 25px;
   color: rgb(167, 11, 11);
 }
+
+.unblock-icon {
+  font-size: 30px;
+  transform: rotateZ(90deg);
+  color: green;
+}
+
+.conversation-name.chat-block {
+  color: rgb(167, 11, 11);
+}
