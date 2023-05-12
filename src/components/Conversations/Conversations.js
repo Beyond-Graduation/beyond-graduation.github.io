@@ -15,6 +15,7 @@ export default function Conversations({
   currUser,
   setOtherUserName,
   setCurrentChat,
+  socket,
 }) {
   const [user, setUser] = useState({});
   const navigate = useNavigate();
@@ -40,6 +41,7 @@ export default function Conversations({
         handleClose();
         setBlocked(true);
         setCurrentChat(res.data[0]);
+        socket.current.emit("blockUser", user.userId);
       })
       .catch((err) => {
         toast.error("something went wrong");
@@ -60,6 +62,7 @@ export default function Conversations({
         handleClose();
         setBlocked(false);
         setCurrentChat(res.data[0]);
+        socket.current.emit("blockUser", user.userId);
       })
       .catch((err) => {
         toast.error("something went wrong");

@@ -51,24 +51,24 @@ function Chats() {
       });
   };
 
-  useEffect(() => {
-    const getConversations = async () => {
-      await chatInstance({
-        method: "get",
-        url: "/conversations/" + userId,
+  const getConversations = async () => {
+    await chatInstance({
+      method: "get",
+      url: "/conversations/" + userId,
+    })
+      .then((res) => {
+        setConversations(res.data);
+        if (chatId) {
+          let current = res.data?.filter((x) => x._id === chatId);
+          if (current.length !== 0) setCurrentChat(current[0]);
+        }
       })
-        .then((res) => {
-          setConversations(res.data);
-          if (chatId) {
-            let current = res.data?.filter((x) => x._id === chatId);
-            if (current.length !== 0) setCurrentChat(current[0]);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
+  useEffect(() => {
     getConversations();
   }, []);
 
@@ -80,6 +80,9 @@ function Chats() {
         text: data.text,
         createdAt: Date.now(),
       });
+    });
+    socket.current.on("blocked", () => {
+      getConversations();
     });
   }, []);
 
@@ -124,6 +127,7 @@ function Chats() {
               currUser={userId}
               setOtherUserName={setOtherUserName}
               setCurrentChat={setCurrentChat}
+              socket={socket}
             />
           ))}
         </div>
