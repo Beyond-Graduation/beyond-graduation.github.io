@@ -58,10 +58,6 @@ function Chats() {
     })
       .then((res) => {
         setConversations(res.data);
-        if (chatId) {
-          let current = res.data?.filter((x) => x._id === chatId);
-          if (current.length !== 0) setCurrentChat(current[0]);
-        }
       })
       .catch((err) => {
         console.log(err);
@@ -70,7 +66,7 @@ function Chats() {
 
   useEffect(() => {
     getConversations();
-  }, []);
+  }, [chatId]);
 
   useEffect(() => {
     if (!chatId) setCurrentChat(null);
@@ -120,6 +116,13 @@ function Chats() {
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  useEffect(() => {
+    let current = conversations?.filter(
+      (x) => x._id === chatId || x._id === currentChat?._id
+    );
+    if (current.length !== 0) setCurrentChat(current[0]);
+  }, [conversations]);
 
   return (
     <div className="chats d-flex">
