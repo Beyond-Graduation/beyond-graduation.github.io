@@ -73,6 +73,10 @@ function Chats() {
   }, []);
 
   useEffect(() => {
+    if (!chatId) setCurrentChat(null);
+  }, [chatId]);
+
+  useEffect(() => {
     socket.current = io("ws://localhost:8900");
     socket.current.on("getMessage", (data) => {
       setArrivalMessage({
@@ -127,6 +131,7 @@ function Chats() {
               currUser={userId}
               setOtherUserName={setOtherUserName}
               setCurrentChat={setCurrentChat}
+              getAllChats={getConversations}
               socket={socket}
             />
           ))}

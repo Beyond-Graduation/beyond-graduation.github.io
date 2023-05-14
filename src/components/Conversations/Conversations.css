@@ -6,7 +6,11 @@
 }
 
 .conversations:hover {
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.25)!important;
+}
+
+.conversations.active {
+  background-color: rgba(0, 0, 0, 0.15);
 }
 
 .conversation-img {

@@ -18,6 +18,9 @@
 .single-blog-title {
   font-size: 40px;
   font-weight: 500;
+  max-width: 60%;
+  letter-spacing: 1px;
+  line-height: 120%;
 }
 
 .single-blog-author {
@@ -160,7 +163,7 @@
 
 .bookmark-btn {
   background-color: white;
-  border: 1px solid rgba(0, 0, 0, 0.3 );
+  border: 1px solid rgba(0, 0, 0, 0.3);
   font-size: 18px;
   font-weight: 600;
   padding: 10px 20px;
@@ -179,4 +182,28 @@
 
 .bookmark-btn svg {
   margin-top: 3px;
+}
+
+.recommended-heading {
+  font-size: 26px;
+  font-weight: 500;
+  margin: 80px 0 15px 0;
+}
+
+.recommended-loading {
+  font-size: 24px;
+  padding: 0 40px;
+  color: rgb(91, 91, 91);
+}
+
+.recommended .carousel-card {
+  height: 300px;
+}
+
+.recommended .d-b-card-upper {
+  height: 50%;
+}
+
+.recommended .d-b-card-lower {
+  padding: 10px;
 }

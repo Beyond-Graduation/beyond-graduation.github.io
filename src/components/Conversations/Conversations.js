@@ -13,8 +13,9 @@ import { Button, Modal } from "react-bootstrap";
 export default function Conversations({
   conversation,
   currUser,
-  setOtherUserName,
   setCurrentChat,
+  setOtherUserName,
+  getAllChats,
   socket,
 }) {
   const [user, setUser] = useState({});
@@ -40,7 +41,7 @@ export default function Conversations({
         toast.warning(`Chat from ${user.firstName} blocked !`);
         handleClose();
         setBlocked(true);
-        setCurrentChat(res.data[0]);
+        getAllChats();
         socket.current.emit("blockUser", user.userId);
       })
       .catch((err) => {
@@ -61,7 +62,7 @@ export default function Conversations({
         toast.warning(`Chat from ${user.firstName} unblocked !`);
         handleClose();
         setBlocked(false);
-        setCurrentChat(res.data[0]);
+        getAllChats();
         socket.current.emit("blockUser", user.userId);
       })
       .catch((err) => {
@@ -93,6 +94,7 @@ export default function Conversations({
 
     getData();
   }, []);
+
   return (
     <div
       onClick={() => {
@@ -104,7 +106,11 @@ export default function Conversations({
         });
       }}
     >
-      <div className="conversations d-flex justify-content-between align-items-center">
+      <div
+        className={`conversations d-flex justify-content-between align-items-center ${
+          chatId === conversation._id ? "active" : ""
+        }`}
+      >
         <div className=" d-flex align-items-center">
           <img
             className="conversation-img"
@@ -112,13 +118,19 @@ export default function Conversations({
             alt={user.firstName}
           />
           <span
-            className={`conversation-name ms-3 ${blocked ? "chat-block" : ""}`}
+            className={`conversation-name ms-3 ${
+              conversation.blocked ? "chat-block" : ""
+            }`}
           >
             {user.firstName} {user.lastName}
           </span>
         </div>
-        {blocked ? (
-          <CgUnblock className="unblock-icon ms-3" onClick={handleShow} />
+        {conversation.blocked ? (
+          conversation.blockedBy === currUser ? (
+            <CgUnblock className="unblock-icon ms-3" onClick={handleShow} />
+          ) : (
+            <></>
+          )
         ) : (
           <BiBlock className="block-icon ms-3" onClick={handleShow} />
         )}
@@ -132,19 +144,24 @@ export default function Conversations({
       >
         <Modal.Header closeButton>
           <Modal.Title>
-            {blocked ? "Unblock" : "Block"} {user.firstName} {user.lastName}
+            {conversation.blocked ? "Unblock" : "Block"} {user.firstName}{" "}
+            {user.lastName}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Are you sure that you want to {blocked ? "unblock" : "block"}{" "}
-          {user.firstName} {user.lastName} ?
+          Are you sure that you want to{" "}
+          {conversation.blocked ? "unblock" : "block"} {user.firstName}{" "}
+          {user.lastName} ?
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="danger" onClick={blocked ? unblockChat : blockChat}>
-            {blocked ? "Unblock" : "Block"}
+          <Button
+            variant="danger"
+            onClick={conversation.blocked ? unblockChat : blockChat}
+          >
+            {conversation.blocked ? "Unblock" : "Block"}
           </Button>
         </Modal.Footer>
       </Modal>

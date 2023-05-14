@@ -1,12 +1,15 @@
 import React, { useEffect, useRef } from "react";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "../../../components/axios";
 import parse from "html-react-parser";
 import "./SingleBlog.css";
 import { AiFillLike } from "react-icons/ai";
 import { BsBookmark, BsBookmarkFill, BsFillReplyFill } from "react-icons/bs";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
+import DashBlogCard from "../../../components/DasboardCards/DashBlogCard/DashBlogCard";
 
 function SingleBlog() {
   const [childCommentOpen, setChildCommentOpen] = useState([]);
@@ -20,6 +23,7 @@ function SingleBlog() {
   const [postCommentEnabled, setPostCommentEnabled] = useState(true);
   const [blogLiked, setBlogLiked] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const [recommendedBlogs, setRecommendedBlogs] = useState([]);
 
   const commentRef = useRef();
   const childCommentRef = useRef([]);
@@ -184,9 +188,9 @@ function SingleBlog() {
   };
 
   useEffect(() => {
+    const token =
+      localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
     const fetchBlogData = async () => {
-      const token =
-        localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
       axios({
         method: "get",
         url: `blog?blogId=${blogId}`,
@@ -205,8 +209,26 @@ function SingleBlog() {
         });
     };
 
+    const getRecommendedBlogs = async () => {
+      axios({
+        method: "get",
+        url: `blog/recommend?blogId=${blogId}`,
+        headers: {
+          Authorization: `bearer ${token}`,
+        },
+      })
+        .then((res) => {
+          setRecommendedBlogs(res.data.relatedArticles);
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.error("Something went wrong!!");
+        });
+    };
+
     fetchBlogComments();
     fetchBlogData();
+    getRecommendedBlogs();
   }, [blogId]);
 
   useEffect(() => {
@@ -217,6 +239,30 @@ function SingleBlog() {
   useEffect(() => {
     if (comments.length > 0) fetchChildComments();
   }, [comments]);
+
+  const responsive = {
+    superLargeDesktop: {
+      // the naming can be any, depends on you.
+      breakpoint: { max: 4000, min: 3000 },
+      items: 5,
+    },
+    desktop: {
+      breakpoint: { max: 3000, min: 1200 },
+      items: 4,
+    },
+    smallDesktop: {
+      breakpoint: { max: 1200, min: 900 },
+      items: 3,
+    },
+    tablet: {
+      breakpoint: { max: 900, min: 464 },
+      items: 2,
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 1,
+    },
+  };
 
   return (
     <div className="single-blog">
@@ -249,7 +295,9 @@ function SingleBlog() {
             <div>{blogLiked ? "UNLIKE" : "LIKE"}</div>
             <div>{likeCount}</div>
           </div>
-          <div className="single-blog-title text-center">{blogData.title}</div>
+          <div className="single-blog-title text-center mx-auto">
+            {blogData.title}
+          </div>
           <div className="single-blog-author my-3 text-center">
             By - {blogData.firstName} {blogData.lastName}
           </div>
@@ -260,7 +308,9 @@ function SingleBlog() {
             {blogData.content ? parse(blogData?.content) : null}
           </div>
         </div>
-        <div className="comments-heading">Comments ({comments.length})</div>
+        <div className="comments-heading mt-5">
+          Comments ({comments.length})
+        </div>
         <div className="post-comment text-center my-5 mt-4">
           <textarea
             name="comment"
@@ -350,6 +400,32 @@ function SingleBlog() {
               </div>
             );
           })}
+        </div>
+
+        <div className="recommended">
+          <div className="recommended-heading">Recommended Blogs</div>
+          {recommendedBlogs.length === 0 ? (
+            <span className="recommended-loading">Loading...</span>
+          ) : (
+            <Carousel
+              responsive={responsive}
+              infinite={true}
+              className="lg-carousel"
+            >
+              {recommendedBlogs.map((blog) => {
+                return (
+                  <div className="carousel-card">
+                    <Link
+                      to={`/blogs/${blog.blogId}`}
+                      onClick={() => window.location.reload()}
+                    >
+                      <DashBlogCard blogData={blog} userData={{}} />
+                    </Link>
+                  </div>
+                );
+              })}
+            </Carousel>
+          )}
         </div>
       </div>
     </div>
