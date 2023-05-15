@@ -206,7 +206,7 @@ function App() {
               element={<PrivateRoute comp={InternshipPosting} />}
             />
             <Route
-              path="/internships/apply"
+              path="/internships/apply/:internshipId"
               element={<PrivateRoute comp={InternshipApplication} />}
             />
 
