@@ -103,11 +103,9 @@ function PublishNotice() {
   }, [noticeDetails]);
 
   useEffect(() => {
-    if (
-      localStorage.getItem("userType") !== "alumni" ||
-      sessionStorage.getItem("userType") !== "alumni"
-    )
-      navigate("/dashboard");
+    let userType =
+      localStorage.getItem("userType") || sessionStorage.getItem("userType");
+    if (userType !== "alumni") navigate("/dashboard");
   }, []);
 
   return (

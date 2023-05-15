@@ -7,10 +7,11 @@ import { useEffect } from "react";
 import { FaTrash } from "react-icons/fa";
 import "./InternshipApplication.css";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 function InternshipApplication() {
   const navigate = useNavigate();
+  const { internshipId } = useParams();
   const [formDetails, setFormDetails] = useState({
     alumniId: "",
     applicationId: "",
@@ -41,7 +42,6 @@ function InternshipApplication() {
     setFormDetails({ ...formDetails, qnas: temp });
   };
 
-  let internshipId = "oppo123xyz";
   const getInternshipDetails = async () => {
     let token =
       localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
