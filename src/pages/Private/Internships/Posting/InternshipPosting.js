@@ -48,21 +48,6 @@ function InternshipPosting() {
     //setFormDetails({ ...formDetails, areasOfInterest: areas });
   };
 
-  const YoSOptions = [
-    { value: "first_year", label: "First Year" },
-    { value: "second_year", label: "Second Year" },
-    { value: "third_year", label: "Third Year" },
-    { value: "fourth_year", label: "Fourth Year" },
-  ];
-
-  const handleYoSChange = (e) => {
-    const yearofStudy = [];
-    e.forEach((item) => {
-      yearofStudy.push(item.label);
-    });
-    //setFormDetails({ ...formDetails, areasOfInterest: areas });
-  };
-
   const PerkOptions = [
     { value: "lor", label: "Letter of Recommendation" },
     { value: "cert", label: "Certificate" },
@@ -89,7 +74,6 @@ function InternshipPosting() {
                   <AnimatedInputField name="firstName" title="First Name" />
                   <AnimatedInputField name="lastName" title="Last Name" />
                   <AnimatedInputField name="email" title="Email" />
-                  <AnimatedInputField name="phone" title="Phone Number" />
                 </div>
               </div>
             </section>
