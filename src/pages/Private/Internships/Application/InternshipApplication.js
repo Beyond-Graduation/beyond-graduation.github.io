@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 function InternshipApplication() {
   const navigate = useNavigate();
   const [formDetails, setFormDetails] = useState({
-    
+    alumniId: "",
     applicationId: "",
     internshipId: "",
     email: "",
@@ -57,6 +57,20 @@ function InternshipApplication() {
         res.data.qnas.forEach((q) => {
           tempQues = [...tempQues, { question: q.question, answer: "" }];
         });
+        let applId = "application";
+        const possible =
+          "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        for (let i = 0; i < 3; i++) {
+          applId += possible.charAt(
+            Math.floor(Math.random() * possible.length)
+          );
+        }
+        setFormDetails({
+          ...formDetails,
+          alumniId: res.data.alumniId,
+          applicationId: applId,
+          internshipId: internshipId,
+        });
         setQuestions(tempQues);
       })
       .catch((e) => {
@@ -66,17 +80,6 @@ function InternshipApplication() {
 
   useEffect(() => {
     getInternshipDetails();
-    let applId = "application";
-    const possible =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    for (let i = 0; i < 3; i++) {
-      applId += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
-    setFormDetails({
-      ...formDetails,
-      applicationId: applId,
-      internshipId: internshipId,
-    });
   }, []);
 
   const onApplicationSubmit = async () => {
