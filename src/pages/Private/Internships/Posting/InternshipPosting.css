@@ -1,1 +1,47 @@
-    
+.body {
+  min-height: calc(100vh - 70px);
+  height: fit-content;
+  color: white;
+  padding-top: 8vh;
+  user-select: none;
+  padding-bottom: 15vh;
+  user-select: none;
+  background-color: rgba(0, 12, 2, 0.89);
+}
+
+.main-container {
+  width: 80%;
+  margin: auto;
+}
+
+.main-heading {
+  font-size: calc(1rem + 2vw);
+  width: fit-content;
+}
+
+.main-heading::after {
+  content: "";
+  display: block;
+  width: 50%;
+  margin-top: 8px;
+  height: 5px;
+  border-radius: 5px;
+  background-color: rgba(163, 177, 138, 1);
+}
+
+.main-container h4 {
+  font-size: calc(0.7rem + 0.9vw);
+  margin-top: 4vh;
+}
+
+.intro-form-inner {
+  margin-left: 30px;
+}
+
+.intro-section .head {
+  font-size: 20px;
+}
+
+.intro-section .sub-head {
+  font-size: 18px;
+}
