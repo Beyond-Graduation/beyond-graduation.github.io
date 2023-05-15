@@ -38,6 +38,7 @@ import ChangePassword from "./pages/Private/ChangePassword/ChangePassword";
 import ResetPassword from "./pages/Public/ResetPassword/ResetPassword";
 import InternshipPosting from "./pages/Private/Internships/Posting/InternshipPosting";
 import InternshipApplication from "./pages/Private/Internships/Application/InternshipApplication";
+import InternshipView from "./pages/Private/Internships/View/InternshipView";
 
 const WithNav = () => {
   return (
@@ -208,7 +209,15 @@ function App() {
               path="/internships/apply"
               element={<PrivateRoute comp={InternshipApplication} />}
             />
-            <Route path="/chats/:chatId" element={<PrivateRoute comp={Chats} />} />
+
+            <Route
+              path="/internships/viewall"
+              element={<PrivateRoute comp={InternshipView} />}
+            />
+            <Route
+              path="/chats/:chatId"
+              element={<PrivateRoute comp={Chats} />}
+            />
             <Route path="/chats" element={<PrivateRoute comp={Chats} />} />
             <Route path="/about" element={<About />} />
             <Route path="/" element={<PublicRoute comp={Home} />} />
