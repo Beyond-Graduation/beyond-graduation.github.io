@@ -391,7 +391,7 @@ function UpdateAlumniProfile({ data }) {
                       id={`company${i}`}
                       name="company"
                       title="Company/Organisation"
-                      defaultValue={experience[i].company}
+                      value={experience[i].company}
                       onChange={(e) => handleExperienceChange(e, i)}
                     />
                     <AnimatedInputField
@@ -402,7 +402,7 @@ function UpdateAlumniProfile({ data }) {
                       min="1900"
                       max="2099"
                       step="1"
-                      defaultValue={experience[i].from}
+                      value={experience[i].from}
                       onChange={(e) => handleExperienceChange(e, i)}
                     />
                   </div>
@@ -411,7 +411,7 @@ function UpdateAlumniProfile({ data }) {
                       id={`role${i}`}
                       name="role"
                       title="Role/Job Title"
-                      defaultValue={experience[i].role}
+                      value={experience[i].role}
                       onChange={(e) => handleExperienceChange(e, i)}
                     />
                     <AnimatedInputField
@@ -422,7 +422,7 @@ function UpdateAlumniProfile({ data }) {
                       step="1"
                       name="to"
                       title="To (year)"
-                      defaultValue={experience[i].to}
+                      value={experience[i].to}
                       onChange={(e) => handleExperienceChange(e, i)}
                     />
                   </div>
@@ -464,14 +464,14 @@ function UpdateAlumniProfile({ data }) {
                       id={`title${i}`}
                       name="title"
                       title="Title"
-                      defaultValue={projects[i].title}
+                      value={projects[i].title}
                       onChange={(e) => handleProjectsChange(e, i)}
                     />
                     <AnimatedInputField
                       id={`domain${i}`}
                       name="domain"
                       title="Domain"
-                      defaultValue={projects[i].domain}
+                      value={projects[i].domain}
                       onChange={(e) => handleProjectsChange(e, i)}
                     />
                   </div>
@@ -484,7 +484,7 @@ function UpdateAlumniProfile({ data }) {
                       title="Description"
                       rows={4}
                       className="mt-5"
-                      defaultValue={projects[i].description}
+                      value={projects[i].description}
                       onChange={(e) => handleProjectsChange(e, i)}
                     />
                     <div className="d-flex flex-column w-50">
@@ -493,7 +493,7 @@ function UpdateAlumniProfile({ data }) {
                         name="link"
                         title="Link"
                         className="mb-4"
-                        defaultValue={projects[i].link}
+                        value={projects[i].link}
                         onChange={(e) => handleProjectsChange(e, i)}
                       />
                       {projectCount >= 1 && (

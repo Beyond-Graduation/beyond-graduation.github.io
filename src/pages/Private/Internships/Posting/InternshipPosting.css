@@ -45,3 +45,8 @@
 .intro-section .sub-head {
   font-size: 18px;
 }
+
+.internship-field .animated-in, .internship-ques .animated-in{
+  max-width: unset;
+
+}

@@ -16,6 +16,7 @@ function AnimatedInputField({
 
   useEffect(() => {
     if (defaultValue) setValue(defaultValue);
+    else if (rest.value) setValue(rest.value);
   }, [defaultValue]);
 
   return (
