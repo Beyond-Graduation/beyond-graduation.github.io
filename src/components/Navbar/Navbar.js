@@ -113,10 +113,10 @@ function NavbarMain() {
             </>
           ) : (
             <>
-              <Link to="/login">
+              <Link to="/login" className="navbar-login">
                 <div className="navbar-btn">Login</div>
               </Link>
-              <Link to="/register">
+              <Link to="/register" className="navbar-login">
                 <div className="navbar-btn">Register</div>
               </Link>
             </>

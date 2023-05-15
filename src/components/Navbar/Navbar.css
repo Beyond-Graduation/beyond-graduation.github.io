@@ -3,6 +3,12 @@
   height: 70px;
 }
 
+.navbar .container {
+  background-color: rgba(58, 90, 64, 1);
+  z-index: 1000;
+  width: 100vw !important;
+}
+
 .navbar-brand.logo {
   color: white !important;
   font-size: 30px;
@@ -44,6 +50,7 @@
   background-color: rgba(88, 129, 87, 1);
   padding: 0 30px;
   border-radius: 15px;
+  width: fit-content;
 }
 
 .profile-btn {
@@ -113,7 +120,7 @@
 
 .dropdown-menu {
   margin-top: 6px !important;
-  margin-left: 30px!important;
+  margin-left: 30px !important;
   background-color: rgba(58, 90, 64, 1) !important;
   border: none !important;
 }
@@ -131,6 +138,24 @@
 }
 
 @media (max-width: 992px) {
+  .navbar .container {
+    background-color: rgba(58, 90, 64, 1);
+    z-index: 1000;
+    width: 100vw !important;
+    max-width: unset;
+    padding: 0 20px;
+  }
+
+  .navbar .container a {
+    display: block;
+    width: fit-content !important;
+  }
+
+  .navbar .navbar-nav {
+    margin-right: 0 !important;
+    margin-bottom: 10px;
+  }
+
   .navbar-nav .nav-link,
   .dropdown-toggle.nav-link {
     text-align: center;
@@ -139,8 +164,22 @@
     width: fit-content;
   }
 
+  .dropdown-menu .dropdown-item {
+    margin: auto
+  }
+
+  .dropdown-menu.show {
+    margin-left: 0 !important;
+  }
+
+  .navbar-login {
+    margin: auto;
+    margin-bottom: 20px;
+  }
+
   .profile-btn {
     margin: auto;
+    margin-bottom: 10px;
   }
 
   .dropdown-menu {
