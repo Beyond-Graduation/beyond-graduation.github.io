@@ -39,9 +39,22 @@ function InternshipView() {
             //var date = new Date(notice.dateUploaded);
             return (
               <div className="internship-view-card d-flex align-items-center mt-4">
-                <div className="not-view-right">
-                  <div className="title">
-                    {i + 1}. {internship.role}
+                <div className="w-100">
+                  <div className="d-flex flex-row justify-content-between">
+                    <div className="d-flex flex-column">
+                      <div className="intern-role">{internship.role}</div>
+                      <div className="intern-compname">{internship.companyName}</div>
+                    </div>
+
+                    <div className="d-flex flex-column">
+                      <div className="intern-duration">{internship.duration}</div>
+                      <div className="intern-stipend">{internship.stipend}</div>
+                    </div>
+
+                    <div className="d-flex flex-column">
+                      <div className="intern-workType">{internship.workingType}</div>
+                      <div className="apply-button"> Apply </div>
+                    </div>
                   </div>
                 </div>
               </div>
