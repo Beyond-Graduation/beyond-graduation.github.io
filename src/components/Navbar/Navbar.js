@@ -71,6 +71,7 @@ function NavbarMain() {
                 </NavDropdown>
                 <Nav.Link href="/blogs">Blogs</Nav.Link>
                 <Nav.Link href="/notices">Notices</Nav.Link>
+                <Nav.Link href="/internships/viewall">Internships</Nav.Link>
               </>
             ) : null}
             <Nav.Link href="/about">About</Nav.Link>
