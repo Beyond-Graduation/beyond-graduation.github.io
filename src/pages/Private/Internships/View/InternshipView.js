@@ -6,6 +6,7 @@ import "./InternshipView.css";
 import parse from "html-react-parser";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Modal } from "react-bootstrap";
+import { GiTakeMyMoney } from "react-icons/gi";
 
 function InternshipView() {
   const navigate = useNavigate();
@@ -41,6 +42,14 @@ function InternshipView() {
   return (
     <div className="internship-view">
       <div className="internship-view-cnt">
+        {userType === "alumni" ? (
+          <Link to="/internships/post">
+            <div className="create-notice-btn  d-flex align-items-center">
+              <GiTakeMyMoney className="me-2" /> post internship
+            </div>
+          </Link>
+        ) : null}
+
         <div className="internship-heading">Internships</div>
         <div className="internship-cnt">
           {internships.map((internship, i) => {
