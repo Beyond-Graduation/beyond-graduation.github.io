@@ -13,6 +13,7 @@ import { isAuth } from "../../../auth/Auth";
 import FileInput from "../../../components/FileInput/FileInput";
 import { deleteObject, ref } from "firebase/storage";
 import storage from "../../../firebase";
+import { Spinner } from "react-bootstrap";
 
 function AluminiRegistration({ state }) {
   const navigate = useNavigate();
@@ -45,6 +46,7 @@ function AluminiRegistration({ state }) {
     admissionId: "",
     phone: "",
     resume: "",
+    profilePicPath: "",
   });
 
   const degreeOptions = [
@@ -206,18 +208,30 @@ function AluminiRegistration({ state }) {
       }
 
       if (
+        formDetails.admissionId === "" ||
         formDetails.firstName === "" ||
         formDetails.lastName === "" ||
         formDetails.email === "" ||
         formDetails.password === "" ||
-        formDetails.areasOfInterest.length === 0
+        formDetails.department === "" ||
+        !formDetails.yearGraduation ||
+        formDetails.areasOfInterest.length === 0 ||
+        formDetails.degree === "" ||
+        formDetails.gender === ""
       ) {
         toast.error("Please fill all the fields");
         setRegistering(false);
         return;
       }
 
+      if (formDetails.profilePicPath === "") {
+        setRegistering(false);
+        toast.error("Add Profile Picture");
+        return;
+      }
+
       if (formDetails.resume === "") {
+        setRegistering(false);
         toast.error("Upload your resume");
         return;
       }
@@ -457,7 +471,11 @@ function AluminiRegistration({ state }) {
         </section>
 
         <div className="intro-reg-btn" onClick={onRegister}>
-          register
+          {registering ? (
+            <Spinner animation="border" size="sm"></Spinner>
+          ) : (
+            "register"
+          )}
         </div>
       </div>
     </div>

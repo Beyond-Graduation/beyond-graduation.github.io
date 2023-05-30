@@ -240,6 +240,10 @@ function SingleBlog() {
     if (comments.length > 0) fetchChildComments();
   }, [comments]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -308,116 +312,20 @@ function SingleBlog() {
             {blogData.content ? parse(blogData?.content) : null}
           </div>
         </div>
-        <div className="comments-heading mt-5">
-          Comments ({comments.length})
-        </div>
-        <div className="post-comment text-center my-5 mt-4">
-          <textarea
-            name="comment"
-            cols="30"
-            rows="5"
-            ref={commentRef}
-          ></textarea>
-          <span onClick={() => postComment("parent", "", 0)}>POST COMMENT</span>
-        </div>
-        <div className="single-blog-comments">
-          {comments.map((com, i) => {
-            let comId = com.commentId;
-            return (
-              <div className="blog-comment p-4">
-                <div className="d-flex justify-content-between blog-comment-head">
-                  <div className="comment-author">
-                    {com.firstName} {com.lastName}
-                  </div>
-                  <div className="comment-date">
-                    {new Date(com.dateUploaded).toLocaleDateString("en-us", {
-                      year: "numeric",
-                      day: "2-digit",
-                      month: "long",
-                    })}
-                  </div>
-                  <div className="comment-likes">
-                    <AiFillLike /> <span>{com.likes}</span>
-                  </div>
-                </div>
-                <div className="comment-content mt-2">{com.content}</div>
-                <div
-                  className="comm-reply mt-2 me-4"
-                  onClick={() => {
-                    let arr = childCommentOpen.map((x, index) => {
-                      if (index === i)
-                        return childCommentOpen[index] === 0 ? 1 : 0;
-                      else return childCommentOpen[index];
-                    });
-                    setChildCommentOpen(arr);
-                  }}
-                >
-                  <BsFillReplyFill />
-                  <span>Reply</span>
-                </div>
-                <div
-                  className="comment-reply mt-2"
-                  hidden={!childCommentOpen[i]}
-                >
-                  <textarea
-                    name={`childComm${i}`}
-                    id={`childComm${i}`}
-                    rows="2"
-                    ref={(ref) => childCommentRef.current.push(ref)}
-                  />
-                  <span onClick={() => postComment("child", com.commentId, i)}>
-                    Reply
-                  </span>
-                </div>
-                <div className="child-comment">
-                  {childComments[com.commentId] &&
-                    childComments[com.commentId].map((child) => (
-                      <div className="ms-5 mt-2">
-                        <div className="d-flex justify-content-between blog-comment-head">
-                          <div className="comment-author">
-                            {child.firstName} {child.lastName}
-                          </div>
-                          <div className="comment-date">
-                            {new Date(child.dateUploaded).toLocaleDateString(
-                              "en-us",
-                              {
-                                year: "numeric",
-                                day: "2-digit",
-                                month: "long",
-                              }
-                            )}
-                          </div>
-                          <div className="comment-likes">
-                            <AiFillLike /> <span>{child.likes}</span>
-                          </div>
-                        </div>
-                        <div className="comment-content mt-2">
-                          {child.content}
-                        </div>
-                      </div>
-                    ))}
-                </div>
-              </div>
-            );
-          })}
-        </div>
 
         <div className="recommended">
           <div className="recommended-heading">Recommended Blogs</div>
           {recommendedBlogs.length === 0 ? (
             <span className="recommended-loading">Loading...</span>
           ) : (
-            <Carousel
-              responsive={responsive}
-              infinite={true}
-              className="lg-carousel"
-            >
+            <Carousel responsive={responsive} className="lg-carousel">
               {recommendedBlogs.map((blog) => {
                 return (
                   <div className="carousel-card">
                     <Link
                       to={`/blogs/${blog.blogId}`}
-                      onClick={() => window.location.reload()}
+                      reloadDocument={true}
+                      rel="noopener noreferrer"
                     >
                       <DashBlogCard blogData={blog} userData={{}} />
                     </Link>
@@ -427,6 +335,106 @@ function SingleBlog() {
             </Carousel>
           )}
         </div>
+
+        <section>
+          <div className="comments-heading mt-5">
+            Comments ({comments.length})
+          </div>
+          <div className="post-comment text-center my-5 mt-4">
+            <textarea
+              name="comment"
+              cols="30"
+              rows="5"
+              ref={commentRef}
+            ></textarea>
+            <span onClick={() => postComment("parent", "", 0)}>
+              POST COMMENT
+            </span>
+          </div>
+          <div className="single-blog-comments">
+            {comments.map((com, i) => {
+              let comId = com.commentId;
+              return (
+                <div className="blog-comment p-4">
+                  <div className="d-flex justify-content-between blog-comment-head">
+                    <div className="comment-author">
+                      {com.firstName} {com.lastName}
+                    </div>
+                    <div className="comment-date">
+                      {new Date(com.dateUploaded).toLocaleDateString("en-us", {
+                        year: "numeric",
+                        day: "2-digit",
+                        month: "long",
+                      })}
+                    </div>
+                    <div className="comment-likes">
+                      <AiFillLike /> <span>{com.likes}</span>
+                    </div>
+                  </div>
+                  <div className="comment-content mt-2">{com.content}</div>
+                  <div
+                    className="comm-reply mt-2 me-4"
+                    onClick={() => {
+                      let arr = childCommentOpen.map((x, index) => {
+                        if (index === i)
+                          return childCommentOpen[index] === 0 ? 1 : 0;
+                        else return childCommentOpen[index];
+                      });
+                      setChildCommentOpen(arr);
+                    }}
+                  >
+                    <BsFillReplyFill />
+                    <span>Reply</span>
+                  </div>
+                  <div
+                    className="comment-reply mt-2"
+                    hidden={!childCommentOpen[i]}
+                  >
+                    <textarea
+                      name={`childComm${i}`}
+                      id={`childComm${i}`}
+                      rows="2"
+                      ref={(ref) => childCommentRef.current.push(ref)}
+                    />
+                    <span
+                      onClick={() => postComment("child", com.commentId, i)}
+                    >
+                      Reply
+                    </span>
+                  </div>
+                  <div className="child-comment">
+                    {childComments[com.commentId] &&
+                      childComments[com.commentId].map((child) => (
+                        <div className="ms-5 mt-2">
+                          <div className="d-flex justify-content-between blog-comment-head">
+                            <div className="comment-author">
+                              {child.firstName} {child.lastName}
+                            </div>
+                            <div className="comment-date">
+                              {new Date(child.dateUploaded).toLocaleDateString(
+                                "en-us",
+                                {
+                                  year: "numeric",
+                                  day: "2-digit",
+                                  month: "long",
+                                }
+                              )}
+                            </div>
+                            <div className="comment-likes">
+                              <AiFillLike /> <span>{child.likes}</span>
+                            </div>
+                          </div>
+                          <div className="comment-content mt-2">
+                            {child.content}
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
       </div>
     </div>
   );

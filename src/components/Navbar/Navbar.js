@@ -59,7 +59,7 @@ function NavbarMain() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto me-4">
             <Nav.Link href="/">Home</Nav.Link>
-            {isAuth.checkAuth() ? (
+            {isAuth.isAuthenticated ? (
               <>
                 <NavDropdown title="Profiles" id="basic-nav-dropdown">
                   <NavDropdown.Item href="/alumni-profiles">
@@ -76,7 +76,7 @@ function NavbarMain() {
             ) : null}
             <Nav.Link href="/about">About</Nav.Link>
           </Nav>
-          {isAuth.checkAuth() ? (
+          {isAuth.isAuthenticated ? (
             <>
               <label htmlFor="profile-btn" className="nav-link" ref={ref}>
                 <div className="profile-btn">

@@ -13,12 +13,14 @@ import { toast } from "react-toastify";
 import FileInput from "../../../components/FileInput/FileInput";
 import { deleteObject, ref } from "firebase/storage";
 import storage from "../../../firebase";
+import { Spinner } from "react-bootstrap";
 
 function StudentRegistration({ state }) {
   const navigate = useNavigate();
   const [registering, setRegistering] = useState(false);
   const [resumeFileName, setResumeFileName] = useState("");
   const [profilePic, setProfilePic] = useState(avatarIcon);
+  const [loading, setLoading] = useState(false);
 
   const [formDetails, setFormDetails] = useState({
     userId: "",
@@ -177,7 +179,6 @@ function StudentRegistration({ state }) {
   const onRegister = async () => {
     if (!registering) {
       setRegistering(true);
-      console.log(formDetails);
       if (
         formDetails.admissionId === "" ||
         formDetails.firstName === "" ||
@@ -199,7 +200,14 @@ function StudentRegistration({ state }) {
         return;
       }
 
+      if (formDetails.profilePicPath === "") {
+        setRegistering(false);
+        toast.error("Add Profile Picture");
+        return;
+      }
+
       if (formDetails.resume === "") {
+        setRegistering(false);
         toast.error("Upload your resume");
         return;
       }
@@ -212,6 +220,7 @@ function StudentRegistration({ state }) {
         .then((res) => {
           isAuth.registering = false;
           toast.success("Registration Successful !!");
+          isAuth.logout();
           navigate("/login");
         })
         .catch((e) => {
@@ -407,7 +416,11 @@ function StudentRegistration({ state }) {
           </div>
         </section>
         <div className="intro-reg-btn" onClick={onRegister}>
-          register
+          {registering ? (
+            <Spinner animation="border" size="sm"></Spinner>
+          ) : (
+            "register"
+          )}
         </div>
       </div>
     </div>

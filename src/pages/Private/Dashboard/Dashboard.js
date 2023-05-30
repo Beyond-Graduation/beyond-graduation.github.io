@@ -5,12 +5,14 @@ import AlumniDashboard from "./AlumniDashboard";
 import StudentDashboard from "./StudentDashboard";
 import { useStateValue } from "../../../reducer/StateProvider";
 import axios from "../../../components/axios";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 
 function Dashboard() {
   const [{ userData, userId }, dispatch] = useStateValue();
   const userType =
     localStorage.getItem("userType") || sessionStorage.getItem("userType");
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const userType =
@@ -43,6 +45,9 @@ function Dashboard() {
 
     if (token && userId && userType !== "admin") {
       getData();
+    }
+    if (location.state) {
+      navigate(location.state.current);
     }
   }, [dispatch]);
 

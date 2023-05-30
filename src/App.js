@@ -6,6 +6,7 @@ import {
   Outlet,
   Route,
   Routes,
+  useLocation,
 } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
@@ -44,9 +45,7 @@ const WithNav = () => {
   return (
     <>
       <Navbar />
-      {/* <div style={{ paddingTop: "70px" }}> */}
       <Outlet />
-      {/* </div> */}
     </>
   );
 };
@@ -69,13 +68,23 @@ const PrivateRoute = ({ comp: Component }) => {
   ) : isAuth.checkAuth() === true ? (
     <Component />
   ) : (
-    <Navigate to="/login" replace />
+    // <Component />
+    <Navigate to="/login" state={{ current: window.location.pathname }} />
   );
 };
 
 const PublicRoute = ({ comp: Component }) => {
+  const location = useLocation();
   return isAuth.checkAuth() === true ? (
-    <Navigate to="/dashboard" replace />
+    location.state ? (
+      <Navigate
+        to="/dashboard"
+        replace
+        state={{ current: location.state.current }}
+      />
+    ) : (
+      <Navigate to="/dashboard" replace />
+    )
   ) : (
     <Component />
   );
@@ -92,41 +101,90 @@ const RegisterRoute = ({ comp: Component }) => {
 function App() {
   const [{ userData, userId }, dispatch] = useStateValue();
 
-  useEffect(() => {
+  const getData = async () => {
     const userType =
       localStorage.getItem("userType") || sessionStorage.getItem("userType");
     const token =
       localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
     const userId =
       localStorage.getItem("userId") || sessionStorage.getItem("userId");
+    await axios({
+      method: "get",
+      url:
+        userType.toLowerCase() === "student"
+          ? `student/student_details?userId=${userId}`
+          : userType.toLowerCase() === "alumni"
+          ? `alumni/alumni_details?userId=${userId}`
+          : `admin/admin_details?userId=${userId}`,
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
+    }).then((res) => {
+      if (res.status === 200) {
+        dispatch({
+          type: "SET_USER_DATA",
+          item: res.data,
+        });
+        isAuth.userType = res.data.__t.toLowerCase();
+      }
+    });
+  };
 
-    const getData = async () => {
-      await axios({
-        method: "get",
-        url:
-          userType.toLowerCase() === "student"
-            ? `student/student_details?userId=${userId}`
-            : userType.toLowerCase() === "alumni"
-            ? `alumni/alumni_details?userId=${userId}`
-            : `admin/admin_details?userId=${userId}`,
-        headers: {
-          Authorization: `bearer ${token}`,
-        },
-      }).then((res) => {
-        if (res.status === 200) {
-          dispatch({
-            type: "SET_USER_DATA",
-            item: res.data,
-          });
-          isAuth.userType = res.data.__t.toLowerCase();
+  useEffect(() => {
+    var sessionStorage_transfer = function (event) {
+      if (!event) {
+        event = window.event;
+      } // ie suq
+      if (!event.newValue) return; // do nothing if no value to work with
+      if (event.key === "getSessionStorage") {
+        // another tab asked for the sessionStorage -> send it
+        localStorage.setItem("sessionStorage", JSON.stringify(sessionStorage));
+        // the other tab should now have it, so we're done with it.
+        localStorage.removeItem("sessionStorage"); // <- could do short timeout as well.
+      } else if (event.key === "sessionStorage" && !sessionStorage.length) {
+        console.log("sample");
+        // another tab sent data <- get it
+        var data = JSON.parse(event.newValue);
+        for (var key in data) {
+          sessionStorage.setItem(key, data[key]);
         }
-      });
+        var sessionStorageUpdatedEvent = new CustomEvent(
+          "sessionStorageUpdated"
+        );
+        window.dispatchEvent(sessionStorageUpdatedEvent);
+      }
     };
 
-    if (token && userId) {
-      getData();
+    // listen for changes to localStorage
+    if (window.addEventListener) {
+      window.addEventListener("storage", sessionStorage_transfer, false);
+    } else {
+      window.attachEvent("onstorage", sessionStorage_transfer);
     }
-  }, [dispatch]);
+
+    const token =
+      localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
+    if (token) getData();
+    const handleSessionStorageUpdated = () => {
+      getData();
+    };
+
+    // Ask other tabs for session storage (this is ONLY to trigger event)
+    if (!sessionStorage.length) {
+      localStorage.setItem("getSessionStorage", "foobar");
+      localStorage.removeItem("getSessionStorage", "foobar");
+    }
+
+    window.addEventListener(
+      "sessionStorageUpdated",
+      handleSessionStorageUpdated
+    );
+    return () =>
+      window.removeEventListener(
+        "sessionStorageUpdated",
+        handleSessionStorageUpdated
+      );
+  }, []);
 
   return (
     <div className="App">

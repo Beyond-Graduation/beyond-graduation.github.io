@@ -1,25 +1,27 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./Login.css";
 import { HiOutlineMail } from "react-icons/hi";
 import { BiLockAlt } from "react-icons/bi";
 import { AiFillEye, AiOutlineClose } from "react-icons/ai";
 import { FaHome } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { isAuth } from "../../../auth/Auth";
 import { useRef } from "react";
 import { toast } from "react-toastify";
 import { useStateValue } from "../../../reducer/StateProvider";
 import axios from "../../../components/axios";
+import { Spinner } from "react-bootstrap";
 
-function Login() {
+function Login(props) {
   const navigate = useNavigate();
+  const location = useLocation();
   const passToggleRef = useRef();
   const rememberRef = useRef();
   const forgotPasswordEmailRef = useRef();
   const overlayCntRef = useRef();
   const overlayRef = useRef();
   const [forgotOverlay, setForgotOverlay] = React.useState(false);
-
+  const [loading, setLoading] = useState(false);
   const [{ userData, userId }, dispatch] = useStateValue();
 
   const [credentials, setCredentials] = React.useState({
@@ -32,56 +34,62 @@ function Login() {
   };
 
   const handleLogin = async () => {
-    await axios({
-      method: "post",
-      url: "user/login",
-      data: {
-        email: credentials.email,
-        password: credentials.password,
-      },
-    })
-      .then(async (res) => {
-        if (res.status === 200) {
-          // console.log(res.data);
-          isAuth.login(
-            res.data.token,
-            res.data.userId,
-            res.data.userType.toLowerCase(),
-            rememberRef.current.checked
-          );
-          isAuth.userType = res.data.userType.toLowerCase();
-          dispatch({
-            type: "SET_USER_ID",
-            item: res.data.userId,
-          });
-          await axios({
-            method: "get",
-            url:
-              res.data.userType.toLowerCase() === "student"
-                ? `student/student_details?userId=${res.data.userId}`
-                : res.data.userType.toLowerCase() === "alumni"
-                ? `alumni/alumni_details?userId=${res.data.userId}`
-                : `admin/admin_details?userId=${res.data.userId}`,
-            headers: {
-              Authorization: `bearer ${res.data.token}`,
-            },
-          }).then((res) => {
-            if (res.status === 200) {
-              dispatch({
-                type: "SET_USER_DATA",
-                item: res.data,
-              });
-            }
-          });
-          toast.success("Login Successfull !!");
-          navigate("/dashboard");
-        } else {
-          toast.error("Something went wrong !!");
-        }
+    if (!loading) {
+      setLoading(true);
+      await axios({
+        method: "post",
+        url: "user/login",
+        data: {
+          email: credentials.email,
+          password: credentials.password,
+        },
       })
-      .catch((err) => {
-        toast.error(err.response.data);
-      });
+        .then(async (res) => {
+          setLoading(false);
+          if (res.status === 200) {
+            // console.log(res.data);
+            isAuth.login(
+              res.data.token,
+              res.data.userId,
+              res.data.userType.toLowerCase(),
+              rememberRef.current.checked
+            );
+            isAuth.userType = res.data.userType.toLowerCase();
+            dispatch({
+              type: "SET_USER_ID",
+              item: res.data.userId,
+            });
+            await axios({
+              method: "get",
+              url:
+                res.data.userType.toLowerCase() === "student"
+                  ? `student/student_details?userId=${res.data.userId}`
+                  : res.data.userType.toLowerCase() === "alumni"
+                  ? `alumni/alumni_details?userId=${res.data.userId}`
+                  : `admin/admin_details?userId=${res.data.userId}`,
+              headers: {
+                Authorization: `bearer ${res.data.token}`,
+              },
+            }).then((res) => {
+              if (res.status === 200) {
+                dispatch({
+                  type: "SET_USER_DATA",
+                  item: res.data,
+                });
+              }
+            });
+            toast.success("Login Successful !!");
+            if (location.state) navigate(location.state.current);
+            else navigate("/dashboard");
+          } else {
+            toast.error("Something went wrong !!");
+          }
+        })
+        .catch((err) => {
+          setLoading(false);
+          toast.error(err.response.data.error);
+        });
+    }
   };
 
   const togglePassword = () => {
@@ -139,6 +147,22 @@ function Login() {
     return () => document.removeEventListener("click", handleClick);
   }, []);
 
+  useEffect(() => {
+    const handleSessionStorageUpdated = () => {
+      if (location.state) navigate(location.state.current);
+    };
+
+    window.addEventListener(
+      "sessionStorageUpdated",
+      handleSessionStorageUpdated
+    );
+    return () =>
+      window.removeEventListener(
+        "sessionStorageUpdated",
+        handleSessionStorageUpdated
+      );
+  }, []);
+
   return (
     <div className="login-main d-flex align-items-center justify-content-center">
       <Link to="/">
@@ -182,7 +206,11 @@ function Login() {
             <input type="checkbox" ref={rememberRef} /> Remember Me ?
           </label>
           <div className="login-button" onClick={handleLogin}>
-            LOGIN
+            {loading ? (
+              <Spinner animation="border" size="sm"></Spinner>
+            ) : (
+              <>LOGIN</>
+            )}
           </div>
           <p className="bottom-line">
             Don't have an account already ?

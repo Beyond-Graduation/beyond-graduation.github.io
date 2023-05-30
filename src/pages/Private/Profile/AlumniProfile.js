@@ -9,10 +9,6 @@ import ProfileCard from "../../../components/ProfileCard/ProfileCard";
 function AlumniProfile({ data }) {
   const [showResume, setShowResume] = useState(false);
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
-
   return (
     <div className="profile-main">
       <div className="profile-top d-flex align-items-center justify-content-between">
@@ -121,8 +117,8 @@ function AlumniProfile({ data }) {
               <Accordion.Header>Work Experience</Accordion.Header>
               <Accordion.Body>
                 {data.workExperience?.length > 0
-                  ? data.workExperience?.map((proj) => (
-                      <div className="project">
+                  ? data.workExperience?.map((proj, i) => (
+                      <div className="project" key={i}>
                         <div className="d-flex justify-content-between  align-items-center">
                           <div className="d-flex align-items-center ">
                             <div className="proj-title">{proj.company}</div>
@@ -145,8 +141,8 @@ function AlumniProfile({ data }) {
               <Accordion.Header>Publications</Accordion.Header>
               <Accordion.Body>
                 {data.publications?.length > 0
-                  ? data.publications?.map((proj) => (
-                      <div className="project">
+                  ? data.publications?.map((proj, i) => (
+                      <div className="project" key={i}>
                         <div className="d-flex justify-content-between  align-items-center">
                           <div className="d-flex align-items-center ">
                             <div className="proj-title">{proj.title}</div>

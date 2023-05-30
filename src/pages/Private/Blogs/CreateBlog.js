@@ -84,15 +84,9 @@ function CreateBlog() {
         toast.error("Please fill all the fields");
         return;
       } else if (
-        editorRef.current.getContent({ format: "text" }).length < 500
+        editorRef.current.getContent({ format: "text" }).length < 100
       ) {
-        toast.error("Blog must contain at least 500 characters");
-        return;
-      } else if (blogDetails.abstract.length < 30) {
-        toast.error("Description must contain at least 30 characters");
-        return;
-      } else if (blogDetails.abstract.length > 200) {
-        toast.error("Description must contain less than 200 characters");
+        toast.error("Blog must contain at least 100 characters");
         return;
       } else if (blogDetails.imagePath === "") {
         toast.error("Upload Blog Image !!");

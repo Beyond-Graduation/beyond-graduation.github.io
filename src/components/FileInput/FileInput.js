@@ -247,7 +247,20 @@ const FileInput = ({
                   className="image-crop"
                 />
               </ReactCrop>
-              <Button onClick={getCroppedImg}>CROP</Button>
+              <div className="d-flex w-75 justify-content-around m-auto align-items-center">
+                <Button onClick={getCroppedImg}>CROP</Button>
+                <Button
+                  onClick={() => {
+                    inputRef.current.value = "";
+                    setShowCropOverlay(false);
+                    setImage(null);
+                    setSrcImg(null);
+                    setFile(null);
+                  }}
+                >
+                  CANCEL
+                </Button>
+              </div>
             </div>
           </div>
         )}
