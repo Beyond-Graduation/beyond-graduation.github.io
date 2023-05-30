@@ -247,8 +247,8 @@ function AluminiRegistration({ state }) {
           navigate("/login");
         })
         .catch((e) => {
-          toast.error("Something went wrong !!");
           setRegistering(false);
+          toast.error(e.response.data.message);
         });
     }
   };

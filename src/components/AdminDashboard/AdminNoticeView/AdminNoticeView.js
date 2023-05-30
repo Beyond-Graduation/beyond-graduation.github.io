@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./AdminNoticeView.css";
 import axios from "../../axios";
 import { CgAttachment } from "react-icons/cg";
+import { Form } from "react-bootstrap";
 
 function AdminNoticeView() {
   const token =
@@ -11,13 +12,30 @@ function AdminNoticeView() {
   const getData = async () => {
     await axios({
       method: "get",
-      url: "notice/",
+      url: "notice?filter=All",
       headers: {
         Authorization: `bearer ${token}`,
       },
     }).then((res) => {
       if (res.status === 200) {
         console.log(res.data);
+        setNotices(res.data);
+      }
+    });
+  };
+
+  const filterChange = async (e) => {
+    var path;
+    if (e.target.value === "All") path = "notice?filter=All";
+    else if (e.target.value === "Alumni") path = "notice?filter=Alumni";
+    await axios({
+      method: "get",
+      url: path,
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
+    }).then((res) => {
+      if (res.status === 200) {
         setNotices(res.data);
       }
     });
@@ -49,6 +67,26 @@ function AdminNoticeView() {
   return (
     <div className="admin-notice-view pb-5 mb-5">
       <div className="admin-notice-view-head">General Notices</div>
+      <div>
+        <Form className="d-flex gap-3 filter-notice">
+          <Form.Check
+            type="radio"
+            label="All"
+            name="filter"
+            value="All"
+            defaultChecked
+            onChange={filterChange}
+          />
+          <Form.Check
+            type="radio"
+            label="Alumni Only"
+            name="filter"
+            value="Alumni"
+            onChange={filterChange}
+          />
+        </Form>
+      </div>
+
       <div className="admin-notice-view-cnt mt-5">
         {notices.map((notice, i) => {
           var date = new Date(notice.dateUploaded);

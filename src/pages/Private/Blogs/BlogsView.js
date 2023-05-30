@@ -12,8 +12,7 @@ function BlogsView() {
   const userType =
     localStorage.getItem("userType") || sessionStorage.getItem("userType");
   const [blogData, setBlogData] = useState([]);
-  const searchRef = useRef();
-  const filterRef = useRef();
+  const [showBlogData, setShowBlogData] = useState([]);
 
   const blogsFilter = ["popular", "latest", "oldest", "blogname"];
 
@@ -30,6 +29,7 @@ function BlogsView() {
       })
         .then((res) => {
           setBlogData(res.data);
+          setShowBlogData(res.data);
         })
         .catch((err) => {
           toast.error("Something went wrong!!");
@@ -38,6 +38,20 @@ function BlogsView() {
 
     fetchData();
   }, []);
+
+  const searchBlogs = (e) => {
+    const filteredBlogs = blogData.filter((blog) => {
+      const titleMatch = blog.title
+        .toLowerCase()
+        .includes(e.target.value.toLowerCase());
+      const abstractMatch = blog.abstract
+        .toLowerCase()
+        .includes(e.target.value.toLowerCase());
+      return titleMatch || abstractMatch;
+    });
+
+    setShowBlogData(filteredBlogs);
+  };
 
   const filterChange = (e) => {
     const token =
@@ -51,6 +65,7 @@ function BlogsView() {
     })
       .then((res) => {
         setBlogData(res.data);
+        setShowBlogData(res.data);
       })
       .catch((err) => {
         toast.error("Something went wrong!!");
@@ -72,13 +87,12 @@ function BlogsView() {
         <div className="d-flex mt-5 align-items-center justify-content-between">
           <div className="blog-search-cnt d-flex align-items-center">
             <img src={searchIcon} alt="" />
-            <input type="text" placeholder="Search" ref={searchRef} />
+            <input type="text" placeholder="Search" onChange={searchBlogs} />
           </div>
           <DropdownButton
             menuVariant="dark"
             title="Sort By"
             onSelect={filterChange}
-            ref={filterRef}
           >
             <Dropdown.Item active eventKey="1">
               MOST RECENT
@@ -92,7 +106,7 @@ function BlogsView() {
         </div>
 
         <div className="blogs-view-list mt-5">
-          {blogData.map((blog) => {
+          {showBlogData.map((blog) => {
             return <BlogCard key={blog.id} blog={blog} />;
           })}
         </div>

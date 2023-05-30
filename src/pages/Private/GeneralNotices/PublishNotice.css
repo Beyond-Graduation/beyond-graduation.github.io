@@ -23,3 +23,8 @@
 .notices-publish .light-mode.animated-in textarea.form-control {
   border-radius: 5px 5px 0 0;
 }
+
+.notice-type {
+  font-size: 18px;
+  color: rgb(42, 64, 46);
+}

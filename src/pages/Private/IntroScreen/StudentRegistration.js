@@ -20,7 +20,6 @@ function StudentRegistration({ state }) {
   const [registering, setRegistering] = useState(false);
   const [resumeFileName, setResumeFileName] = useState("");
   const [profilePic, setProfilePic] = useState(avatarIcon);
-  const [loading, setLoading] = useState(false);
 
   const [formDetails, setFormDetails] = useState({
     userId: "",
@@ -224,8 +223,8 @@ function StudentRegistration({ state }) {
           navigate("/login");
         })
         .catch((e) => {
-          toast.error("Something went wrong !!");
           setRegistering(false);
+          toast.error(e.response.data.message);
         });
     }
   };

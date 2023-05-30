@@ -96,6 +96,9 @@ function AdminNoticeVerification() {
                 <div className="name mt-1">
                   <span>By:</span> {notice.firstName} {notice.lastName}
                 </div>
+                <div className="name mt-1">
+                  <span>Type:</span> {notice.noticeType}
+                </div>
                 <div className="content mt-1">{notice.content}</div>
                 {notice.attachmentPath ? (
                   <div

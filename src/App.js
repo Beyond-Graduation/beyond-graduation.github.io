@@ -210,6 +210,7 @@ function App() {
             path="/reset_password/:token"
             element={<PublicRoute comp={ResetPassword} />}
           />
+          <Route path="/admin/:func" element={<AdminDash />} />
           <Route path="/admin" element={<AdminDash />} />
           <Route element={<WithNav />}>
             <Route path="/intro" element={<RegisterRoute comp={Intro} />} />

@@ -10,6 +10,7 @@ import FileInput from "../../FileInput/FileInput";
 import axios from "../../axios";
 import "./AdminNoticePublish.css";
 import { useNavigate } from "react-router-dom";
+import { Form } from "react-bootstrap";
 
 function AdminNoticePublish() {
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ function AdminNoticePublish() {
     title: "",
     content: "",
     attachmentPath: "",
+    noticeType: "Public",
   });
 
   const handleInputChange = (e) => {
@@ -104,12 +106,32 @@ function AdminNoticePublish() {
     <div className="admin-notice-pub p-3">
       <div className="admin-notice-pub-head">Publish Notice</div>
       <div className="admin-notice-pub-cnt p-5 pt-3">
-        <AnimatedInputField
-          name="title"
-          title="Title"
-          className="light-mode mb-5"
-          onChange={handleInputChange}
-        />
+        <div className="d-flex align-items-baseline">
+          <AnimatedInputField
+            name="title"
+            title="Title"
+            className="light-mode mb-5"
+            onChange={handleInputChange}
+          />
+          <Form
+            className="d-flex gap-3 notice-type ms-5"
+            onChange={handleInputChange}
+          >
+            <Form.Check
+              type="radio"
+              label="Public Notice"
+              name="noticeType"
+              value="Public"
+              defaultChecked
+            />
+            <Form.Check
+              type="radio"
+              label="Alumni Only"
+              name="noticeType"
+              value="Alumni"
+            />
+          </Form>
+        </div>
         <AnimatedInputField
           as="textarea"
           name="content"

@@ -18,8 +18,6 @@ function StudentProfilesView() {
   const [filterData, setFilterData] = useState({
     department: "",
     areasOfInterest: [],
-    before: null,
-    after: null,
   });
 
   const handleSearch = () => {
@@ -46,34 +44,18 @@ function StudentProfilesView() {
   };
 
   const applyFilter = async () => {
-    //remove null values and empty string and empty array from filterData
-    const filterDataWithoutNull = Object.fromEntries(
-      Object.entries(filterData).filter(
-        ([key, value]) => value !== null && value !== ""
-      )
-    );
-    const filterDataWithoutEmptyArray = Object.fromEntries(
-      Object.entries(filterDataWithoutNull).filter(
-        ([key, value]) => value.length > 0
-      )
-    );
-    if (Object.keys(filterDataWithoutEmptyArray).length === 0) {
-      fetchData();
-    } else {
-      const token =
-        localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
-
-      await axios({
-        method: "post",
-        url: "alumni/filter",
-        data: filterDataWithoutEmptyArray,
-        headers: {
-          Authorization: `bearer ${token}`,
-        },
-      }).then((res) => {
-        setSearchAlumniData(res.data);
-      });
-    }
+    const token =
+      localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
+    axios({
+      method: "get",
+      url: `student/student_list?department=${filterData.department}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((res) => {
+      setAlumniData(res.data);
+      setSearchAlumniData(res.data);
+    });
   };
 
   const fetchData = async () => {
@@ -125,7 +107,7 @@ function StudentProfilesView() {
     <div className="profiles-view">
       <div className="profiles-view-cnt">
         <h1 className="profiles-view-head">Student Profiles</h1>
-        {/* <div className="filter-container mt-5">
+        <div className="filter-container mt-5">
           <div className="filter-inner mb-4 d-flex">
             <Select
               name="department"
@@ -140,7 +122,7 @@ function StudentProfilesView() {
                   : handleFilterChange("department", "")
               }
             />
-            <Select
+            {/* <Select
               isMulti
               name="areasOfInterest"
               className="department me-3"
@@ -148,33 +130,18 @@ function StudentProfilesView() {
               placeholder="Domain"
               options={interestList}
               onChange={(e) => handleFilterChange("areasOfInterest", e)}
-            />
-            <input
-              type="number"
-              name="after"
-              min={1943}
-              maxLength={4}
-              className="me-3 grad"
-              placeholder="Grad. Year (after)"
-              onChange={(e) =>
-                handleFilterChange(e.target.name, e.target.value)
-              }
-            />
-            <input
-              type="number"
-              name="before"
-              min={1943}
-              maxLength={4}
-              className="grad"
-              placeholder="Grad. Year (before)"
-              onChange={(e) =>
-                handleFilterChange(e.target.name, e.target.value)
-              }
-            />
+            /> */}
           </div>
           <div className="d-flex align-items-center justify-content-between">
             <div className="search-cnt d-flex align-items-center">
-              <input type="text" placeholder="Search" ref={searchRef} />
+              <input
+                type="text"
+                placeholder="Search"
+                ref={searchRef}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter") handleSearch();
+                }}
+              />
               <FaSearch className="search-ic" onClick={handleSearch} />
             </div>
             <div className="d-flex">
@@ -188,7 +155,7 @@ function StudentProfilesView() {
               </div>
             </div>
           </div>
-        </div> */}
+        </div>
         <div className="profiles-view-list mt-5">
           {searchAlumniData.map((student) => (
             <Link to={`/student-profile/${student.userId}`}>

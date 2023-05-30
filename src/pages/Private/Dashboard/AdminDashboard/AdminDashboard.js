@@ -5,10 +5,9 @@ import AlumniVerification from "../../../../components/AdminDashboard/AlumniVeri
 import axios from "../../../../components/axios";
 import { FaPowerOff } from "react-icons/fa";
 import { isAuth } from "../../../../auth/Auth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import AdminHome from "../../../../components/AdminDashboard/Home/AdminHome";
 import { useStateValue } from "../../../../reducer/StateProvider";
-import UnderConstruction from "../../../../components/AdminDashboard/UnderConstruction/UnderConstruction";
 import AdminNoticePublish from "../../../../components/AdminDashboard/NoticePublish/AdminNoticePublish";
 import AdminNoticeView from "../../../../components/AdminDashboard/AdminNoticeView/AdminNoticeView";
 import AdminNoticeVerification from "../../../../components/AdminDashboard/AdminNoticeVerification/AdminNoticeVerification";
@@ -16,12 +15,21 @@ import AdminNoticeVerification from "../../../../components/AdminDashboard/Admin
 const AdminDashboard = () => {
   const [{ userData, userId }, dispatch] = useStateValue();
   const navigate = useNavigate();
-  const [activeMenu, setActiveMenu] = useState(1);
+  const [activeMenu, setActiveMenu] = useState(0);
   const [profImg, setProfImg] = useState(avatarIcon);
-
   const [pending, setPending] = useState([]);
+  const { func } = useParams();
   const token =
     localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
+
+  const menuArray = [
+    "home",
+    "alumni-verification",
+    "notice-verification",
+    "publish-notice",
+    "view-notice",
+  ];
+
   const getData = async () => {
     await axios({
       method: "get",
@@ -47,6 +55,7 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     getData();
+    if (func) setActiveMenu(menuArray.indexOf(func));
   }, []);
 
   useEffect(() => {
@@ -74,10 +83,6 @@ const AdminDashboard = () => {
       name: "Notices View",
       component: <AdminNoticeView />,
     },
-    // {
-    //   name: "Data Modification",
-    //   component: <UnderConstruction />,
-    // },
   ];
 
   return (
@@ -95,7 +100,11 @@ const AdminDashboard = () => {
                   className={`admin-nav-item ${
                     activeMenu === i ? "active" : ""
                   }`}
-                  onClick={(e) => setActiveMenu(i)}
+                  onClick={(e) => {
+                    setActiveMenu(i);
+                    navigate("/admin/" + menuArray[i]);
+                  }}
+                  key={i}
                 >
                   {opt.name}
                 </div>
