@@ -8,7 +8,12 @@ import axios from "../../../components/axios";
 import AnimatedInputField from "../../../components/AnimatedInputField/AnimatedInputField";
 import { MutliDropdown } from "../../../components/CustomDropdown/CustomDropdown";
 import { useNavigate } from "react-router-dom";
-import { deleteObject, ref } from "firebase/storage";
+import {
+  deleteObject,
+  getDownloadURL,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
 import storage from "../../../firebase";
 
 function CreateBlog() {
@@ -129,6 +134,25 @@ function CreateBlog() {
     setBlogDetails({ ...blogDetails, domain: areas });
   };
 
+  const handleUpload = (file, callback) => {
+    const fileToUpload = file;
+    const fileName = "sample";
+    const storageRef = ref(storage, `/blogs/${fileName}`);
+    const uploadTask = uploadBytesResumable(storageRef, fileToUpload);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {},
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+          callback(url);
+        });
+      }
+    );
+  };
+
   useEffect(() => {
     if (
       localStorage.getItem("userType") !== "alumni" &&
@@ -232,15 +256,9 @@ function CreateBlog() {
 
                   var reader = new FileReader();
                   reader.onload = function () {
-                    var id = "blobid" + new Date().getTime();
-                    var blobCache =
-                      window.tinymce.activeEditor.editorUpload.blobCache;
-                    var base64 = reader.result.split(",")[1];
-                    var blobInfo = blobCache.create(id, file, base64);
-                    blobCache.add(blobInfo);
-
-                    /* call the callback and populate the Title field with the file name */
-                    cb(blobInfo.blobUri(), { title: file.name });
+                    handleUpload(file, (url) => {
+                      cb(url, { title: file.name });
+                    });
                   };
                   reader.readAsDataURL(file);
                 };

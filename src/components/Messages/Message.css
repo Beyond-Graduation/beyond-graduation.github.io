@@ -8,8 +8,23 @@
   width: 60%;
   margin: 15px;
   margin-left: auto;
-  flex-direction: row-reverse;
   margin-bottom: 30px;
+}
+
+.message-cnt-own > div {
+  flex-direction: row-reverse;
+}
+
+.message-cnt-own .sent-time {
+  text-align: right;
+  margin-right: 6px;
+}
+
+.sent-time {
+  margin-top: 6px;
+  font-size: 14px;
+  margin-left: 4px;
+  color: rgb(60, 57, 57);
 }
 
 .msg-content {
