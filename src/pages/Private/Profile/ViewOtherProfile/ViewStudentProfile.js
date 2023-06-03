@@ -25,7 +25,7 @@ function ViewStudentProfile() {
       data: { senderId: currUser, receiverId: userId },
     })
       .then((res) => {
-        console.log(res.data._id);
+        //console.log(res.data._id);
         navigate(`/chats/${res.data._id}`);
       })
       .catch((err) => {

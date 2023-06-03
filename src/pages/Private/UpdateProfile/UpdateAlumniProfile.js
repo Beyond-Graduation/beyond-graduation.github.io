@@ -145,10 +145,10 @@ function UpdateAlumniProfile({ data }) {
       var storageRef = ref(storage, formDetails.profilePicPath);
       deleteObject(storageRef)
         .then((res) => {
-          console.log(res);
+          //console.log(res);
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
           toast.error("Something went wrong !!!");
         });
     }
@@ -182,10 +182,10 @@ function UpdateAlumniProfile({ data }) {
       var storageRef = ref(storage, formDetails.resume);
       deleteObject(storageRef)
         .then((res) => {
-          console.log(res);
+          //console.log(res);
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
           toast.error("Something went wrong !!!");
         });
     }

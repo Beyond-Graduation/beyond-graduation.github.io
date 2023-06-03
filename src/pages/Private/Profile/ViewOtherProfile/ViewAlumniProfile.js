@@ -30,7 +30,7 @@ function ViewStudentProfile() {
       data: { senderId: currUser, receiverId: userId },
     })
       .then((res) => {
-        console.log(res.data._id);
+        //console.log(res.data._id);
         navigate(`/chats/${res.data._id}`);
       })
       .catch((err) => {
@@ -55,7 +55,7 @@ function ViewStudentProfile() {
         });
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
         toast.error("Something went wrong!!");
       });
   };
@@ -73,7 +73,7 @@ function ViewStudentProfile() {
           setData(res.data);
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
           toast.error("Something went wrong!!");
         });
     };

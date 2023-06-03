@@ -4,6 +4,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { toast } from "react-toastify";
 import axios from "../../axios";
 import "./AlumniVerification.css";
+import { Image } from "react-bootstrap";
 
 function AlumniVerification() {
   const token =
@@ -28,7 +29,7 @@ function AlumniVerification() {
   };
 
   const approveAlumni = async (userId) => {
-    // console.log(userId);
+    //console.log(userId);
     await axios({
       method: "post",
       url: "admin/alumni_approve",
@@ -40,7 +41,7 @@ function AlumniVerification() {
         approved: 1,
       },
     }).then((res) => {
-      console.log(res);
+      //console.log(res);
       if (res.status === 200) {
         toast.success("Alumni Approved");
         getData();
@@ -66,7 +67,7 @@ function AlumniVerification() {
           remarks: msg,
         },
       }).then((res) => {
-        console.log(res);
+        //console.log(res);
         if (res.status === 200) {
           toast.success("Alumni Rejected");
           ref.current.value = "";
@@ -110,11 +111,14 @@ function AlumniVerification() {
         {pending.length !== 0 ? (
           pending.map((alu) => (
             <div className="pending-card">
-              <div className="p-card-top">
-                <div className="p-name">
-                  {alu.firstName} {alu.lastName}
+              <div className="p-card-top d-flex align-items-center">
+                <Image src={alu.profilePicPath} className="p-image" />
+                <div className="ms-3">
+                  <div className="p-name">
+                    {alu.firstName} {alu.lastName}
+                  </div>
+                  <div className="p-department">{alu.department}</div>
                 </div>
-                <div className="p-department">{alu.department}</div>
               </div>
               <div className="d-flex align-items-center justify-content-between">
                 <div>

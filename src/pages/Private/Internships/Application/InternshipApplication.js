@@ -8,8 +8,10 @@ import { FaTrash } from "react-icons/fa";
 import "./InternshipApplication.css";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
+import { useStateValue } from "../../../../reducer/StateProvider";
 
 function InternshipApplication() {
+  const [{ userData, userId }, dispatch] = useStateValue();
   const navigate = useNavigate();
   const { internshipId } = useParams();
   const [formDetails, setFormDetails] = useState({
@@ -22,15 +24,7 @@ function InternshipApplication() {
     qnas: [],
     yearofStudy: "",
   });
-  const [questions, setQuestions] = useState([
-    { question: "Why should you be selected for this role ?", answer: "" },
-    {
-      question:
-        "Are you available for the time duration applicable to this role ?",
-      answer: "",
-    },
-    { question: "t work experience. Share links (if any) ?", answer: "" },
-  ]);
+  const [questions, setQuestions] = useState([]);
 
   const handleChange = (e) => {
     setFormDetails({ ...formDetails, [e.target.name]: e.target.value });
@@ -70,6 +64,9 @@ function InternshipApplication() {
           alumniId: res.data.alumniId,
           applicationId: applId,
           internshipId: internshipId,
+          email: userData.email ? userData.email : "",
+          cgpa: userData.cgpa ? userData.cgpa : "",
+          phone: userData.phone ? userData.phone : "",
         });
         setQuestions(tempQues);
       })
@@ -102,9 +99,9 @@ function InternshipApplication() {
       });
   };
 
-  useEffect(() => {
-    console.log(formDetails);
-  }, [formDetails]);
+  // useEffect(() => {
+  //   //console.log(formDetails);
+  // }, [formDetails]);
 
   return (
     <div className="main-intro">
@@ -119,11 +116,13 @@ function InternshipApplication() {
                   <AnimatedInputField
                     name="email"
                     title="Email"
+                    defaultValue={formDetails.email}
                     onChange={handleChange}
                   />
                   <AnimatedInputField
                     name="phone"
                     title="Phone"
+                    defaultValue={formDetails.phone}
                     onChange={handleChange}
                   />
                 </div>
@@ -141,6 +140,7 @@ function InternshipApplication() {
                 <AnimatedInputField
                   name="cgpa"
                   title="CGPA"
+                  defaultValue={formDetails.cgpa}
                   onChange={handleChange}
                 />
                 <AnimatedInputField
@@ -229,7 +229,7 @@ function InternshipApplication() {
                         placeholder="Answer"
                         rows={4}
                         cols={10}
-                        //className="mt-5"
+                        key={index}
                         onChange={(e) => handleQuestionAnswerChange(e, index)}
                       />
                     </div>

@@ -155,7 +155,7 @@ function AlumniProfile({ data }) {
                           {proj.description}
                         </div>
                         <a
-                          href={proj.link}
+                          href={"https://" + proj.link}
                           target="_blank"
                           className="proj-contribution"
                           rel="noreferrer"
@@ -174,10 +174,10 @@ function AlumniProfile({ data }) {
                   <span className="link-head">Github : </span>
                   {data.github ? (
                     <a
-                      href={data.github}
+                      href={"https://" + data.github}
                       target="_blank"
                       className="link"
-                      rel="noreferrer"
+                      rel="noopener noreferrer"
                     >
                       {data.github}
                     </a>
@@ -189,7 +189,7 @@ function AlumniProfile({ data }) {
                   <span className="link-head">LinkedIn : </span>
                   {data.linkedin ? (
                     <a
-                      href={data.linkedin}
+                      href={"https://" + data.linkedin}
                       target="_blank"
                       className="link"
                       rel="noreferrer"
@@ -204,7 +204,7 @@ function AlumniProfile({ data }) {
                   <span className="link-head">Other Links : </span>
                   {data.otherLinks ? (
                     <a
-                      href={data.otherLinks}
+                      href={"https://" + data.otherLinks}
                       target="_blank"
                       className="link"
                       rel="noreferrer"

@@ -36,10 +36,10 @@ function PublishNotice() {
       var storageRef = ref(storage, noticeDetails.attachmentPath);
       deleteObject(storageRef)
         .then((res) => {
-          console.log(res);
+          //console.log(res);
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
           toast.error("Something went wrong !!!");
         });
     }
@@ -101,7 +101,7 @@ function PublishNotice() {
   }, [userData]);
 
   useEffect(() => {
-    console.log(noticeDetails);
+    //console.log(noticeDetails);
   }, [noticeDetails]);
 
   useEffect(() => {

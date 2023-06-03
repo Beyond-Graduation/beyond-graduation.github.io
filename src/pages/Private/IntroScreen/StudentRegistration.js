@@ -149,10 +149,10 @@ function StudentRegistration({ state }) {
       var storageRef = ref(storage, formDetails.profilePicPath);
       deleteObject(storageRef)
         .then((res) => {
-          console.log(res);
+          //console.log(res);
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
           toast.error("Something went wrong !!!");
         });
     }
@@ -164,10 +164,10 @@ function StudentRegistration({ state }) {
       var storageRef = ref(storage, formDetails.resume);
       deleteObject(storageRef)
         .then((res) => {
-          console.log(res);
+          //console.log(res);
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
           toast.error("Something went wrong !!!");
         });
     }
@@ -236,14 +236,14 @@ function StudentRegistration({ state }) {
   //   var reader = new FileReader();
   //   reader.readAsDataURL(file);
   //   reader.onload = () => {
-  //     console.log(typeof reader.result);
+  //     //console.log(typeof reader.result);
   //   };
   //   reader.onerror = (error) => {
-  //     console.log("Error: ", error);
+  //     //console.log("Error: ", error);
   //   };
 
   //   setTimeout(() => {
-  //     console.log("object");
+  //     //console.log("object");
   //     saveAs(reader.result, "sampele.png");
   //   }, 5000);
   // };

@@ -33,7 +33,7 @@ function ResetPassword() {
   };
 
   const handleResetPassword = async () => {
-    console.log(credentials);
+    //console.log(credentials);
     if (credentials.password !== credentials.confirmPassword) {
       toast.error("Passwords do not match");
     } else {

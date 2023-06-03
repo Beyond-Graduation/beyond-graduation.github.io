@@ -47,7 +47,7 @@ function Chats() {
         setNewMessage("");
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   };
 
@@ -60,7 +60,7 @@ function Chats() {
         setConversations(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
   };
 
@@ -106,7 +106,7 @@ function Chats() {
           setMessages(res.data);
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
         });
     };
 

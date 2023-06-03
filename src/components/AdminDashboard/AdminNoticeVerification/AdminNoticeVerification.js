@@ -18,7 +18,7 @@ function AdminNoticeVerification() {
       },
     }).then((res) => {
       if (res.status === 200) {
-        console.log(res.data);
+        //console.log(res.data);
         setPendingNotices(res.data);
       }
     });
@@ -36,7 +36,7 @@ function AdminNoticeVerification() {
         approved: approve,
       },
     }).then((res) => {
-      console.log(res);
+      //console.log(res);
       if (res.status === 200) {
         approve
           ? toast.success("Notice Approved")

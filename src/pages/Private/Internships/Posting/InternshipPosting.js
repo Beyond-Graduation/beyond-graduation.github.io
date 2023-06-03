@@ -9,12 +9,21 @@ import { useRef } from "react";
 import axios from "../../../../components/axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useStateValue } from "../../../../reducer/StateProvider";
 
 function InternshipPosting() {
+  const [{ userData, userId }, dispatch] = useStateValue();
   const editorRef = useRef();
   const navigate = useNavigate();
   const [questionCount, setQuestionCount] = useState(0);
-  const [question, setQuestion] = useState([]);
+  const [question, setQuestion] = useState([
+    { question: "Why should you be selected for this role ?" },
+    {
+      question:
+        "Are you available for the time duration applicable to this role ?",
+    },
+    { question: "Past work experience. Share links (if any) ?" },
+  ]);
   const [formDetails, setFormDetails] = useState({
     internshipId: "",
     email: "",
@@ -24,7 +33,7 @@ function InternshipPosting() {
     stipend: "",
     duration: "",
     workingType: "",
-    qnas: [],
+    qnas: question,
   });
 
   const handleBlogContentChange = (e) => {
@@ -45,8 +54,19 @@ function InternshipPosting() {
     for (let i = 0; i < 5; i++) {
       oppoId += possible.charAt(Math.floor(Math.random() * possible.length));
     }
-    setFormDetails({ ...formDetails, internshipId: oppoId });
+    setFormDetails({
+      ...formDetails,
+      internshipId: oppoId,
+      email: userData.email ? userData.email : "",
+    });
   }, []);
+
+  useEffect(() => {
+    setFormDetails({
+      ...formDetails,
+      email: userData.email ? userData.email : "",
+    });
+  }, [userData]);
 
   const addNewQuestion = () => {
     setQuestionCount(questionCount + 1);
@@ -60,7 +80,7 @@ function InternshipPosting() {
   };
   const removeQuestion = (index) => {
     const newQuestion = [...question];
-    newQuestion.splice(index, 1);
+    newQuestion.splice(index + 3, 1);
     setQuestion(newQuestion);
     setQuestionCount(questionCount - 1);
     setFormDetails({ ...formDetails, qnas: newQuestion });
@@ -68,7 +88,7 @@ function InternshipPosting() {
 
   const onQuestionChange = (e, index) => {
     const newQuestion = [...question];
-    newQuestion[index].question = e.target.value;
+    newQuestion[index + 3].question = e.target.value;
     setQuestion(newQuestion);
     setFormDetails({ ...formDetails, qnas: newQuestion });
   };
@@ -86,22 +106,13 @@ function InternshipPosting() {
     }
   };
 
-  // const PerkOptions = [
-  //   { value: "lor", label: "Letter of Recommendation" },
-  //   { value: "cert", label: "Certificate" },
-  // ];
-
-  // const handlePerkChange = (e) => {
-  //   const perks = [];
-  //   e.forEach((item) => {
-  //     perks.push(item.label);
-  //   });
-  //   //setFormDetails({ ...formDetails, areasOfInterest: areas });
-  // };
-
   useEffect(() => {
-    console.log(formDetails);
-  }, [formDetails]);
+    //console.log(question);
+  }, [question]);
+
+  // useEffect(() => {
+  //   //console.log(formDetails);
+  // }, [formDetails]);
 
   const onInternshipPost = async () => {
     let token =
@@ -136,6 +147,7 @@ function InternshipPosting() {
                   <AnimatedInputField
                     name="email"
                     title="Email"
+                    defaultValue={formDetails.email}
                     onChange={handleChange}
                   />
                 </div>
@@ -262,7 +274,8 @@ function InternshipPosting() {
                     <AnimatedInputField
                       as="textarea"
                       rows={3}
-                      value={question[i].question}
+                      value={question[i + 3].question}
+                      key={i}
                       onChange={(e) => onQuestionChange(e, i)}
                     />
                   </div>

@@ -7,7 +7,7 @@ function Message({ message, own, curr, other, colors }) {
   const DateConverter = (originalDate) => {
     const date = new Date(originalDate);
 
-    console.log(originalDate);
+    //console.log(originalDate);
     const day = date.getDate();
     const month = date.getMonth() + 1; // Months are zero-based
     const hours = date.getHours();

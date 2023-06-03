@@ -38,10 +38,10 @@ function AdminNoticePublish() {
       var storageRef = ref(storage, noticeDetails.attachmentPath);
       deleteObject(storageRef)
         .then((res) => {
-          console.log(res);
+          //console.log(res);
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
           toast.error("Something went wrong !!!");
         });
     }

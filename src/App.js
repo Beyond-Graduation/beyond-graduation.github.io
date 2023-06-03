@@ -142,7 +142,7 @@ function App() {
         // the other tab should now have it, so we're done with it.
         localStorage.removeItem("sessionStorage"); // <- could do short timeout as well.
       } else if (event.key === "sessionStorage" && !sessionStorage.length) {
-        console.log("sample");
+        //console.log("sample");
         // another tab sent data <- get it
         var data = JSON.parse(event.newValue);
         for (var key in data) {

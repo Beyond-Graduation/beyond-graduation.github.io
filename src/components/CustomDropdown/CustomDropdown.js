@@ -58,7 +58,7 @@ export function MutliDropdown({ title, options, onChange, defaultValue }) {
         noOptionsMessage={() => "Type and add a new option"}
         maxMenuHeight={210}
         onChange={(e) => {
-          // console.log(e);
+          //console.log(e);
           onChange(e);
         }}
         defaultValue={defaultValue}

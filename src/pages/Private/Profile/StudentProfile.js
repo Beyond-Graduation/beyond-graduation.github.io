@@ -10,7 +10,7 @@ function StudentProfile({ data }) {
   const [showResume, setShowResume] = useState(false);
 
   useEffect(() => {
-    console.log(data);
+    //console.log(data);
   }, []);
 
   return (
@@ -66,7 +66,9 @@ function StudentProfile({ data }) {
             </div>
             <div className="prof-address-box d-flex align-items-center">
               <div className="prof-det-head mt-0">Address</div>
-              <div className="prof-address">{data.address ? data.address : "Address not provided"}</div>
+              <div className="prof-address">
+                {data.address ? data.address : "Address not provided"}
+              </div>
             </div>
           </div>
           <div className="p-person-info pb-5 mb-5 border-0">

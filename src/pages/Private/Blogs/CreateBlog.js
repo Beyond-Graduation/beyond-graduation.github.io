@@ -66,10 +66,10 @@ function CreateBlog() {
       var storageRef = ref(storage, blogDetails.imagePath);
       deleteObject(storageRef)
         .then((res) => {
-          console.log(res);
+          //console.log(res);
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
           toast.error("Something went wrong !!!");
         });
     }
@@ -143,7 +143,7 @@ function CreateBlog() {
       "state_changed",
       (snapshot) => {},
       (error) => {
-        console.log(error);
+        //console.log(error);
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((url) => {

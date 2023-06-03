@@ -47,7 +47,7 @@ function Login(props) {
         .then(async (res) => {
           setLoading(false);
           if (res.status === 200) {
-            // console.log(res.data);
+            //console.log(res.data);
             isAuth.login(
               res.data.token,
               res.data.userId,

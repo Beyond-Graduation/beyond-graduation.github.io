@@ -49,7 +49,7 @@ function DashboardCarousel({
 
   // useEffect(() => {
   //   if (cardCount === 4 && type === "blog") {
-  //     console.log(data);
+  //     //console.log(data);
   //   }
   // }, [data]);
 

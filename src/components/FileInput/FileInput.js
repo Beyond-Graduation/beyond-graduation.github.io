@@ -52,7 +52,7 @@ const FileInput = ({
     setSrcImg(URL.createObjectURL(event.target.files[0]));
     if (content !== "blog") setShowCropOverlay(true);
     else onChange(event);
-    console.log(event.target.files[0]);
+    //console.log(event.target.files[0]);
   };
 
   const convertBase64ToFile = function (image) {
@@ -76,8 +76,8 @@ const FileInput = ({
       imageMain.src = srcImg;
       const ctx = canvas.getContext("2d");
 
-      console.log(imageMain.naturalHeight, cropImage.height);
-      console.log(inputRef.current.files[0]);
+      //console.log(imageMain.naturalHeight, cropImage.height);
+      //console.log(inputRef.current.files[0]);
 
       if (!ctx) {
         throw new Error("No 2d context");
@@ -130,7 +130,7 @@ const FileInput = ({
       }
       setShowCropOverlay(false);
     } catch (e) {
-      console.log(e);
+      //console.log(e);
     }
   };
 
@@ -158,7 +158,7 @@ const FileInput = ({
         setProgress(uploaded);
       },
       (error) => {
-        console.log(error);
+        //console.log(error);
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((url) => {

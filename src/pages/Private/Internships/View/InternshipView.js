@@ -83,11 +83,15 @@ function InternshipView() {
                         {internship.workingType}
                       </div>
                       {userType !== "alumni" && (
-                        <Link
-                          to={`/internships/apply/${internship.internshipId}`}
+                        <div
+                          className="apply-button"
+                          onClick={() => {
+                            setCurrent(internship);
+                            handleShow();
+                          }}
                         >
-                          <div className="apply-button"> Apply </div>
-                        </Link>
+                          Apply
+                        </div>
                       )}
                     </div>
                   </div>
@@ -113,15 +117,17 @@ function InternshipView() {
         <Modal.Body>
           {current.description && parse(current.description)}
         </Modal.Body>
-        <Modal.Footer>
-          <Button
-            onClick={() =>
-              navigate(`/internships/apply/${current.internshipId}`)
-            }
-          >
-            Apply
-          </Button>
-        </Modal.Footer>
+        {userType !== "alumni" && (
+          <Modal.Footer>
+            <Button
+              onClick={() =>
+                navigate(`/internships/apply/${current.internshipId}`)
+              }
+            >
+              Apply
+            </Button>
+          </Modal.Footer>
+        )}
       </Modal>
     </div>
   );

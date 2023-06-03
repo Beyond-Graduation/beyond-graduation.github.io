@@ -83,7 +83,7 @@ function SingleBlog() {
           setPostCommentEnabled(true);
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
           toast.error("Something went wrong!!");
         });
     }
@@ -104,7 +104,7 @@ function SingleBlog() {
         setChildCommentOpen(Array(res.data.length).fill(0));
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
         toast.error("Something went wrong!!");
       });
   };
@@ -136,7 +136,7 @@ function SingleBlog() {
         setChildComments(arr);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
         toast.error("Something went wrong!!");
       });
   };
@@ -162,7 +162,7 @@ function SingleBlog() {
     })
       .then((res) => {})
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
         toast.error("Something went wrong!!");
       });
   };
@@ -182,7 +182,7 @@ function SingleBlog() {
         setIsBookmarked(!isBookmarked);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
         toast.error("Something went wrong!!");
       });
   };
@@ -204,7 +204,7 @@ function SingleBlog() {
           setLikeCount(res.data.likes);
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
           toast.error("Something went wrong!!");
         });
     };
@@ -221,7 +221,7 @@ function SingleBlog() {
           setRecommendedBlogs(res.data.relatedArticles);
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
           toast.error("Something went wrong!!");
         });
     };
