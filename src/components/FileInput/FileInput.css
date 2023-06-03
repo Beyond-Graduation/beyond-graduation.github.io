@@ -79,12 +79,8 @@
 
 .crop-cnt {
   background-color: rgba(218, 215, 205, 1);
-  max-height: 75%;
-  max-width: 60%;
-  /* min-height: 60%;
-  min-width: 50%; */
-  height: fit-content;
-  width: fit-content;
+  height: 85% !important;
+  width: 60% !important;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -100,11 +96,21 @@
   margin-bottom: 10px;
 }
 
+.ReactCrop {
+  height: 80%;
+  aspect-ratio: 1;
+}
+
+.ReactCrop__child-wrapper {
+  height: 100% !important;
+  width: 100% !important;
+}
+
 .crop-overlay .image-crop {
   border-radius: 0;
-  height: fit-content;
-  width: fit-content;
-  
+  height: 100% !important;
+  width: 100% !important;
+  object-fit: contain;
 }
 
 .crop-cnt button {

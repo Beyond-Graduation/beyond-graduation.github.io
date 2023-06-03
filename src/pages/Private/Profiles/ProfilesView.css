@@ -65,7 +65,13 @@
 .filter-inner .department {
   max-width: 400px;
   width: 50%;
-  min-width: 250px;
+  min-width: 350px;
+}
+
+.filter-inner .department:nth-child(2) {
+  max-width: unset;
+  width: fit-content;
+  height: fit-content;
 }
 
 .filter-dept__control,
@@ -90,15 +96,23 @@
 }
 
 /* Chrome, Safari, Edge, Opera */
-.filter-inner .grad::-webkit-outer-spin-button,
+/* .filter-inner .grad::-webkit-outer-spin-button,
 .filter-inner .grad::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
-}
+} */
 
 /* Firefox */
-.filter-inner .grad[type="number"] {
+/* .filter-inner .grad[type="number"] {
   -moz-appearance: textfield;
+} */
+
+.filter-dept__option--is-selected {
+  background-color: rgba(88, 129, 87, 1)!important;
+}
+
+.filter-dept__option--is-focused {
+  background-color: rgba(88, 129, 87, 0.3);
 }
 
 .apply-filter {

@@ -8,9 +8,14 @@ import Select from "react-select";
 import { Link } from "react-router-dom";
 
 function StudentProfilesView() {
+  const token =
+    localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
   const [alumniData, setAlumniData] = useState([]);
   const [searchAlumniData, setSearchAlumniData] = useState([]);
   const searchRef = useRef();
+  const departmentRef = useRef();
+  const interestRef = useRef();
+  const sortRef = useRef();
   const [deptList, setDeptList] = useState([
     { value: "", label: "Department" },
   ]);
@@ -18,6 +23,7 @@ function StudentProfilesView() {
   const [filterData, setFilterData] = useState({
     department: "",
     areasOfInterest: [],
+    sort: "",
   });
 
   const handleSearch = () => {
@@ -44,23 +50,37 @@ function StudentProfilesView() {
   };
 
   const applyFilter = async () => {
-    const token =
-      localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
-    axios({
-      method: "get",
-      url: `student/student_list?department=${filterData.department}`,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }).then((res) => {
-      setAlumniData(res.data);
-      setSearchAlumniData(res.data);
-    });
+    //remove null values and empty string and empty array from filterData
+    var filter = Object.fromEntries(
+      Object.entries(filterData).filter(
+        ([key, value]) => value !== null && value !== "" && value !== 0
+      )
+    );
+    if (filter.areasOfInterest.length)
+      filter.areasOfInterest = filter.areasOfInterest.join(",");
+    else {
+      const { areasOfInterest, ...remfilter } = filter;
+      filter = remfilter;
+    }
+
+    if (Object.keys(filter).length === 0) {
+      fetchData();
+    } else {
+      await axios({
+        method: "get",
+        url: "student/student_list",
+        params: filter,
+        headers: {
+          Authorization: `bearer ${token}`,
+        },
+      }).then((res) => {
+        setAlumniData(res.data);
+        setSearchAlumniData(res.data);
+      });
+    }
   };
 
   const fetchData = async () => {
-    const token =
-      localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
     axios({
       method: "get",
       url: `student/student_list`,
@@ -81,25 +101,48 @@ function StudentProfilesView() {
           return self.findIndex((t) => t.label === item.label) === index;
         });
       setDeptList(deptList);
-
-      const interestList = res.data
-        .map((data) => {
-          return data.areasOfInterest.map((interest) => {
-            return {
-              value: interest,
-              label: interest.toUpperCase(),
-            };
-          });
-        })
-        .flat()
-        .filter((item, index, self) => {
-          return self.findIndex((t) => t.label === item.label) === index;
-        });
-      setInterestList(interestList);
     });
   };
 
+  const handleClearFilter = () => {
+    const clearData = {
+      department: "",
+      areasOfInterest: [],
+      sort: "",
+    };
+    interestRef.current.clearValue();
+    departmentRef.current.clearValue();
+    sortRef.current.clearValue();
+    setFilterData(clearData);
+    fetchData();
+  };
+
+  const getAreasofInterest = async () => {
+    axios({
+      method: "get",
+      url: `user/get_interest_list`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((res) => {
+      const areasList = res.data.areasOfInterest.map((areas) => ({
+        value: areas,
+        label: areas,
+      }));
+      setInterestList(areasList);
+    });
+  };
+
+  const sortData = [
+    { label: "Default", value: "" },
+    { label: "Ascending By Name", value: "a_to_z" },
+    { label: "Descending By Name", value: "z_to_a" },
+    { label: "Latest", value: "latest" },
+    { label: "Oldest", value: "oldest" },
+  ];
+
   useEffect(() => {
+    getAreasofInterest();
     fetchData();
   }, []);
 
@@ -108,53 +151,72 @@ function StudentProfilesView() {
       <div className="profiles-view-cnt">
         <h1 className="profiles-view-head">Student Profiles</h1>
         <div className="filter-container mt-5">
-          <div className="filter-inner mb-4 d-flex">
-            <Select
-              name="department"
-              className="department me-3"
-              classNamePrefix="filter-dept"
-              placeholder="Department"
-              isClearable={true}
-              options={deptList}
-              onChange={(e) =>
-                e
-                  ? handleFilterChange("department", e.value)
-                  : handleFilterChange("department", "")
-              }
-            />
-            {/* <Select
-              isMulti
-              name="areasOfInterest"
-              className="department me-3"
-              classNamePrefix="filter-dept"
-              placeholder="Domain"
-              options={interestList}
-              onChange={(e) => handleFilterChange("areasOfInterest", e)}
-            /> */}
-          </div>
-          <div className="d-flex align-items-center justify-content-between">
-            <div className="search-cnt d-flex align-items-center">
-              <input
-                type="text"
-                placeholder="Search"
-                ref={searchRef}
-                onKeyPress={(e) => {
-                  if (e.key === "Enter") handleSearch();
-                }}
-              />
-              <FaSearch className="search-ic" onClick={handleSearch} />
-            </div>
-            <div className="d-flex">
-              <div className="apply-filter" onClick={applyFilter}>
-                <FaFilter className="me-1" />
-                Apply Filters
-              </div>
-              <div className="apply-filter ms-3" onClick={applyFilter}>
-                <FaBan className="me-2" onClick={fetchData} />
-                Clear Filters
+          <form id="filterForm">
+            <div className="filter-inner mb-4 align-items-center">
+              <div className="d-sm-flex d-block align-items-center mb-4">
+                <Select
+                  name="department"
+                  className="department me-3 mt-2"
+                  classNamePrefix="filter-dept"
+                  placeholder="Department"
+                  isClearable={true}
+                  ref={departmentRef}
+                  options={deptList}
+                  onChange={(e) =>
+                    e
+                      ? handleFilterChange("department", e.value)
+                      : handleFilterChange("department", "")
+                  }
+                />
+                <Select
+                  isMulti
+                  name="areasOfInterest"
+                  className="department me-3 mt-2"
+                  classNamePrefix="filter-dept"
+                  placeholder="Domain"
+                  ref={interestRef}
+                  options={interestList}
+                  onChange={(e) => handleFilterChange("areasOfInterest", e)}
+                />
+                <Select
+                  name="sort"
+                  className="department me-3 mt-2"
+                  classNamePrefix="filter-dept"
+                  placeholder="Sort By"
+                  isClearable={true}
+                  ref={sortRef}
+                  options={sortData}
+                  onChange={(e) =>
+                    e
+                      ? handleFilterChange("sort", e.value)
+                      : handleFilterChange("sort", "")
+                  }
+                />
               </div>
             </div>
-          </div>
+
+            <div className="d-md-flex flex-row-reverse d-block align-items-center justify-content-end">
+              <div className="d-flex">
+                <div className="apply-filter" onClick={applyFilter}>
+                  <FaFilter className="me-1" />
+                  Apply Filters
+                </div>
+                <div className="apply-filter ms-3" onClick={handleClearFilter}>
+                  <FaBan className="me-2" />
+                  Clear Filters
+                </div>
+              </div>
+              <div className="search-cnt d-flex align-items-center me-3">
+                <input
+                  type="text"
+                  placeholder="Search by Name"
+                  ref={searchRef}
+                  onChange={handleSearch}
+                />
+                <FaSearch className="search-ic" onClick={handleSearch} />
+              </div>
+            </div>
+          </form>
         </div>
         <div className="profiles-view-list mt-5">
           {searchAlumniData.map((student) => (

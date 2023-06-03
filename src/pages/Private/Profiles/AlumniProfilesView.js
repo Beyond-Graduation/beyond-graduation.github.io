@@ -8,9 +8,14 @@ import Select from "react-select";
 import { Link } from "react-router-dom";
 
 function AlumniProfilesView() {
+  const token =
+    localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
   const [alumniData, setAlumniData] = useState([]);
   const [searchAlumniData, setSearchAlumniData] = useState([]);
   const searchRef = useRef();
+  const departmentRef = useRef();
+  const interestRef = useRef();
+  const sortRef = useRef();
   const [deptList, setDeptList] = useState([
     { value: "", label: "Department" },
   ]);
@@ -18,8 +23,9 @@ function AlumniProfilesView() {
   const [filterData, setFilterData] = useState({
     department: "",
     areasOfInterest: [],
-    before: null,
-    after: null,
+    yearBefore: 0,
+    yearAfter: 0,
+    sort: "",
   });
 
   const handleSearch = () => {
@@ -47,38 +53,36 @@ function AlumniProfilesView() {
 
   const applyFilter = async () => {
     //remove null values and empty string and empty array from filterData
-    const filterDataWithoutNull = Object.fromEntries(
+    var filter = Object.fromEntries(
       Object.entries(filterData).filter(
-        ([key, value]) => value !== null && value !== ""
+        ([key, value]) => value !== null && value !== "" && value !== 0
       )
     );
-    const filterDataWithoutEmptyArray = Object.fromEntries(
-      Object.entries(filterDataWithoutNull).filter(
-        ([key, value]) => value.length > 0
-      )
-    );
-    if (Object.keys(filterDataWithoutEmptyArray).length === 0) {
+    if (filter.areasOfInterest.length)
+      filter.areasOfInterest = filter.areasOfInterest.join(",");
+    else {
+      const { areasOfInterest, ...remfilter } = filter;
+      filter = remfilter;
+    }
+
+    if (Object.keys(filter).length === 0) {
       fetchData();
     } else {
-      const token =
-        localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
-
       await axios({
-        method: "post",
-        url: "alumni/filter",
-        data: filterDataWithoutEmptyArray,
+        method: "get",
+        url: "alumni/alumni_list",
+        params: filter,
         headers: {
           Authorization: `bearer ${token}`,
         },
       }).then((res) => {
+        setAlumniData(res.data);
         setSearchAlumniData(res.data);
       });
     }
   };
 
   const fetchData = async () => {
-    const token =
-      localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
     axios({
       method: "get",
       url: `alumni/alumni_list`,
@@ -99,36 +103,57 @@ function AlumniProfilesView() {
           return self.findIndex((t) => t.label === item.label) === index;
         });
       setDeptList(deptList);
-
-      const interestList = res.data
-        .map((data) => {
-          return data.areasOfInterest.map((interest) => {
-            return {
-              value: interest,
-              label: interest.toUpperCase(),
-            };
-          });
-        })
-        .flat()
-        .filter((item, index, self) => {
-          return self.findIndex((t) => t.label === item.label) === index;
-        });
-      setInterestList(interestList);
     });
   };
 
   const handleClearFilter = () => {
-    setFilterData({
+    const clearData = {
       department: "",
       areasOfInterest: [],
-      before: null,
-      after: null,
-    });
-    setSearchAlumniData(alumniData);
+      yearBefore: 0,
+      yearAfter: 0,
+      sort: "",
+    };
+    interestRef.current.clearValue();
+    departmentRef.current.clearValue();
+    sortRef.current.clearValue();
+    document.getElementById("filterForm").reset();
+    setFilterData(clearData);
+    fetchData();
   };
+
+  const getAreasofInterest = async () => {
+    axios({
+      method: "get",
+      url: `user/get_interest_list`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((res) => {
+      const areasList = res.data.areasOfInterest.map((areas) => ({
+        value: areas,
+        label: areas,
+      }));
+      setInterestList(areasList);
+    });
+  };
+
+  const filterChange = (e) => {
+    const profileFilter = ["", "a_to_z", "z_to_a", "latest", "oldest"];
+    setFilterData({ ...filterData, sort: profileFilter[e] });
+  };
+
+  const sortData = [
+    { label: "Default", value: "" },
+    { label: "Ascending By Name", value: "a_to_z" },
+    { label: "Descending By Name", value: "z_to_a" },
+    { label: "Latest", value: "latest" },
+    { label: "Oldest", value: "oldest" },
+  ];
 
   useEffect(() => {
     fetchData();
+    getAreasofInterest();
   }, []);
 
   return (
@@ -136,80 +161,107 @@ function AlumniProfilesView() {
       <div className="profiles-view-cnt">
         <h1 className="profiles-view-head">Alumni Profiles</h1>
         <div className="filter-container mt-4">
-          <div className="filter-inner mb-4 align-items-center">
-            <div className="d-sm-flex d-block align-items-center mb-4">
-              <Select
-                name="department"
-                className="department me-3 mt-2"
-                classNamePrefix="filter-dept"
-                placeholder="Department"
-                isClearable={true}
-                options={deptList}
-                onChange={(e) =>
-                  e
-                    ? handleFilterChange("department", e.value)
-                    : handleFilterChange("department", "")
-                }
-              />
-              <Select
-                isMulti
-                name="areasOfInterest"
-                className="department me-3 mt-2"
-                classNamePrefix="filter-dept"
-                placeholder="Domain"
-                options={interestList}
-                onChange={(e) => handleFilterChange("areasOfInterest", e)}
-              />
+          <form id="filterForm">
+            <div className="filter-inner mb-4 align-items-center">
+              <div className="d-sm-flex d-block align-items-center mb-4">
+                <Select
+                  name="department"
+                  className="department me-3 mt-2"
+                  classNamePrefix="filter-dept"
+                  placeholder="Department"
+                  isClearable={true}
+                  ref={departmentRef}
+                  options={deptList}
+                  onChange={(e) =>
+                    e
+                      ? handleFilterChange("department", e.value)
+                      : handleFilterChange("department", "")
+                  }
+                />
+                <Select
+                  isMulti
+                  name="areasOfInterest"
+                  className="department me-3 mt-2"
+                  classNamePrefix="filter-dept"
+                  placeholder="Domain"
+                  ref={interestRef}
+                  options={interestList}
+                  onChange={(e) => handleFilterChange("areasOfInterest", e)}
+                />
+              </div>
+              <div className="d-sm-flex d-block align-items-center ">
+                <Select
+                  name="sort"
+                  className="department me-3 mt-2"
+                  classNamePrefix="filter-dept"
+                  placeholder="Sort By"
+                  isClearable={true}
+                  ref={sortRef}
+                  options={sortData}
+                  onChange={(e) =>
+                    e
+                      ? handleFilterChange("sort", e.value)
+                      : handleFilterChange("sort", "")
+                  }
+                />
+                <div className="grad-year-label">Graduation Year:</div>
+                <div className="d-flex">
+                  <input
+                    type="number"
+                    name="yearAfter"
+                    min={1943}
+                    max={2100}
+                    maxLength={4}
+                    className="me-3 grad"
+                    placeholder="After"
+                    onChange={(e) =>
+                      handleFilterChange(
+                        e.target.name,
+                        parseInt(e.target.value)
+                      )
+                    }
+                  />
+                  <input
+                    type="number"
+                    name="yearBefore"
+                    min={1943}
+                    max={2100}
+                    maxLength={4}
+                    className="grad"
+                    placeholder="Before"
+                    onChange={(e) => {
+                      handleFilterChange(
+                        e.target.name,
+                        parseInt(e.target.value)
+                      );
+                    }}
+                  />
+                </div>
+              </div>
             </div>
-            <div className="d-sm-flex d-block align-items-center ">
-              <div className="grad-year-label">Graduation Year:</div>
+
+            <div className="d-md-flex flex-row-reverse d-block align-items-center justify-content-end">
               <div className="d-flex">
+                <div className="apply-filter" onClick={applyFilter}>
+                  <FaFilter className="me-1" />
+                  Apply Filters
+                </div>
+                <div className="apply-filter ms-3" onClick={handleClearFilter}>
+                  <FaBan className="me-2" />
+                  Clear Filters
+                </div>
+              </div>
+              <div className="search-cnt d-flex align-items-center me-3">
                 <input
-                  type="number"
-                  name="after"
-                  min={1943}
-                  maxLength={4}
-                  className="me-3 grad"
-                  placeholder="After"
-                  onChange={(e) =>
-                    handleFilterChange(e.target.name, e.target.value)
-                  }
+                  type="text"
+                  placeholder="Search by Name"
+                  ref={searchRef}
+                  onChange={handleSearch}
                 />
-                <input
-                  type="number"
-                  name="before"
-                  min={1943}
-                  maxLength={4}
-                  className="grad"
-                  placeholder="Before"
-                  onChange={(e) =>
-                    handleFilterChange(e.target.name, e.target.value)
-                  }
-                />
+                <FaSearch className="search-ic" onClick={handleSearch} />
               </div>
             </div>
-          </div>
-          <div className="d-md-flex flex-row-reverse d-block align-items-center justify-content-end">
-            <div className="d-flex">
-              <div className="apply-filter" onClick={applyFilter}>
-                <FaFilter className="me-1" />
-                Apply Filters
-              </div>
-              <div className="apply-filter ms-3" onClick={handleClearFilter}>
-                <FaBan className="me-2" />
-                Clear Filters
-              </div>
-            </div>
-            <div className="search-cnt d-flex align-items-center me-3">
-              <input
-                type="text"
-                placeholder="Search"
-                ref={searchRef}
-                onChange={handleSearch}
-              />
-              <FaSearch className="search-ic" onClick={handleSearch} />
-            </div>
-          </div>
+          </form>
         </div>
         <div className="profiles-view-list mt-5">
           {searchAlumniData.map((alumni) => (

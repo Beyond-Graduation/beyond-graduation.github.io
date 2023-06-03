@@ -40,8 +40,8 @@ const FileInput = ({
   const [showCropOverlay, setShowCropOverlay] = useState(false);
 
   const checkFileSize = () => {
-    if (inputRef.current.files[0].size > 512000) {
-      toast.error("Upload size must be less than 500KB");
+    if (inputRef.current.files[0].size > 2048000) {
+      toast.error("Upload size must be less than 2MB");
       setFile("");
       return;
     }

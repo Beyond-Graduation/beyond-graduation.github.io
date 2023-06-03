@@ -34,6 +34,13 @@
   border-bottom: 4px solid rgba(88, 129, 87, 0.893);
 }
 
+.blogs-view .btn-primary {
+  background-color: transparent !important;
+  border-color: rgba(52, 78, 65, 1) !important;
+  color: black !important;
+  box-shadow: none !important;
+}
+
 .blogs-view .dropdown button {
   width: 250px;
   display: flex;
@@ -43,16 +50,10 @@
   height: 40px;
 }
 
-.blogs-view .btn-primary {
-  background-color: transparent !important;
-  border-color: rgba(52, 78, 65, 1) !important;
-  color: black !important;
-  box-shadow: none !important;
-}
-
 .blogs-view .dropdown-menu-dark {
   background-color: rgba(52, 78, 65, 1);
   width: 248px;
+  margin: 0 !important;
 }
 
 .blogs-view .dropdown-item {

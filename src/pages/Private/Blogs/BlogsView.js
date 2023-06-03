@@ -13,6 +13,7 @@ function BlogsView() {
     localStorage.getItem("userType") || sessionStorage.getItem("userType");
   const [blogData, setBlogData] = useState([]);
   const [showBlogData, setShowBlogData] = useState([]);
+  const [sortActive, setSortActive] = useState("1");
 
   const blogsFilter = ["popular", "latest", "oldest", "blogname"];
 
@@ -56,6 +57,7 @@ function BlogsView() {
   const filterChange = (e) => {
     const token =
       localStorage.getItem("authKey") || sessionStorage.getItem("authKey");
+    setSortActive(e);
     axios({
       method: "get",
       url: `/blog?sort=${blogsFilter[e]}`,
@@ -94,14 +96,18 @@ function BlogsView() {
             title="Sort By"
             onSelect={filterChange}
           >
-            <Dropdown.Item active eventKey="1">
+            <Dropdown.Item active={sortActive === "1"} eventKey="1">
               MOST RECENT
             </Dropdown.Item>
-            <Dropdown.Item eventKey="0">MOST POPULAR</Dropdown.Item>
-            <Dropdown.Item eventKey="2">FORMER BLOGS</Dropdown.Item>
-            <Dropdown.Item eventKey="3">ALPHABETICAL SORT</Dropdown.Item>
-            {/* <Dropdown.Divider />
-            <Dropdown.Item href="#/action-4">Separated link</Dropdown.Item> */}
+            <Dropdown.Item active={sortActive === "0"} eventKey="0">
+              MOST POPULAR
+            </Dropdown.Item>
+            <Dropdown.Item active={sortActive === "2"} eventKey="2">
+              FORMER BLOGS
+            </Dropdown.Item>
+            <Dropdown.Item active={sortActive === "3"} eventKey="3">
+              ALPHABETICAL SORT
+            </Dropdown.Item>
           </DropdownButton>
         </div>
 
