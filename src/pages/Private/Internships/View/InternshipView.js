@@ -16,10 +16,26 @@ function InternshipView() {
     localStorage.getItem("userType") || sessionStorage.getItem("userType");
   const [internships, setInternships] = useState([]);
   const [show, setShow] = useState(false);
+  const [close, setClose] = useState(false); //change1
   const [current, setCurrent] = useState({});
 
   const handleClose = () => setShow(false);
+  const handleStop = () => setShow(false); //chng 2
   const handleShow = () => setShow(true);
+
+  const getDataAlumni = async () => {
+    await axios({
+      method: "get",
+      url: "internship/my_internships",
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
+    }).then((res) => {
+      if (res.status === 200) {
+        setInternships(res.data);
+      }
+    });
+  };
 
   const getData = async () => {
     await axios({
@@ -36,7 +52,11 @@ function InternshipView() {
   };
 
   useEffect(() => {
-    getData();
+    if (userType === "alumni") {
+      getDataAlumni();
+    } else {
+      getData();
+    }
   }, []);
 
   return (
@@ -82,7 +102,7 @@ function InternshipView() {
                       <div className="intern-workType">
                         {internship.workingType}
                       </div>
-                      {userType !== "alumni" && (
+                      {userType !== "alumni" ? (
                         <div
                           className="apply-button"
                           onClick={() => {
@@ -91,6 +111,23 @@ function InternshipView() {
                           }}
                         >
                           Apply
+                        </div>
+                      ) : (
+                        <div className="d-flex flex-row">
+                          <div
+                            className="apply-button"
+                            onClick={() => {
+                              //setCurrent(internship);
+                              //handleShow();
+                            }}
+                          >
+                            {" "}
+                            Close Internship
+                          </div>
+                          <div className="apply-button ms-3">
+                            {" "}
+                            View Applications
+                          </div>
                         </div>
                       )}
                     </div>
@@ -104,6 +141,35 @@ function InternshipView() {
       <Modal
         show={show}
         onHide={handleClose}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            {current.role}{" "}
+            <span className="intern-compname">({current.companyName})</span>
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {current.description && parse(current.description)}
+        </Modal.Body>
+        {userType !== "alumni" && (
+          <Modal.Footer>
+            <Button
+              onClick={() =>
+                navigate(`/internships/apply/${current.internshipId}`)
+              }
+            >
+              Apply
+            </Button>
+          </Modal.Footer>
+        )}
+      </Modal>
+
+      <Modal
+        close={close} //change1
+        onHide={handleStop} //change2
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
