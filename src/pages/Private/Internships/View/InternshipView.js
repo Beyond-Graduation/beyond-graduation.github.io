@@ -124,11 +124,17 @@ function InternshipView() {
                               handleShowClose();
                             }}
                           >
-                            {" "}
                             Close Internship
                           </div>
-                          <div className="apply-button ms-3">
-                            {" "}
+                          <div
+                            className="apply-button ms-3"
+                            onClick={() =>
+                              navigate(
+                                `/internships/${internship.internshipId}/view-applicants`,
+                                { state: internship }
+                              )
+                            }
+                          >
                             View Applications
                           </div>
                         </div>

@@ -40,6 +40,7 @@ import ResetPassword from "./pages/Public/ResetPassword/ResetPassword";
 import InternshipPosting from "./pages/Private/Internships/Posting/InternshipPosting";
 import InternshipApplication from "./pages/Private/Internships/Application/InternshipApplication";
 import InternshipView from "./pages/Private/Internships/View/InternshipView";
+import ViewApplicants from "./pages/Private/Internships/ViewApplicants/ViewApplicants";
 
 const WithNav = () => {
   return (
@@ -268,7 +269,10 @@ function App() {
               path="/internships/apply/:internshipId"
               element={<PrivateRoute comp={InternshipApplication} />}
             />
-
+            <Route
+              path="/internships/:internshipId/view-applicants"
+              element={<PrivateRoute comp={ViewApplicants} />}
+            />
             <Route
               path="/internships/viewall"
               element={<PrivateRoute comp={InternshipView} />}
