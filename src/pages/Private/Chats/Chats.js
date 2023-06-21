@@ -73,12 +73,12 @@ function Chats() {
   }, [chatId]);
 
   useEffect(() => {
-    socket.current = io("ws://65.20.82.203:8900");
+    socket.current = io("ws://64.227.157.21:8900");
     socket.current.on("getMessage", (data) => {
       setArrivalMessage({
         sender: data.senderId,
         text: data.text,
-        createdAt: Date.now(),
+        sentAt: Date.now,
       });
     });
     socket.current.on("blocked", () => {
@@ -110,7 +110,9 @@ function Chats() {
         });
     };
 
-    getMessages();
+    if (currentChat) {
+      getMessages();
+    }
   }, [currentChat]);
 
   useEffect(() => {

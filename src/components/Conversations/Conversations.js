@@ -38,11 +38,11 @@ export default function Conversations({
       },
     })
       .then((res) => {
-        toast.warning(`Chat from ${user.firstName} blocked !`);
+        toast.warning(`Chat from ${user?.firstName} blocked !`);
         handleClose();
         setBlocked(true);
         getAllChats();
-        socket.current.emit("blockUser", user.userId);
+        socket.current.emit("blockUser", user?.userId);
       })
       .catch((err) => {
         toast.error("something went wrong");
@@ -59,11 +59,11 @@ export default function Conversations({
       },
     })
       .then((res) => {
-        toast.warning(`Chat from ${user.firstName} unblocked !`);
+        toast.warning(`Chat from ${user?.firstName} unblocked !`);
         handleClose();
         setBlocked(false);
         getAllChats();
-        socket.current.emit("blockUser", user.userId);
+        socket.current.emit("blockUser", user?.userId);
       })
       .catch((err) => {
         toast.error("something went wrong");
@@ -99,7 +99,7 @@ export default function Conversations({
     <div
       onClick={() => {
         setCurrentChat(conversation);
-        setOtherUserName(user.firstName);
+        setOtherUserName(user?.firstName);
         navigate({
           pathname: `/chats/${conversation._id}`,
           options: { replace: true },
@@ -114,15 +114,15 @@ export default function Conversations({
         <div className=" d-flex align-items-center">
           <img
             className="conversation-img"
-            src={user.profilePicPath || avatarIcon}
-            alt={user.firstName}
+            src={user?.profilePicPath || avatarIcon}
+            alt={user?.firstName}
           />
           <span
             className={`conversation-name ms-3 ${
               conversation.blocked ? "chat-block" : ""
             }`}
           >
-            {user.firstName} {user.lastName}
+            {user?.firstName} {user?.lastName}
           </span>
         </div>
         {conversation.blocked ? (
@@ -144,14 +144,14 @@ export default function Conversations({
       >
         <Modal.Header closeButton>
           <Modal.Title>
-            {conversation.blocked ? "Unblock" : "Block"} {user.firstName}{" "}
-            {user.lastName}
+            {conversation.blocked ? "Unblock" : "Block"} {user?.firstName}{" "}
+            {user?.lastName}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           Are you sure that you want to{" "}
-          {conversation.blocked ? "unblock" : "block"} {user.firstName}{" "}
-          {user.lastName} ?
+          {conversation.blocked ? "unblock" : "block"} {user?.firstName}{" "}
+          {user?.lastName} ?
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
