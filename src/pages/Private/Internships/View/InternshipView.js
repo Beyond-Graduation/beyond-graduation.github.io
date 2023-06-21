@@ -20,8 +20,11 @@ function InternshipView() {
   const [current, setCurrent] = useState({});
 
   const handleClose = () => setShow(false);
-  const handleStop = () => setShow(false); //chng 2
+  const handleStop = () => setClose(false); //chng 2
   const handleShow = () => setShow(true);
+  const handleShowClose = () => setClose(true);
+
+  const handleCloseInternship = async () => {};
 
   const getDataAlumni = async () => {
     await axios({
@@ -118,7 +121,7 @@ function InternshipView() {
                             className="apply-button"
                             onClick={() => {
                               //setCurrent(internship);
-                              //handleShow();
+                              handleShowClose();
                             }}
                           >
                             {" "}
@@ -168,30 +171,30 @@ function InternshipView() {
       </Modal>
 
       <Modal
-        close={close} //change1
+        show={close} //change1
         onHide={handleStop} //change2
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        <Modal.Header closeButton>
+        <Modal.Header Close Internship>
           <Modal.Title id="contained-modal-title-vcenter">
-            {current.role}{" "}
-            <span className="intern-compname">({current.companyName})</span>
+            {/* {current.role} */}
+            {/* <span className="intern-compname">({current.companyName})</span> */}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {current.description && parse(current.description)}
+          <h3>Are you sure you want to close this internship?</h3>
+
+          <div className="d-flex flex-row">
+            <Button onClick={handleCloseInternship}>Yes</Button>
+
+            <Button onClick={handleStop}>Cancel</Button>
+          </div>
         </Modal.Body>
-        {userType !== "alumni" && (
+        {userType === "alumni" && (
           <Modal.Footer>
-            <Button
-              onClick={() =>
-                navigate(`/internships/apply/${current.internshipId}`)
-              }
-            >
-              Apply
-            </Button>
+            <Button onClick={() => navigate()}>Close Internship</Button>
           </Modal.Footer>
         )}
       </Modal>
