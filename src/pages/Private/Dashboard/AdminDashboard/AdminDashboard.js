@@ -9,6 +9,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import AdminHome from "../../../../components/AdminDashboard/Home/AdminHome";
 import { useStateValue } from "../../../../reducer/StateProvider";
 import AdminNoticePublish from "../../../../components/AdminDashboard/NoticePublish/AdminNoticePublish";
+import EmailAlumni from "../../../../components/AdminDashboard/EmailAlumni/EmailAlumniView";
 import AdminNoticeView from "../../../../components/AdminDashboard/AdminNoticeView/AdminNoticeView";
 import AdminNoticeVerification from "../../../../components/AdminDashboard/AdminNoticeVerification/AdminNoticeVerification";
 
@@ -27,6 +28,7 @@ const AdminDashboard = () => {
     "alumni-verification",
     "notice-verification",
     "publish-notice",
+    "alumni-broadcast",
     "view-notice",
   ];
 
@@ -78,6 +80,10 @@ const AdminDashboard = () => {
     {
       name: "Notice Publication",
       component: <AdminNoticePublish />,
+    },
+    {
+      name: "Email Alumni",
+      component: <EmailAlumni/>,
     },
     {
       name: "Notices View",
