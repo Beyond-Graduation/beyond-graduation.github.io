@@ -1,0 +1,72 @@
+.internship-view {
+  background-color: rgba(218, 215, 205, 1);
+  padding-top: 5vh;
+  padding-bottom: 12vh;
+  min-height: 100vh;
+}
+
+.internship-view-cnt {
+  width: 80%;
+  margin: auto;
+  position: relative;
+}
+
+.internship-heading {
+  color: black;
+  font-weight: 500;
+  font-size: calc(1rem + 2vw);
+  width: fit-content;
+  margin-bottom: 30px;
+}
+
+.internship-heading:after {
+  content: "";
+  display: block;
+  width: 70%;
+  border-bottom: 4px solid rgba(88, 129, 87, 0.893);
+}
+
+.internship-view-card {
+  border: 3px solid #3a5a40;
+  border-radius: 8px;
+  width: 70%;
+  padding: 20px 3%;
+  background-color: #a3b18a;
+  cursor: pointer;
+}
+
+.intern-role {
+  font-size: 24px;
+  font-weight: bold;
+  color: black;
+}
+
+.intern-compname {
+  font-size: 18px;
+  color: rgba(0, 12, 2, 0.89);
+  font-weight: 400;
+}
+
+.intern-duration,
+.intern-stipend {
+  font-size: 18px;
+  color: rgba(0, 12, 2, 0.89);
+  font-weight: 400;
+}
+
+.intern-workType {
+  font-size: 18px;
+  color: rgba(0, 12, 2, 0.89);
+  font-weight: 400;
+}
+
+.apply-button {
+  border: 1px solid white;
+  border-radius: 8px;
+  padding: 5px 15px;
+  background-color: #344e41;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 10px;
+}
