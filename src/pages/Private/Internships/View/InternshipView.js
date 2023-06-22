@@ -7,6 +7,7 @@ import parse from "html-react-parser";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Modal } from "react-bootstrap";
 import { GiTakeMyMoney } from "react-icons/gi";
+import { toast } from "react-toastify";
 
 function InternshipView() {
   const navigate = useNavigate();
@@ -24,7 +25,29 @@ function InternshipView() {
   const handleShow = () => setShow(true);
   const handleShowClose = () => setClose(true);
 
-  const handleCloseInternship = async () => {};
+  const handleCloseInternship = async () => {
+    await axios({
+      method: "post",
+      url: "internship/close",
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
+      data: {
+        internshipId: current.internshipId,
+      },
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          toast.success("Internship Closed");
+          getDataAlumni();
+        } else {
+          toast.error("Something went wrong");
+        }
+      })
+      .catch((err) => {
+        toast.error("Something went wrong");
+      });
+  };
 
   const getDataAlumni = async () => {
     await axios({
@@ -178,8 +201,8 @@ function InternshipView() {
       </Modal>
 
       <Modal
-        show={close} //change1
-        onHide={handleStop} //change2
+        show={close}
+        onHide={handleStop}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
@@ -200,7 +223,7 @@ function InternshipView() {
         {userType === "alumni" && (
           <Modal.Footer className="d-flex justify-content-around">
             <Button onClick={handleCloseInternship}>Yes</Button>
-            <Button onClick={handleStop}>Cancel</Button>{" "}
+            <Button onClick={handleStop}>Cancel</Button>
           </Modal.Footer>
         )}
       </Modal>

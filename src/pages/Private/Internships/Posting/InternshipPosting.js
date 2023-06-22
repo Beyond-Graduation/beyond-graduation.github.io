@@ -54,19 +54,13 @@ function InternshipPosting() {
     for (let i = 0; i < 5; i++) {
       oppoId += possible.charAt(Math.floor(Math.random() * possible.length));
     }
+    console.log(oppoId);
     setFormDetails({
       ...formDetails,
       internshipId: oppoId,
       email: userData.email ? userData.email : "",
     });
   }, []);
-
-  useEffect(() => {
-    setFormDetails({
-      ...formDetails,
-      email: userData.email ? userData.email : "",
-    });
-  }, [userData]);
 
   const addNewQuestion = () => {
     setQuestionCount(questionCount + 1);
@@ -106,12 +100,12 @@ function InternshipPosting() {
     }
   };
 
-  useEffect(() => {
-    //console.log(question);
-  }, [question]);
+  // useEffect(() => {
+  //   //console.log(question);
+  // }, [question]);
 
   // useEffect(() => {
-  //   //console.log(formDetails);
+  //   console.log(formDetails);
   // }, [formDetails]);
 
   const onInternshipPost = async () => {
