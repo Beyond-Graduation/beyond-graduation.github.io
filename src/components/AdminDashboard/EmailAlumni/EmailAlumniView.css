@@ -1,0 +1,69 @@
+.admin-notice-view-head {
+  color: black;
+  font-weight: 500;
+  font-size: calc(1rem + 1vw);
+  width: fit-content;
+  margin-bottom: 10px;
+}
+
+.admin-notice-view-head:after {
+  content: "";
+  display: block;
+  width: 70%;
+  border-bottom: 4px solid rgba(88, 129, 87, 0.893);
+}
+
+.notice-view-card {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  width: 70%;
+  margin: auto;
+  padding: 10px 5%;
+  color: black;
+}
+
+.not-view-left {
+  width: 15%;
+  font-size: 18px;
+}
+
+.not-view-left > div {
+  max-width: 50px;
+}
+
+.not-view-left .date {
+  background-color: white;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 3px 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.not-view-right {
+	width: 85%;	
+}
+
+.not-view-right .title{
+	font-size: 24px;
+	font-weight: 600;
+	text-transform: capitalize;
+}
+
+.not-view-right .content{
+	font-size: 18px;
+	line-height: 110%;
+}
+
+.not-view-right .attachment {
+	color: rgba(66, 60, 60, 1);
+	cursor: pointer;
+	width: fit-content;
+}
+
+.email-form{
+  margin-top: 0.5rem;
+}
