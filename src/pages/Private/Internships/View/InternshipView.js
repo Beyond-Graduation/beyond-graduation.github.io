@@ -201,8 +201,8 @@ function InternshipView() {
       </Modal>
 
       <Modal
-        show={close} //change1
-        onHide={handleStop} //change2
+        show={close}
+        onHide={handleStop}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
