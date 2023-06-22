@@ -119,8 +119,9 @@ function InternshipView() {
                         <div className="d-flex flex-row">
                           <div
                             className="apply-button"
-                            onClick={() => {
-                              //setCurrent(internship);
+                            onClick={(e) => {
+                              setCurrent(internship);
+                              e.stopPropagation();
                               handleShowClose();
                             }}
                           >
@@ -185,22 +186,21 @@ function InternshipView() {
       >
         <Modal.Header Close Internship>
           <Modal.Title id="contained-modal-title-vcenter">
-            {/* {current.role} */}
-            {/* <span className="intern-compname">({current.companyName})</span> */}
+            {current.role}{" "}
+            <span className="intern-compname">({current.companyName})</span>
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h3>Are you sure you want to close this internship?</h3>
+          <p className="fs-5">
+            Are you sure you want to close this internship?
+          </p>
 
-          <div className="d-flex flex-row">
-            <Button onClick={handleCloseInternship}>Yes</Button>
-
-            <Button onClick={handleStop}>Cancel</Button>
-          </div>
+          <div className="d-flex flex-row"></div>
         </Modal.Body>
         {userType === "alumni" && (
-          <Modal.Footer>
-            <Button onClick={() => navigate()}>Close Internship</Button>
+          <Modal.Footer className="d-flex justify-content-around">
+            <Button onClick={handleCloseInternship}>Yes</Button>
+            <Button onClick={handleStop}>Cancel</Button>{" "}
           </Modal.Footer>
         )}
       </Modal>
