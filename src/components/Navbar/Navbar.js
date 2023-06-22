@@ -62,6 +62,9 @@ function NavbarMain() {
             {isAuth.isAuthenticated ? (
               <>
                 <NavDropdown title="Profiles" id="basic-nav-dropdown">
+                <NavDropdown.Item href="/similar-profiles">
+                    Recommended
+                  </NavDropdown.Item>
                   <NavDropdown.Item href="/alumni-profiles">
                     Alumni
                   </NavDropdown.Item>
