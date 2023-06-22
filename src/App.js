@@ -26,6 +26,7 @@ import BlogsView from "./pages/Private/Blogs/BlogsView";
 import About from "./pages/Public/About/About";
 import AlumniProfilesView from "./pages/Private/Profiles/AlumniProfilesView";
 import StudentProfilesView from "./pages/Private/Profiles/StudentProfilesView";
+import SimilarProfilesView from "./pages/Private/Profiles/SimilarProfilesView";
 import AdminDashboard from "./pages/Private/Dashboard/AdminDashboard/AdminDashboard";
 import UpdateProfile from "./pages/Private/UpdateProfile/UpdateProfile";
 import CreateBlog from "./pages/Private/Blogs/CreateBlog";
@@ -235,6 +236,10 @@ function App() {
             <Route
               path="/student-profiles"
               element={<PrivateRoute comp={StudentProfilesView} />}
+            />
+            <Route
+              path="/similar-profiles"
+              element={<PrivateRoute comp={SimilarProfilesView} />}
             />
             <Route
               path="/student-profile/:userId"
