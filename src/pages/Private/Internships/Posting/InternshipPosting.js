@@ -57,7 +57,7 @@ function InternshipPosting() {
     console.log(oppoId);
     setFormDetails({
       ...formDetails,
-      internshipId: "oppoId",
+      internshipId: oppoId,
       email: userData.email ? userData.email : "",
     });
   }, []);
@@ -100,13 +100,13 @@ function InternshipPosting() {
     }
   };
 
-  useEffect(() => {
-    //console.log(question);
-  }, [question]);
+  // useEffect(() => {
+  //   //console.log(question);
+  // }, [question]);
 
-  useEffect(() => {
-    console.log(formDetails);
-  }, [formDetails]);
+  // useEffect(() => {
+  //   console.log(formDetails);
+  // }, [formDetails]);
 
   const onInternshipPost = async () => {
     let token =
