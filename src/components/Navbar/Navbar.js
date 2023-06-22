@@ -6,7 +6,12 @@ import { useStateValue } from "../../reducer/StateProvider";
 import avatarIcon from "../../assets/images/avatar.png";
 import { FaPowerOff } from "react-icons/fa";
 import { AiFillLock } from "react-icons/ai";
-import { BsChatRightTextFill, BsPersonCircle } from "react-icons/bs";
+import {
+  BsChatRightTextFill,
+  BsFillPenFill,
+  BsPen,
+  BsPersonCircle,
+} from "react-icons/bs";
 import { useRef } from "react";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 
@@ -16,6 +21,8 @@ function NavbarMain() {
   const checkRef = useRef();
   const overlayRef = useRef();
   const [profileImg, setProfileImg] = useState(avatarIcon);
+  const userType =
+    localStorage.getItem("userType") || sessionStorage.getItem("userType");
 
   const [{ userData, userId }, dispatch] = useStateValue();
 
@@ -62,7 +69,7 @@ function NavbarMain() {
             {isAuth.isAuthenticated ? (
               <>
                 <NavDropdown title="Profiles" id="basic-nav-dropdown">
-                <NavDropdown.Item href="/similar-profiles">
+                  <NavDropdown.Item href="/similar-profiles">
                     Recommended
                   </NavDropdown.Item>
                   <NavDropdown.Item href="/alumni-profiles">
@@ -95,6 +102,14 @@ function NavbarMain() {
                         <span>My Profile</span>
                       </div>
                     </Link>
+                    {userType === "student" && (
+                      <Link to="/internships/view-my-applications">
+                        <div className="prof-btn-link">
+                          <BsFillPenFill />
+                          <span>My Applications</span>
+                        </div>
+                      </Link>
+                    )}
                     <Link to="/chats">
                       <div className="prof-btn-link">
                         <BsChatRightTextFill />

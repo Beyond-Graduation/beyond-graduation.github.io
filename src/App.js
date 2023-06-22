@@ -42,6 +42,7 @@ import InternshipPosting from "./pages/Private/Internships/Posting/InternshipPos
 import InternshipApplication from "./pages/Private/Internships/Application/InternshipApplication";
 import InternshipView from "./pages/Private/Internships/View/InternshipView";
 import ViewApplicants from "./pages/Private/Internships/ViewApplicants/ViewApplicants";
+import StudentViewApplications from "./pages/Private/Internships/StudentViewApplications/StudentViewApplications";
 
 const WithNav = () => {
   return (
@@ -273,6 +274,10 @@ function App() {
             <Route
               path="/internships/apply/:internshipId"
               element={<PrivateRoute comp={InternshipApplication} />}
+            />
+            <Route
+              path="/internships/view-my-applications"
+              element={<PrivateRoute comp={StudentViewApplications} />}
             />
             <Route
               path="/internships/:internshipId/view-applicants"
